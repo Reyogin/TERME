@@ -17,7 +17,7 @@ public class TurretScript : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        InflictPain();
+        //InflictPain();
     }
 
     void OnTriggerStay(Collider other)
@@ -25,33 +25,40 @@ public class TurretScript : MonoBehaviour
         if (timer >= timeBetweenAttacks && other.gameObject.tag == "Player")
         {
             timer = 0f;
-            HealthPlayer player = other.gameObject.GetComponent<HealthPlayer>();
+            HealthPlayer hpplayer = other.gameObject.GetComponent<HealthPlayer>();
+            CQCCombat playerGP = other.gameObject.GetComponent<CQCCombat>();
 
-            if (player.currentHealth > 0)
+            if (playerGP.Guard())
+                playerGP.currGP -= 10;
+
+
+            else
             {
-                player.damageImage.color = player.flashColor;
-                player.currentHealth -= 10;
-                //player.healthSlider.value = player.currentHealth;
-                player.SetHealthUI();
+                if (hpplayer.currHealth > 0)
+                {
+                    hpplayer.damageImage.color = hpplayer.flashColor;
+                    hpplayer.currHealth -= 10;
+                    //player.healthSlider.value = player.currentHealth;
+                    hpplayer.SetHealthUI();
+                }
+
+                if (hpplayer.currHealth <= 0)
+                {
+                    MoveControlsSolo moves = other.GetComponent<MoveControlsSolo>();
+                    CameraControllerSolo camCtrl = other.GetComponent<CameraControllerSolo>();
+                    Animator m_anim = other.GetComponent<Animator>();
+
+                    moves.enabled = false;
+                    camCtrl.enabled = false;
+                    m_anim.enabled = false;
+                }
+
+                hpplayer.damageImage.color = Color.Lerp(hpplayer.damageImage.color, Color.clear, hpplayer.flashSpeed * Time.deltaTime);
             }
-
-            if (player.currentHealth <= 0)
-            {
-                MoveControlsSolo moves = other.GetComponent<MoveControlsSolo>();
-                CameraControllerSolo camCtrl = other.GetComponent<CameraControllerSolo>();
-                Animator m_anim = other.GetComponent<Animator>();
-
-                moves.enabled = false;
-                camCtrl.enabled = false;
-                m_anim.enabled = false;
-            }
-
-            player.damageImage.color = Color.Lerp(player.damageImage.color, Color.clear, player.flashSpeed * Time.deltaTime);
-
         }
     }
 
-    void InflictPain()
+    /*void InflictPain()
     {
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 1.5f, Vector3.zero, out hit, 0))
@@ -61,15 +68,15 @@ public class TurretScript : MonoBehaviour
                     timer = 0f;
                     HealthPlayer player = hit.transform.gameObject.GetComponent<HealthPlayer>();
 
-                    if (player.currentHealth > 0)
+                    if (player.currHealth > 0)
                     {
                         player.damageImage.color = player.flashColor;
-                        player.currentHealth -= 10;
+                        player.currHealth -= 10;
                         //player.healthSlider.value = player.currentHealth;
                         player.SetHealthUI();
                     }
 
-                    if (player.currentHealth <= 0)
+                    if (player.currHealth <= 0)
                     {
                         MoveControlsSolo moves = hit.transform.gameObject.GetComponent<MoveControlsSolo>();
                         CameraControllerSolo camCtrl = hit.transform.gameObject.GetComponent<CameraControllerSolo>();
@@ -83,5 +90,5 @@ public class TurretScript : MonoBehaviour
                     player.damageImage.color = Color.Lerp(player.damageImage.color, Color.clear, player.flashSpeed * Time.deltaTime);
 
                 }
-    }
+    }*/
 }

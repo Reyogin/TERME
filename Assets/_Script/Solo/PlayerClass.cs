@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player_Script : MonoBehaviour
+public class PlayerClass : MonoBehaviour
 {
+    public float maxHealth;
+    public float currHealth;
+    public float guardPoints;
+    public float currGP;
 
 	// Use this for initialization
 	void Start ()

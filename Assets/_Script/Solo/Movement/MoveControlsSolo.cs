@@ -17,7 +17,7 @@ public class MoveControlsSolo : MonoBehaviour
     private float runspeed;
     [SerializeField]
     float m_GroundCheckDistance = 0f;
-    //Animator m_animator;
+    Animator m_animator;
     float speed;
 
 
@@ -26,18 +26,18 @@ public class MoveControlsSolo : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
-        //m_animator = GetComponent<Animator11>();
+        m_animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //UpdateAnimator();
-        GetInput(out speed);
+        UpdateAnimator();
+        Move(out speed);
     }
 
-    void GetInput(out float speed)
+    void Move(out float speed)
     {
         speed = this.speed;
         bool leftshift = Input.GetKey(KeyCode.LeftShift);
@@ -53,7 +53,7 @@ public class MoveControlsSolo : MonoBehaviour
 
     }
 
-   /* void UpdateAnimator()
+   void UpdateAnimator()
     {
 
         bool leftshit = Input.GetKey(KeyCode.LeftShift);
@@ -84,6 +84,6 @@ public class MoveControlsSolo : MonoBehaviour
 
 
         }
-    }*/
+    }
 
 }
