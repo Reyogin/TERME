@@ -30,13 +30,11 @@ public class MoveControls : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        if (base.isLocalPlayer)
+        if (isLocalPlayer)
         {
             playerTransform = GetComponent<Transform>();
             rigidbody = GetComponent<Rigidbody>();
             m_animator = GetComponent<Animator>();
-
-
         }
 
     }
@@ -70,45 +68,43 @@ public class MoveControls : NetworkBehaviour
 
     void UpdateAnimator()
     {
-        if (base.isLocalPlayer)
-        {
-            bool leftshit = Input.GetKey(KeyCode.LeftShift);
-            bool input = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0; //|| Input.GetAxis("Jump") >= Mathf.Abs(1);
-            bool jump = Input.GetKeyDown(KeyCode.Space);
+        if (!isLocalPlayer)
+            return;
 
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
+        bool leftshit = Input.GetKey(KeyCode.LeftShift);
+        bool input = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0; //|| Input.GetAxis("Jump") >= Mathf.Abs(1);
+        bool jump = Input.GetKeyDown(KeyCode.Space);
 
-            Vector2 input2 = new Vector2(horizontal, vertical);
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-            m_animator.SetFloat(m_HashHorizontalPara, input2.x, m_Damping, Time.deltaTime);
-            m_animator.SetFloat(m_HashVerticalPara, input2.y, m_Damping, Time.deltaTime);
+        Vector2 input2 = new Vector2(horizontal, vertical);
 
-            isRunning = leftshit && input;
-            if (isRunning)
-                m_animator.SetBool("IsRunning", true);
-            else
-                m_animator.SetBool("IsRunning", false);
+        m_animator.SetFloat(m_HashHorizontalPara, input2.x, m_Damping, Time.deltaTime);
+        m_animator.SetFloat(m_HashVerticalPara, input2.y, m_Damping, Time.deltaTime);
 
-            if (!jump)
-                m_animator.SetBool("IsGrounded", true);
-            else
-                m_animator.SetBool("IsGrounded", false);
-        }
+        isRunning = leftshit && input;
+        if (isRunning)
+            m_animator.SetBool("IsRunning", true);
+        else
+            m_animator.SetBool("IsRunning", false);
+
+        if (!jump)
+            m_animator.SetBool("IsGrounded", true);
+        else
+            m_animator.SetBool("IsGrounded", false);
+
     }
 
     void jump()
     {
-        if (base.isLocalPlayer)
+        bool isJumping = Input.GetKeyDown(KeyCode.Space);
+
+        if (isJumping)
         {
-            bool isJumping = Input.GetKeyDown(KeyCode.Space);
+            transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
+            //rigidbody.drag = 0.1f * Time.deltaTime;
 
-            if (isJumping)
-            {
-                transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
-                //rigidbody.drag = 0.1f * Time.deltaTime;
-
-            }
         }
 
     }

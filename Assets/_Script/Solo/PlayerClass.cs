@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class PlayerClass : MonoBehaviour
+public class PlayerClass : NetworkBehaviour
 {
     public float maxHealth;
     public float currHealth;

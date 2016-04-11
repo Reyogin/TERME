@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class CameraController : NetworkBehaviour
 {
     private Transform playerTransform;
-    private GameObject cam;
+    private Camera cam;
     private float rotationSpeed = 150.0f;
 
     private float minx = -70.0f;
@@ -15,14 +15,16 @@ public class CameraController : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-
         playerTransform = GetComponent<Transform>();
-        this.cam = gameObject.GetComponentInChildren<Camera>().gameObject;
+        this.cam = gameObject.GetComponentInChildren<Camera>();
         cam.transform.localEulerAngles = v3rotate;
+
         if (!isLocalPlayer)
         {
-            this.cam.SetActive(false);
+            this.cam.enabled = false;//  SetActive(false);
+            return;
         }
+
     }
 
     // Update is called once per frame
@@ -34,13 +36,10 @@ public class CameraController : NetworkBehaviour
 
     void GetInput()
     {
-        if (isLocalPlayer)
-        {
-            transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
-            v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-            v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
-            this.cam.transform.localEulerAngles = v3rotate;
-        }
+        transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
+        v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+        v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
+        this.cam.transform.localEulerAngles = v3rotate;
 
     }
 }
