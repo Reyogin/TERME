@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GUI_HealthPlayer : PlayerClass
+public class GUI_HealthPlayer : CQCCombat
 {
     private static Texture2D _staticRectTexture;
     private static GUIStyle _staticRectStyle;
@@ -13,6 +13,8 @@ public class GUI_HealthPlayer : PlayerClass
     {
         this.maxHealth = 100;
         this.currHealth = maxHealth;
+        this.guardPoints = 100;
+        this.currGP = guardPoints;
     }
 
     // Update is called once per frame
@@ -23,8 +25,8 @@ public class GUI_HealthPlayer : PlayerClass
 
     void OnGUI()
     {
-        GUIDrawRect(new Rect(162, Screen.height - 70, 228, 8), Color.green);
-        GUIDrawRect(new Rect(140, Screen.height - 55, 120, 5), Color.blue);
+        GUIDrawRect(new Rect(162, Screen.height - 70, 228*currHealth/maxHealth, 8), Color.green);
+        GUIDrawRect(new Rect(140, Screen.height - 55, 120*currGP/guardPoints, 5), Color.blue);
         GUI.DrawTexture(new Rect(30, Screen.height - 250, 400, 400), image, ScaleMode.ScaleToFit);
     }
 
