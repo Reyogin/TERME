@@ -15,7 +15,6 @@ public class CameraControllerSolo : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         playerTransform = GetComponent<Transform>();
         this.cam = gameObject.GetComponentInChildren<Camera>().gameObject;
         cam.transform.localEulerAngles = v3rotate;
@@ -24,18 +23,14 @@ public class CameraControllerSolo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         GetInput();
     }
 
     void GetInput()
     {
-
-
        transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
         v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
         v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
         this.cam.transform.localEulerAngles = v3rotate;
-
     }
 }

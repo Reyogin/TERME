@@ -24,7 +24,7 @@ public class HealthPlayer_Multi : PlayerClass
     // Use this for initialization
     void Start()
     {
-        if (isLocalPlayer)
+
         {
             this.maxHealth = 100;
             currentHealth = maxHealth;
@@ -38,7 +38,7 @@ public class HealthPlayer_Multi : PlayerClass
     // Update is called once per frame
     void Update()
     {
-        if (isLocalPlayer)
+       
         {
             isDamaged = Input.GetKeyDown(KeyCode.H);
 
@@ -57,7 +57,7 @@ public class HealthPlayer_Multi : PlayerClass
 
     public void TakeDamage(int amount)
     {
-        if (isLocalPlayer)
+       
         {
             isDamaged = true;
 
