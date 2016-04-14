@@ -43,7 +43,5 @@ public class CameraController : NetworkBehaviour
             v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
             this.cam.transform.localEulerAngles = v3rotate;
         }
-      
-
     }
 }
