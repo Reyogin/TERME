@@ -4,15 +4,18 @@ using UnityEngine.Networking;
 
 public class PlayerClass : MonoBehaviour
 {
-    public float maxHealth;
-    public float currHealth;
-    public float guardPoints;
-    public float currGP;
+    private float maxHealth;
+    private float currHealth;
+    private float guardPoints;
+    private float currGP;
 
 	// Use this for initialization
-	void Start ()
+	protected virtual void Start ()
     {
-	
+        maxHealth = 100f;
+        currHealth = maxHealth;
+        guardPoints = 100f;
+        currGP = guardPoints;
 	}
 	
 	// Update is called once per frame
@@ -20,4 +23,28 @@ public class PlayerClass : MonoBehaviour
     {
 	
 	}
+
+    #region Getters/Setters
+    public float currentHealth
+    {
+        get { return currHealth; }
+        set { this.currHealth = value; }
+    }
+
+    public float getmaxHealth
+    {
+        get { return maxHealth; }
+    }
+
+    public float getGP
+    {
+        get { return guardPoints; }
+    }
+
+    public float currentGP
+    {
+        get { return currGP; }
+        set { this.currGP = value; }
+    }
+    #endregion
 }

@@ -3,15 +3,14 @@ using System.Collections;
 
 public class CQCCombat : PlayerClass
 {
-    public float distance;
-    public float damage = 30f;
-    public float range = 2f;
+    private float distance;
+    private float damage = 30f;
+    private float range = 2f;
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
-        this.guardPoints = 100;
-        this.currGP = guardPoints;
+        base.Start();
     }
 
     // Update is called once per frame
@@ -41,7 +40,7 @@ public class CQCCombat : PlayerClass
     {
         bool guard = Input.GetButton("Fire2");
 
-        if (guard && currGP > 0)
+        if (guard && currentGP > 0)
             return true;
         else
             return false;

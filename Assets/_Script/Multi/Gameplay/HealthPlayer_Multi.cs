@@ -6,7 +6,7 @@ using System.Collections;
 public class HealthPlayer_Multi : PlayerClass
 {
     //public int startingHealth = 100;
-    public float currentHealth;
+    /*public float currentHealth;
     public Slider healthSlider;
     public Image m_fillImage;
     public Color m_fullHealthColor = Color.green;
@@ -87,5 +87,5 @@ public class HealthPlayer_Multi : PlayerClass
 
         if (currHealth <= maxHealth / 5)
             m_fillImage.color = Color.red;
-    }
+    }*/
 }

@@ -25,24 +25,24 @@ public class TurretScript : MonoBehaviour
         if (timer >= timeBetweenAttacks && other.gameObject.tag == "Player")
         {
             timer = 0f;
-            HealthPlayer hpplayer = other.gameObject.GetComponent<HealthPlayer>();
-            CQCCombat playerGP = other.gameObject.GetComponent<CQCCombat>();
+            GUI_HealthPlayer hpplayer = other.gameObject.GetComponent<GUI_HealthPlayer>();
+            GUI_HealthPlayer playerGP = other.gameObject.GetComponent<GUI_HealthPlayer>();
 
             if (playerGP.Guard())
-                playerGP.currGP -= 10;
+                playerGP.currentGP -= 10;
 
 
             else
             {
-                if (hpplayer.currHealth > 0)
+                if (hpplayer.currentHealth > 0)
                 {
-                    hpplayer.damageImage.color = hpplayer.flashColor;
-                    hpplayer.currHealth -= 10;
+                    //hpplayer.damageImage.color = hpplayer.flashColor;
+                    hpplayer.currentHealth -= 10;
                     //player.healthSlider.value = player.currentHealth;
-                    hpplayer.SetHealthUI();
+                    //hpplayer.SetHealthUI();
                 }
 
-                if (hpplayer.currHealth <= 0)
+                if (hpplayer.currentHealth <= 0)
                 {
                     MoveControlsSolo moves = other.GetComponent<MoveControlsSolo>();
                     CameraControllerSolo camCtrl = other.GetComponent<CameraControllerSolo>();
@@ -53,7 +53,7 @@ public class TurretScript : MonoBehaviour
                     m_anim.enabled = false;
                 }
 
-                hpplayer.damageImage.color = Color.Lerp(hpplayer.damageImage.color, Color.clear, hpplayer.flashSpeed * Time.deltaTime);
+                //hpplayer.damageImage.color = Color.Lerp(hpplayer.damageImage.color, Color.clear, hpplayer.flashSpeed * Time.deltaTime);
             }
         }
     }

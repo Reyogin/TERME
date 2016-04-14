@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class HealthPlayer : PlayerClass {
-    //public int startingHealth = 100;
+    /*//public int startingHealth = 100;
     //public int currentHealth;
     public Slider healthSlider;
     public Image m_fillImage;
@@ -23,8 +23,8 @@ public class HealthPlayer : PlayerClass {
 	// Use this for initialization
 	void Start ()
     {
-        this.maxHealth = 100;
-        this.currHealth = maxHealth;
+        //this.maxHealth = 100;
+        //this.currHealth = maxHealth;
         movecontrol = GetComponent<MoveControlsSolo>();
         cameracontrol = GetComponent<CameraControllerSolo>();
         m_animator = GetComponent<Animator>();
@@ -78,5 +78,5 @@ public class HealthPlayer : PlayerClass {
 
         if (currHealth <= maxHealth/5)
             m_fillImage.color = Color.red;
-    }
+    }*/
 }
