@@ -4,6 +4,7 @@ using System.Collections;
 public class AI_test : MonoBehaviour
 {
     public Transform target;
+
     NavMeshAgent nav;
     // Use this for initialization
     void Start()
@@ -31,5 +32,11 @@ public class AI_test : MonoBehaviour
             {
                 nav.SetDestination(target.position);
             }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+            nav.SetDestination(target.position);
     }
 }

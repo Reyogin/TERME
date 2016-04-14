@@ -2,9 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class HealthPlayer : MonoBehaviour {
-    public int startingHealth = 100;
-    public int currentHealth;
+public class HealthPlayer : PlayerClass {
+    /*//public int startingHealth = 100;
+    //public int currentHealth;
     public Slider healthSlider;
     public Image m_fillImage;
     public Color m_fullHealthColor = Color.green;
@@ -23,7 +23,8 @@ public class HealthPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        currentHealth = startingHealth;
+        //this.maxHealth = 100;
+        //this.currHealth = maxHealth;
         movecontrol = GetComponent<MoveControlsSolo>();
         cameracontrol = GetComponent<CameraControllerSolo>();
         m_animator = GetComponent<Animator>();
@@ -53,11 +54,11 @@ public class HealthPlayer : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            currentHealth -= amount;
+            currHealth -= amount;
             SetHealthUI();
         }
 
-        if (currentHealth <= 0 && !isDead)
+        if (currHealth <= 0 && !isDead)
         {
             isDead = true;
             movecontrol.enabled = false;
@@ -69,13 +70,13 @@ public class HealthPlayer : MonoBehaviour {
     public void SetHealthUI()
     {
         // Set the slider's value appropriately.
-        healthSlider.value = currentHealth;
+        healthSlider.value = currHealth;
 
-        if (currentHealth <= startingHealth / 2)
+        if (currHealth <= maxHealth / 2)
             // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
             m_fillImage.color = Color.yellow;
 
-        if (currentHealth <= startingHealth/5)
+        if (currHealth <= maxHealth/5)
             m_fillImage.color = Color.red;
-    }
+    }*/
 }

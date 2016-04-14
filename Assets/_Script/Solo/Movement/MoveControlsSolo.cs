@@ -8,7 +8,12 @@ public class MoveControlsSolo : MonoBehaviour
     private Rigidbody rigidbody;
     public float coeffMove = 3.0f;
     public float jumpCoeff = 5.0f;
+    public float m_Damping = 0.35f;
     private bool isRunning;
+
+    private readonly int m_HashHorizontalPara = Animator.StringToHash("Horizontal");
+    private readonly int m_HashVerticalPara = Animator.StringToHash("Vertical");
+
     //private bool isGrounded;
     //private bool input;
     [SerializeField]
@@ -17,7 +22,7 @@ public class MoveControlsSolo : MonoBehaviour
     private float runspeed;
     [SerializeField]
     float m_GroundCheckDistance = 0f;
-    //Animator m_animator;
+    Animator m_animator;
     float speed;
 
 
@@ -26,18 +31,18 @@ public class MoveControlsSolo : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
-        //m_animator = GetComponent<Animator11>();
+        m_animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //UpdateAnimator();
-        GetInput(out speed);
+        UpdateAnimator();
+        Move(out speed);
     }
 
-    void GetInput(out float speed)
+    void Move(out float speed)
     {
         speed = this.speed;
         bool leftshift = Input.GetKey(KeyCode.LeftShift);
@@ -53,12 +58,19 @@ public class MoveControlsSolo : MonoBehaviour
 
     }
 
-   /* void UpdateAnimator()
+    void UpdateAnimator()
     {
-
         bool leftshit = Input.GetKey(KeyCode.LeftShift);
         bool input = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0; //|| Input.GetAxis("Jump") >= Mathf.Abs(1);
         bool jump = Input.GetKeyUp(KeyCode.Space);
+
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector2 input2 = new Vector2(horizontal, vertical);
+
+        m_animator.SetFloat(m_HashHorizontalPara, input2.x, m_Damping, Time.deltaTime);
+        m_animator.SetFloat(m_HashVerticalPara, input2.y, m_Damping, Time.deltaTime);
 
         isRunning = leftshit && input;
         if (isRunning)
@@ -84,6 +96,6 @@ public class MoveControlsSolo : MonoBehaviour
 
 
         }
-    }*/
+    }
 
 }
