@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AI_test : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
 
     NavMeshAgent nav;
     // Use this for initialization
@@ -29,9 +29,7 @@ public class AI_test : MonoBehaviour
 
         if (angle < 45f)
             if (distance <= 25f)
-            {
                 nav.SetDestination(target.position);
-            }
     }
 
     void OnTriggerStay(Collider other)

@@ -21,16 +21,15 @@ public class GUI_HealthPlayer : CQCCombat
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Current Health : " + currentHealth);
-        Debug.Log("Current GP : " + currentGP);
-        Debug.Log("Max GP : " + getGP);
-
+      
     }
 
     void OnGUI()
     {
-        GUIDrawRect(new Rect(162, Screen.height - 70, 228 * currentHealth / getmaxHealth, 8), Color.green);
-        GUIDrawRect(new Rect(140, Screen.height - 55, 120 * currentGP / getGP, 5), Color.blue);
+        float hppercent = currentHealth / getmaxHealth;
+        float gppercent = currentGP / getGP;
+        GUIDrawHP(hppercent);
+        GUIDrawRect(new Rect(140, Screen.height - 55, 110 * gppercent, 5), Color.cyan);
         GUI.DrawTexture(new Rect(30, Screen.height - 250, 400, 400), image, ScaleMode.ScaleToFit);
     }
 
@@ -49,5 +48,15 @@ public class GUI_HealthPlayer : CQCCombat
         _staticRectStyle.normal.background = _staticRectTexture;
 
         GUI.Box(position, GUIContent.none, _staticRectStyle);
+    }
+
+    public static void GUIDrawHP(float percent)
+    {
+        if (percent > 0.5f)
+            GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.green);
+        else if (percent > 0.2f)
+            GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.yellow);
+        else
+            GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.red);
     }
 }

@@ -23,8 +23,8 @@ public class HealthPlayer : PlayerClass {
 	// Use this for initialization
 	void Start ()
     {
-        //this.maxHealth = 100;
-        //this.currHealth = maxHealth;
+        this.maxHealth = 100;
+        this.currHealth = maxHealth;
         movecontrol = GetComponent<MoveControlsSolo>();
         cameracontrol = GetComponent<CameraControllerSolo>();
         m_animator = GetComponent<Animator>();

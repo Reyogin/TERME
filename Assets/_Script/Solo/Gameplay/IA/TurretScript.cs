@@ -31,30 +31,15 @@ public class TurretScript : MonoBehaviour
             if (playerGP.Guard())
                 playerGP.currentGP -= 10;
 
-
             else
-            {
-                if (hpplayer.currentHealth > 0)
-                {
+                hpplayer.TakingPunishment(10);         
                     //hpplayer.damageImage.color = hpplayer.flashColor;
-                    hpplayer.currentHealth -= 10;
+                    
                     //player.healthSlider.value = player.currentHealth;
                     //hpplayer.SetHealthUI();
-                }
-
-                if (hpplayer.currentHealth <= 0)
-                {
-                    MoveControlsSolo moves = other.GetComponent<MoveControlsSolo>();
-                    CameraControllerSolo camCtrl = other.GetComponent<CameraControllerSolo>();
-                    Animator m_anim = other.GetComponent<Animator>();
-
-                    moves.enabled = false;
-                    camCtrl.enabled = false;
-                    m_anim.enabled = false;
-                }
-
+                
                 //hpplayer.damageImage.color = Color.Lerp(hpplayer.damageImage.color, Color.clear, hpplayer.flashSpeed * Time.deltaTime);
-            }
+            
         }
     }
 

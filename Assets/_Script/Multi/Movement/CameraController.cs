@@ -36,10 +36,12 @@ public class CameraController : NetworkBehaviour
 
     void GetInput()
     {
-        transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
-        v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-        v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
-        this.cam.transform.localEulerAngles = v3rotate;
-
+        if(isLocalPlayer)
+        {
+            transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
+            v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+            v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
+            this.cam.transform.localEulerAngles = v3rotate;
+        }
     }
 }
