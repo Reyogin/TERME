@@ -21,10 +21,7 @@ public class GUI_HealthPlayer : CQCCombat
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Current Health : " + currentHealth);
-        Debug.Log("Current GP : " + currentGP);
-        Debug.Log("Max GP : " + getGP);
-
+      
     }
 
     void OnGUI()
