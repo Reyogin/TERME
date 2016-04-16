@@ -33,6 +33,7 @@ public class TurretScript : MonoBehaviour
 
             else
                 hpplayer.TakingPunishment(10);         
+            ///Decommenter le code ci-dessous une fois que la méthode pour faire flasher l'écran sera good
                     //hpplayer.damageImage.color = hpplayer.flashColor;
                     
                     //player.healthSlider.value = player.currentHealth;
@@ -43,7 +44,8 @@ public class TurretScript : MonoBehaviour
         }
     }
 
-    /*void InflictPain()
+    ///Supposedly 
+    /*void InflictPain() 
     {
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 1.5f, Vector3.zero, out hit, 0))

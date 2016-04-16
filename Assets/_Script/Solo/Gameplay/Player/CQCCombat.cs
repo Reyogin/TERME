@@ -8,27 +8,37 @@ public class CQCCombat : PlayerClass
     private float range = 2f;
     protected Animator m_animator;
     bool isDead;
+    private float atkcooldown = 1f;
+    private float atkSpeed;
+    private int slashNb = 0;
+    //private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
 
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         m_animator = GetComponent<Animator>();
-        isDead = false;
+        isDead = currentHealth <= 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        atkSpeed += Time.deltaTime;
+        if (atkSpeed > atkcooldown)
+            m_animator.SetBool("IsAtking", false);
         Attack();
     }
 
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1");
-
-        if (attack)
+        if (attack && currentHealth > 0)
         {
+            m_animator.SetBool("IsAtking", true);
+            atkSpeed = 0f;
+            Animate_atk();
+
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
@@ -52,16 +62,17 @@ public class CQCCombat : PlayerClass
 
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
     {
+        Die();
+
         if (currentHealth > 0 && !isDead)
         {
             m_animator.SetTrigger("IsHurt");
             currentHealth -= dmg;
+            //isDead = currentHealth <= 0;
         }
 
         //m_animator.SetBool("IsHurt", false);
-
-        Die();
-
+        m_animator.SetTrigger("Unhurt");
     }
 
     public void Die() ///Animations de mort
@@ -70,25 +81,29 @@ public class CQCCombat : PlayerClass
         {
             MoveControlsSolo moves = GetComponent<MoveControlsSolo>();
             CameraControllerSolo camCtrl = GetComponent<CameraControllerSolo>();
+            CQCCombat combatscript = GetComponent<CQCCombat>();
 
             isDead = true;
             m_animator.SetTrigger("Dead");
 
             moves.enabled = false;
             camCtrl.enabled = false;
+            combatscript.enabled = false;
         }
     }
 
     void Animate_atk() ///Animations d'attaque
     {
-        if (Input.GetButtonDown("Fire1"))
-            m_animator.SetBool("IsAtking", true);
-        else
-            m_animator.SetBool("IsAtking", false);
+        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
 
-        if (m_animator.GetBool("IsAtking") && Input.GetButtonDown("Fire1"))
-            m_animator.SetBool("Comboing", true);
+        if (Input.GetButtonDown("Fire1") && slashNb == 0) //lance la première attaque
+        {
+            //m_animator.SetBool("IsAtking", true);
+            m_animator.SetTrigger("Attack 1");
+        }
         else
-            m_animator.SetBool("Comboing", true);
+            //m_animator.SetBool("IsAtking", false);
+            m_animator.SetTrigger("Attack 2");
+        slashNb = (slashNb + 1) % 2;
     }
 }

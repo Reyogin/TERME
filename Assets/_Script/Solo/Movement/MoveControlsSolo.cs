@@ -5,7 +5,7 @@ using System.Collections;
 public class MoveControlsSolo : MonoBehaviour
 {
     private Transform playerTransform;
-    private Rigidbody rigidbody;
+    //private Rigidbody rigidbody;
     public float coeffMove = 3.0f;
     public float jumpCoeff = 5.0f;
     public float m_Damping = 0.35f;
@@ -30,7 +30,7 @@ public class MoveControlsSolo : MonoBehaviour
     void Start()
     {
         playerTransform = GetComponent<Transform>();
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
     }
 
@@ -53,8 +53,8 @@ public class MoveControlsSolo : MonoBehaviour
 
         Vector2 move = new Vector2(horizontal, vertical).normalized;
 
-        transform.Translate(move.x * Time.deltaTime * coeffMove * speed, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, move.y * coeffMove * speed * Time.deltaTime);
-        //jump();
+        transform.Translate(move.x * Time.deltaTime * coeffMove * speed, /*Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff*/0, move.y * coeffMove * speed * Time.deltaTime);
+        jump();
 
     }
 
@@ -62,7 +62,7 @@ public class MoveControlsSolo : MonoBehaviour
     {
         bool leftshit = Input.GetKey(KeyCode.LeftShift);
         bool input = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0; //|| Input.GetAxis("Jump") >= Mathf.Abs(1);
-        bool jump = Input.GetKeyUp(KeyCode.Space);
+        bool jump = Input.GetKeyDown(KeyCode.Space);
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -93,8 +93,6 @@ public class MoveControlsSolo : MonoBehaviour
         if (isJumping)
         {
             transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
-
-
         }
     }
 
