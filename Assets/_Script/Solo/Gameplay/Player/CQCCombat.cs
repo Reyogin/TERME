@@ -10,7 +10,7 @@ public class CQCCombat : PlayerClass
     bool isDead;
     private float atkcooldown = 1.2f;
     private float atkSpeed;
-    private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
+    //private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
 
     // Use this for initialization
     protected override void Start()
@@ -68,6 +68,7 @@ public class CQCCombat : PlayerClass
         }
 
         //m_animator.SetBool("IsHurt", false);
+        m_animator.SetTrigger("Unhurt");
     }
 
     public void Die() ///Animations de mort
@@ -87,7 +88,7 @@ public class CQCCombat : PlayerClass
 
     void Animate_atk() ///Animations d'attaque
     {
-        m_animator.SetFloat(hashAtkSpeed, atkcooldown);
+        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
 
         if (Input.GetButtonDown("Fire1")) //lance la première attaque
         {
