@@ -5,7 +5,7 @@ using System.Collections;
 public class MoveControlsSolo : MonoBehaviour
 {
     private Transform playerTransform;
-    private Rigidbody rigidbody;
+    //private Rigidbody rigidbody;
     public float coeffMove = 3.0f;
     public float jumpCoeff = 5.0f;
     public float m_Damping = 0.35f;
@@ -30,7 +30,7 @@ public class MoveControlsSolo : MonoBehaviour
     void Start()
     {
         playerTransform = GetComponent<Transform>();
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
     }
 
@@ -93,8 +93,6 @@ public class MoveControlsSolo : MonoBehaviour
         if (isJumping)
         {
             transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
-
-
         }
     }
 
