@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CQCCombat : PlayerClass
 {
-    private float distance;
+    public float distance;
     private float damage = 30f;
     private float range = 2f;
     protected Animator m_animator;
@@ -28,7 +28,6 @@ public class CQCCombat : PlayerClass
         if (atkSpeed > atkcooldown)
             m_animator.SetBool("IsAtking", false);
         Attack();
-        Debug.Log(currentHealth);
     }
 
     void Attack()
@@ -45,6 +44,7 @@ public class CQCCombat : PlayerClass
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
             {
                 distance = hit.distance;
+                Debug.Log(distance);
                 if (distance <= range)
                     hit.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
             }
