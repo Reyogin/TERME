@@ -28,6 +28,7 @@ public class CQCCombat : PlayerClass
         if (atkSpeed > atkcooldown)
             m_animator.SetBool("IsAtking", false);
         Attack();
+        Debug.Log(currentHealth);
     }
 
     void Attack()

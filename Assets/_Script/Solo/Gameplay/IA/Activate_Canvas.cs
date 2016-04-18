@@ -16,7 +16,7 @@ public class Activate_Canvas : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(transform.position, other.position);
-        Debug.Log("Distance = " + distance);
+        //Debug.Log("Distance = " + distance);
         if (distance > 20f)
             other.gameObject.GetComponentInChildren<Canvas>().enabled = false;
         else
