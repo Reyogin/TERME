@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CQCCombat : PlayerClass
 {
-    public float distance;
+    private float distance;
     private float damage = 30f;
     private float range = 2f;
     protected Animator m_animator;
