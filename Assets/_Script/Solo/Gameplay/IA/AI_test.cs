@@ -23,7 +23,7 @@ public class AI_test : MonoBehaviour
     void Update()
     {
         MoveTowards();
-        Attack();
+        //Attack();
     }
 
     void MoveTowards()
