@@ -8,7 +8,7 @@ public class MoveControls : NetworkBehaviour
     private Transform playerTransform;
     //private Rigidbody rigidbody;
     private float coeffMove = 3.0f;
-    private float jumpCoeff = 5.0f;
+    private float jumpCoeff = 40.0f;
     private float m_Damping = 0.35f;
     private bool isRunning;
 
@@ -16,12 +16,8 @@ public class MoveControls : NetworkBehaviour
     //private readonly int m_HashVerticalPara = Animator.StringToHash("Vertical");
     //private bool isGrounded;
     //private bool input;
-    [SerializeField]
-    private float walkspeed;
-    [SerializeField]
-    private float runspeed;
-    [SerializeField]
-    float m_GroundCheckDistance = 0f;
+    private float walkspeed = 2f;
+    private float runspeed = 4f;
     Animator m_animator;
     private float speed;
 
@@ -61,7 +57,7 @@ public class MoveControls : NetworkBehaviour
 
             Vector2 move = new Vector2(horizontal, vertical).normalized;
 
-            transform.Translate(move.x * Time.deltaTime * coeffMove * speed, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, move.y * coeffMove * speed * Time.deltaTime);
+            transform.Translate(move.x * Time.deltaTime * coeffMove * speed, /*Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff*/0, move.y * coeffMove * speed * Time.deltaTime);
             jump();
         }
     }
