@@ -23,18 +23,19 @@ public class Enigme : MonoBehaviour {
     {
         if (other.gameObject.tag == "Nez")
         {
+            
             //Debug.Log("Nez rencontre bouton : " + gameObject.name);
-            if(Input.GetKeyDown(KeyCode.E) && finis == true && gameObject.name == "win")
+            if(Input.GetKeyDown(KeyCode.E) && finis  && gameObject.name == "win")
             {
-                //Debug.Log("Activation boutton");
+                //Debug.Log("Activation du bon boutton: " + gameObject.name);
                 BouttonPlay.enabled = true;
                 Sond.Play();
                 Destroy(PorteDerobe);               
                 finis = false;
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E)  && finis)
             {
-                //Debug.Log("Mauvais activation boutton");
+                //Debug.Log("Mauvais activation boutton: " + gameObject.name);
                 BouttonPlay.enabled = true;
                 PiegeMortelle.SetActive(true);
 
