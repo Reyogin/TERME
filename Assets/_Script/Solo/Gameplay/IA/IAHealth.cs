@@ -58,6 +58,7 @@ public class IAHealth : MonoBehaviour
 
     public void ApplyDamage(int damage)
     {
+        animator.SetTrigger("Ishurt");
         currentHealth -= damage;
         calc_health = currentHealth / startingHealth;
         SetHealthBar(calc_health);
