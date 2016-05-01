@@ -44,6 +44,7 @@ ModelImporter:
     100072: Cone.035
     100074: Cube
     100076: //RootNode
+    100078: Cube.001
     400000: Camera
     400002: Cone
     400004: Cone.001
@@ -83,6 +84,7 @@ ModelImporter:
     400072: Cone.035
     400074: Cube
     400076: //RootNode
+    400078: Cube.001
     2300000: Cone
     2300002: Cone.001
     2300004: Cone.002
@@ -120,6 +122,7 @@ ModelImporter:
     2300068: Cone.034
     2300070: Cone.035
     2300072: Cube
+    2300074: Cube.001
     3300000: Cone
     3300002: Cone.001
     3300004: Cone.002
@@ -157,6 +160,7 @@ ModelImporter:
     3300068: Cone.034
     3300070: Cone.035
     3300072: Cube
+    3300074: Cube.001
     4300000: Cone
     4300002: Cube
     4300004: Cone.001
@@ -194,6 +198,7 @@ ModelImporter:
     4300068: Cone.033
     4300070: Cone.034
     4300072: Cone.035
+    4300074: Cube.001
   materials:
     importMaterials: 1
     materialName: 0
