@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spikedamage : MonoBehaviour {
+public class Spike_damage : MonoBehaviour {
     [SerializeField] private int damageReceive;
 	// Use this for initialization
     void OnTriggerEnter(Collider other)
