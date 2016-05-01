@@ -5,7 +5,7 @@ public class CQCCombat : PlayerClass
 {
     private float distance;
     private float damage = 30f;
-    private float range = 2f;
+    private float range = 1f;
     protected Animator m_animator;
     bool isDead;
     private float atkcooldown = 1f;
@@ -24,6 +24,7 @@ public class CQCCombat : PlayerClass
     // Update is called once per frame
     void Update()
     {
+        Die();
         atkSpeed += Time.deltaTime;
         if (atkSpeed > atkcooldown)
             m_animator.SetBool("IsAtking", false);
@@ -63,7 +64,7 @@ public class CQCCombat : PlayerClass
 
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
     {
-        Die();
+        //Die();
 
         if (currentHealth > 0 && !isDead)
         {

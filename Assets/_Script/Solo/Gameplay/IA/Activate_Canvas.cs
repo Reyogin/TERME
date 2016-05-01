@@ -21,6 +21,5 @@ public class Activate_Canvas : MonoBehaviour
             other.gameObject.GetComponentInChildren<Canvas>().enabled = false;
         else
             other.gameObject.GetComponentInChildren<Canvas>().enabled = true;
-
     }
 }

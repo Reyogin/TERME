@@ -8,8 +8,9 @@ public class IAHealth : MonoBehaviour
     public float currentHealth;
     private float calc_health;
     public Image healthbar;
+    Animator animator;
     bool isDead;
-
+    AI_test IA;
 
     // Use this for initialization
     void Start()
@@ -17,6 +18,8 @@ public class IAHealth : MonoBehaviour
         currentHealth = startingHealth;
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         isDead = currentHealth <= 0;
+        animator = GetComponent<Animator>();
+        IA = GetComponent<AI_test>();
     }
 
     // Update is called once per frame
@@ -60,8 +63,12 @@ public class IAHealth : MonoBehaviour
         SetHealthBar(calc_health);
         if (currentHealth <= 0)
         {
+            currentHealth = 0f;
+            SetHealthBar(currentHealth);
+            IA.enabled = false;
+            animator.SetTrigger("Dead");
             isDead = true;
-            GameObject.Destroy(this.gameObject);
+            GameObject.Destroy(this.gameObject, 2.5f);
         }
     }
 }
