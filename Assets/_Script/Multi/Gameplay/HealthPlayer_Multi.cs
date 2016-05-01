@@ -3,9 +3,11 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 
-public class HealthPlayer_Multi : PlayerClass
+public class HealthPlayer_Multi : NetworkBehaviour
 {
-    /*//public int startingHealth = 100;
+    /*
+    private PlayerClass pc;
+    //public int startingHealth = 100;
     public float currentHealth;
     public Slider healthSlider;
     public Image m_fillImage;
@@ -19,15 +21,14 @@ public class HealthPlayer_Multi : PlayerClass
     bool isDead;
     bool isDamaged;
 
-
-
     // Use this for initialization
     void Start()
     {
         if (isLocalPlayer)
         {
-            this.maxHealth = 100;
-            currentHealth = maxHealth;
+            pc = GetComponent<PlayerClass>();
+            pc.getmaxHealth = 100;
+            pc.currentHealth = pc.getmaxHealth;
             movecontrol = GetComponent<MoveControls>();
             cameracontrol = GetComponent<CameraController>();
 
@@ -79,13 +80,13 @@ public class HealthPlayer_Multi : PlayerClass
         public void SetHealthUI()
     {
         // Set the slider's value appropriately.
-        healthSlider.value = currHealth;
+        healthSlider.value = pc.currentHealth;
 
-        if (currHealth <= maxHealth / 2)
+        if (pc.currentHealth <= pc.getmaxHealth / 2)
             // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
             m_fillImage.color = Color.yellow;
 
-        if (currHealth <= maxHealth / 5)
+        if (pc.currentHealth <= pc.getmaxHealth / 5)
             m_fillImage.color = Color.red;
     }*/
 }

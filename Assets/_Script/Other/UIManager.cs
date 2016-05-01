@@ -17,13 +17,14 @@ public class UIManager : MonoBehaviour {
         if (isPause)
         {
             PauseGame(true);
-            Cursor.visible =true;
+            Cursor.visible = true;
             reticule.SetActive(false);
         }
         else
         {
             PauseGame(isPause);
             Cursor.visible = false;
+
             reticule.SetActive(true);
         }
 

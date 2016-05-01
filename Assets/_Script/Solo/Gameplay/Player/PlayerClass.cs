@@ -34,11 +34,14 @@ public class PlayerClass : MonoBehaviour
     public float getmaxHealth
     {
         get { return maxHealth; }
+        set { this.maxHealth = value; }
     }
 
     public float getGP
     {
         get { return guardPoints; }
+        set { this.guardPoints = value; }
+
     }
 
     public float currentGP

@@ -68,6 +68,7 @@ public class CQCCombat : PlayerClass
 
         if (currentHealth > 0 && !isDead)
         {
+            Debug.Log(currentHealth);
             m_animator.SetTrigger("IsHurt");
             currentHealth -= dmg;
             //isDead = currentHealth <= 0;
