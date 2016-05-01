@@ -8,7 +8,7 @@ public class Dragon_trap : MonoBehaviour
     private float CD;
     void Start()
     {
-        part.gameObject.SetActive(false);
+        part.enableEmission = false;
         CD = -1f;
 
     }
@@ -27,7 +27,8 @@ public class Dragon_trap : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             //Debug.Log("PLayer enter the  collider");
-            part.gameObject.SetActive(true);
+            part.enableEmission = true;
+            part.Play();
 
         }
     }
@@ -46,7 +47,7 @@ public class Dragon_trap : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             //Debug.Log("PLayer exit the collider");
-            part.gameObject.SetActive(false);
+            part.enableEmission = false;
         }
     }
 }
