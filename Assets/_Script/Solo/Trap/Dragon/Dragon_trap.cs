@@ -33,7 +33,7 @@ public class Dragon_trap : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Player on fire");
+        //Debug.Log("Player on fire");
         if (CD <= 0 && other.gameObject.tag == "Player")
         {
             GUI_HealthPlayer otherPl = other.gameObject.GetComponent<GUI_HealthPlayer>();

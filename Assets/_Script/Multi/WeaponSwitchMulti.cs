@@ -31,7 +31,7 @@ public class WeaponSwitchMulti : NetworkBehaviour
             {
                 listeItems.Add(item.gameObject);
             }
-            Debug.Log(listeItems.Count);
+            //Debug.Log(listeItems.Count);
         }
     }
 
