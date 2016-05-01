@@ -7,7 +7,7 @@ public class MoveControlsSolo : MonoBehaviour
     private Transform playerTransform;
     //private Rigidbody rigidbody;
     public float coeffMove = 3.0f;
-    public float jumpCoeff = 5.0f;
+    public float jumpCoeff = 40.0f;
     public float m_Damping = 0.35f;
     private bool isRunning;
 
@@ -16,12 +16,8 @@ public class MoveControlsSolo : MonoBehaviour
 
     //private bool isGrounded;
     //private bool input;
-    [SerializeField]
-    private float walkspeed;
-    [SerializeField]
-    private float runspeed;
-    [SerializeField]
-    float m_GroundCheckDistance = 0f;
+    private float walkspeed = 1.3f;
+    private float runspeed = 2.6f;
     Animator m_animator;
     float speed;
 
