@@ -21,7 +21,7 @@ public class GameOverMulti : NetworkBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { /*}
         if (isLocalPlayer)
         {
             if (Player.currentHealth <= 0)
@@ -37,7 +37,7 @@ public class GameOverMulti : NetworkBehaviour
                 gameOver.SetActive(false);
             }
 
-        }
+        }*/
 
     }
 }
