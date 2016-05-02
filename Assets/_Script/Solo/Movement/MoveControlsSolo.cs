@@ -6,9 +6,9 @@ public class MoveControlsSolo : MonoBehaviour
 {
     private Transform playerTransform;
     //private Rigidbody rigidbody;
-    public float coeffMove = 3.0f;
-    public float jumpCoeff = 40.0f;
-    public float m_Damping = 0.35f;
+    private float coeffMove = 3.0f;
+    private float jumpCoeff = 40.0f;
+    private float m_Damping = 0.35f;
     private bool isRunning;
 
     private readonly int m_HashHorizontalPara = Animator.StringToHash("Horizontal");
@@ -16,8 +16,8 @@ public class MoveControlsSolo : MonoBehaviour
 
     //private bool isGrounded;
     //private bool input;
-    private float walkspeed = 1.3f;
-    private float runspeed = 2.6f;
+    private float walkspeed = 0.8f;
+    private float runspeed = 1.6f;
     Animator m_animator;
     float speed;
 
