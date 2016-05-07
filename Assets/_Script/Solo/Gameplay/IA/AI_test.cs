@@ -76,17 +76,17 @@ public class AI_test : MonoBehaviour
             {
                 hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
                 timer = 0f;
-                animator.SetBool("Atk", true);
+                animator.SetTrigger("Atk");
                 animator.SetBool("Sees Enemy", false);
             }
-            else
-                animator.SetBool("Atk", false);
+            /*else
+                animator.SetBool("Atk", false);*/
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
         {
             animator.SetBool("Sees Enemy", false);
-            animator.SetBool("Atk", false);
+            //animator.SetBool("Atk", false);
         }
     }
 }

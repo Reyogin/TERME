@@ -26,7 +26,7 @@ public class CQCCombat : PlayerClass
     {
         Die();
         atkSpeed += Time.deltaTime;
-        if (atkSpeed > atkcooldown)
+        if (atkSpeed > (atkcooldown+0.5f))
             m_animator.SetBool("IsAtking", false);
         Attack();
     }
@@ -34,7 +34,7 @@ public class CQCCombat : PlayerClass
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1");
-        if (attack && currentHealth > 0)
+        if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
         {
             m_animator.SetBool("IsAtking", true);
             atkSpeed = 0f;
@@ -82,6 +82,7 @@ public class CQCCombat : PlayerClass
     {
         if (currentHealth <= 0 && !isDead)
         {
+            currentHealth = 0f;
             MoveControlsSolo moves = GetComponent<MoveControlsSolo>();
             CameraControllerSolo camCtrl = GetComponent<CameraControllerSolo>();
             CQCCombat combatscript = GetComponent<CQCCombat>();
