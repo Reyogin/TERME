@@ -24,9 +24,12 @@ public class CQCCombat : PlayerClass
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("CQC : " + currentHealth);
+        //if (Input.GetKeyDown(KeyCode.C))
+          //  TakingPunishment(10);
         Die();
         atkSpeed += Time.deltaTime;
-        if (atkSpeed > (atkcooldown+0.5f))
+        if (atkSpeed > (atkcooldown + 0.5f))
             m_animator.SetBool("IsAtking", false);
         Attack();
     }
@@ -75,7 +78,7 @@ public class CQCCombat : PlayerClass
         }
 
         //m_animator.SetBool("IsHurt", false);
-        m_animator.SetTrigger("Unhurt");
+        m_animator.SetTrigger("IsHurt");
     }
 
     public void Die() ///Animations de mort

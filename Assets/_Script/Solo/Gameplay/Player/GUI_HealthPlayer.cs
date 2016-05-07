@@ -21,7 +21,9 @@ public class GUI_HealthPlayer : CQCCombat
     // Update is called once per frame
     void Update()
     {
-      
+        Debug.Log("GUI_HP : " + currentHealth);
+        if (Input.GetKeyDown(KeyCode.C))
+            TakingPunishment(10);
     }
 
     void OnGUI()
