@@ -8,7 +8,7 @@ public class CQCCombat : PlayerClass
     private float range = 1f;
     protected Animator m_animator;
     bool isDead;
-    private float atkcooldown = 1f;
+    private float atkcooldown = 0.4f;
     private float atkSpeed;
     private int slashNb = 0;
     //private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
@@ -25,11 +25,11 @@ public class CQCCombat : PlayerClass
     void Update()
     {
         Debug.Log("CQC : " + currentHealth);
-        /*if (Input.GetKeyDown(KeyCode.C))
-            TakingPunishment(10);*/
+        if (Input.GetKeyDown(KeyCode.C))
+            TakingPunishment(10);
         //Die();
         atkSpeed += Time.deltaTime;
-        if (atkSpeed > (atkcooldown + 0.5f))
+        if (atkSpeed > (atkcooldown + 0.2f))
             m_animator.SetBool("IsAtking", false);
         Attack();
     }
