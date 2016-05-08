@@ -10,13 +10,14 @@ public class AI_test : MonoBehaviour
     private float timebetweenatks = 2.0f;
     private float range = 2f;
     private float distance;
-    private float damage = 40f;
+    private float damage = 10f;
     // Use this for initialization
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        animator.SetBool("Idle", true);
     }
 
     // Update is called once per frame
@@ -41,15 +42,20 @@ public class AI_test : MonoBehaviour
             {
                 nav.SetDestination(target.position);
                 animator.SetBool("Sees Enemy", true);
+                animator.SetBool("Idle", false);
             }
             else
+            {
                 animator.SetBool("Sees Enemy", false);
+                animator.SetBool("Idle", true);
+            }
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
         {
             nav.Stop();
             animator.SetBool("Sees Enemy", false);
+            animator.SetBool("Idle", true);
         }
     }
 
@@ -59,9 +65,14 @@ public class AI_test : MonoBehaviour
         {
             nav.SetDestination(target.position);
             animator.SetBool("Sees Enemy", true);
+            animator.SetBool("Idle", false);
         }
         else
+        {
+            nav.Stop();
             animator.SetBool("Sees Enemy", false);
+            animator.SetBool("Idle", true);
+        }
     }
 
     void Attack()
@@ -74,18 +85,20 @@ public class AI_test : MonoBehaviour
 
             if (distance <= range && timer >= timebetweenatks)
             {
+                animator.SetTrigger("Atk");
                 hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
                 timer = 0f;
-                animator.SetTrigger("Atk");
-                animator.SetBool("Sees Enemy", false);
+                //animator.SetBool("Sees Enemy", false);
             }
             /*else
                 animator.SetBool("Atk", false);*/
+            animator.SetTrigger("Atk");
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
         {
             animator.SetBool("Sees Enemy", false);
+            animator.SetBool("Idle", true);
             //animator.SetBool("Atk", false);
         }
     }
