@@ -25,9 +25,9 @@ public class CQCCombat : PlayerClass
     void Update()
     {
         Debug.Log("CQC : " + currentHealth);
-        //if (Input.GetKeyDown(KeyCode.C))
-          //  TakingPunishment(10);
-        Die();
+        /*if (Input.GetKeyDown(KeyCode.C))
+            TakingPunishment(10);*/
+        //Die();
         atkSpeed += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.5f))
             m_animator.SetBool("IsAtking", false);
@@ -79,6 +79,7 @@ public class CQCCombat : PlayerClass
 
         //m_animator.SetBool("IsHurt", false);
         m_animator.SetTrigger("IsHurt");
+        Die();
     }
 
     public void Die() ///Animations de mort
