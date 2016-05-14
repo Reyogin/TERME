@@ -15,10 +15,15 @@ public class Activate_Canvas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(other==null)
+        {
+            return;
+        }
         float distance = Vector3.Distance(transform.position, other.position);
         Debug.Log("Distance = " + distance);
         if (distance > 20f)
             other.gameObject.GetComponentInChildren<Canvas>().enabled = false;
+
         else
             other.gameObject.GetComponentInChildren<Canvas>().enabled = true;
 

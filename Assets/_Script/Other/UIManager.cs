@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour {
 
     public GameObject EscapePann;
     public bool isPause;
+    public GameObject reticule;
 	// Use this for initialization
 	void Start () {
         isPause = false;
@@ -17,11 +18,13 @@ public class UIManager : MonoBehaviour {
         {
             PauseGame(true);
             Cursor.visible =true;
+            reticule.SetActive(false);
         }
         else
         {
             PauseGame(isPause);
             Cursor.visible = false;
+            reticule.SetActive(true);
         }
 
         if(Input.GetButtonDown("Cancel"))
