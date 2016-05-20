@@ -65,15 +65,16 @@ public class CQCCombat : PlayerClass
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
     {
         //Die();
-
-        if (currentHealth > 0 && !isDead)
-        {
-            //Debug.Log(currentHealth);
-            m_animator.SetTrigger("IsHurt");
-            currentHealth -= dmg;
-            //isDead = currentHealth <= 0;
-        }
-
+        if (Guard())
+            currentGP -= dmg;
+        else
+            if (currentHealth > 0 && !isDead)
+            {
+                //Debug.Log(currentHealth);
+                m_animator.SetTrigger("IsHurt");
+                currentHealth -= dmg;
+                //isDead = currentHealth <= 0;
+            }
         //m_animator.SetBool("IsHurt", false);
         m_animator.SetTrigger("Rest");
         Die();

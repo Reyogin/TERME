@@ -30,7 +30,7 @@ public class GUI_HealthPlayer : CQCCombat
         float hppercent = currentHealth / getmaxHealth;
         float gppercent = currentGP / getGP;
         GUIDrawHP(hppercent);
-        GUIDrawRect(new Rect(140, Screen.height - 55, 110 * gppercent, 5), Color.cyan);
+        GUIDrawGP(gppercent);
         GUI.DrawTexture(new Rect(30, Screen.height - 250, 400, 400), image, ScaleMode.ScaleToFit);
     }
 
@@ -59,5 +59,10 @@ public class GUI_HealthPlayer : CQCCombat
             GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.yellow);
         else
             GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.red);
+    }
+
+    public static void GUIDrawGP(float percent)
+    {
+        GUIDrawRect(new Rect(140, Screen.height - 55, 110 * percent, 5), Color.cyan);
     }
 }
