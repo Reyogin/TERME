@@ -24,9 +24,6 @@ public class CQCCombat : PlayerClass
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("CQC : " + currentHealth);
-        if (Input.GetKeyDown(KeyCode.C))
-            TakingPunishment(10);
         //Die();
         atkSpeed += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.2f))

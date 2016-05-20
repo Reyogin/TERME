@@ -40,12 +40,14 @@ public class AI_test : MonoBehaviour
         {
             if (distance <= 25f)
             {
+                Debug.Log("see player");
                 nav.SetDestination(target.position);
                 animator.SetBool("Sees Enemy", true);
                 animator.SetBool("Idle", false);
             }
             else
             {
+                Debug.Log("don't see player");
                 animator.SetBool("Sees Enemy", false);
                 animator.SetBool("Idle", true);
             }
