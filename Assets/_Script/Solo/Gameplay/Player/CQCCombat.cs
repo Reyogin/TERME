@@ -78,7 +78,7 @@ public class CQCCombat : PlayerClass
         }
 
         //m_animator.SetBool("IsHurt", false);
-        m_animator.SetTrigger("IsHurt");
+        m_animator.SetTrigger("Rest");
         Die();
     }
 

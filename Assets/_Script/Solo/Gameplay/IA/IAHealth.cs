@@ -71,5 +71,6 @@ public class IAHealth : MonoBehaviour
             isDead = true;
             GameObject.Destroy(this.gameObject, 2.5f);
         }
+        animator.SetTrigger("Rest");
     }
 }

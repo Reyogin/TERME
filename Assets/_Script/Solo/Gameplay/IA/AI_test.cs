@@ -92,7 +92,7 @@ public class AI_test : MonoBehaviour
             }
             /*else
                 animator.SetBool("Atk", false);*/
-            animator.SetTrigger("Atk");
+            animator.SetTrigger("Rest");
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
