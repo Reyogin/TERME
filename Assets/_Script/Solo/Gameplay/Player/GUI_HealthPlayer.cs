@@ -37,7 +37,12 @@ public class GUI_HealthPlayer : CQCCombat
     }
 
     // Note that this function is only meant to be called from OnGUI() functions.
-    public static void GUIDrawRect(Rect position, Color color)
+    /// <summary>
+    /// Draws Rectangles on GUI
+    /// </summary>
+    /// <param name="position"> = position on the screen</param>
+    /// <param name="color"> Color of the rectangle drawn</param>
+    public static void GUIDrawRect(Rect position, Color color) 
     {
         if (_staticRectTexture == null)
             _staticRectTexture = new Texture2D(1, 1);

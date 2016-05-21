@@ -12,6 +12,8 @@ public class CQCCombat : PlayerClass
     private float atkSpeed;
     private int slashNb = 0;
     public float leavecombat;
+    private bool inguard;
+    private float isbehind;
     //private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
 
     // Use this for initialization
@@ -35,6 +37,9 @@ public class CQCCombat : PlayerClass
         Attack();
     }
 
+    /// <summary>
+    /// In theory, should work if cast against player now
+    /// </summary>
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1");
@@ -50,6 +55,13 @@ public class CQCCombat : PlayerClass
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
             {
+                isbehind = Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, hit.transform.TransformVector(Vector3.forward).normalized);
+                Debug.Log("isbehind value = " + isbehind);
+                ///isbehind = produit scalaire entre l'avant du perso et le point d'impact
+                /// devrait renvoyer une valeur comprise entre -1 et 1
+                /// [-1,0[ => le personnage est derrière = pas de garde possible
+                /// 0 => le personnage est à la perpendiculaire = pas de garde possible
+                /// [0,1] => le personnage se trouve à l'avant de l'autre et peut donc parrer les coups
                 distance = hit.distance;
                 Debug.Log(distance);
                 if (distance <= range)
@@ -62,10 +74,7 @@ public class CQCCombat : PlayerClass
     {
         bool guard = Input.GetButton("Fire2");
 
-        if (guard && currentGP > 0)
-            return true;
-        else
-            return false;
+        return inguard = (guard && currentGP > 0 && isbehind > 0);
     }
 
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
@@ -120,13 +129,24 @@ public class CQCCombat : PlayerClass
         slashNb = (slashNb + 1) % 2;
     }
 
-    public bool inCombat()
+    /// <summary>
+    /// Supposedly defines whether or not the character is in combat
+    /// If not, should trigger GP regeneration
+    /// Doesn't seem to work in GUIHealthPlayer
+    /// </summary>
+    /// <returns></returns>
+    public bool inCombat() 
     {
         if (leavecombat >= 8f)
             combatStatus = false;
         return combatStatus;
     }
 
+    /// <summary>
+    /// should trigger GP regeneration
+    /// Doesn't seem to work atm
+    /// </summary>
+    /// <param name="status"> status is to be changed with combat status</param>
     public void regenGP(bool status)
     {
         if (!status && currentGP < getGP)
