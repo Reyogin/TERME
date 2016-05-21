@@ -11,6 +11,7 @@ public class CQCCombat : PlayerClass
     private float atkcooldown = 0.4f;
     private float atkSpeed;
     private int slashNb = 0;
+    public float leavecombat;
     //private readonly int hashAtkSpeed = Animator.StringToHash("AtkSpeed");
 
     // Use this for initialization
@@ -25,9 +26,12 @@ public class CQCCombat : PlayerClass
     void Update()
     {
         //Die();
+        //regenGP(combatStatus);
         atkSpeed += Time.deltaTime;
+        leavecombat += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.2f))
             m_animator.SetBool("IsAtking", false);
+        inCombat();
         Attack();
     }
 
@@ -36,6 +40,8 @@ public class CQCCombat : PlayerClass
         bool attack = Input.GetButtonDown("Fire1");
         if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
         {
+            combatStatus = true;
+            leavecombat = 0f;
             m_animator.SetBool("IsAtking", true);
             atkSpeed = 0f;
             Animate_atk();
@@ -47,7 +53,7 @@ public class CQCCombat : PlayerClass
                 distance = hit.distance;
                 Debug.Log(distance);
                 if (distance <= range)
-                    hit.transform.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+                    hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
@@ -64,17 +70,18 @@ public class CQCCombat : PlayerClass
 
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
     {
-        //Die();
+        combatStatus = true;
+        leavecombat = 0f;
         if (Guard())
             currentGP -= dmg;
         else
             if (currentHealth > 0 && !isDead)
-            {
-                //Debug.Log(currentHealth);
-                m_animator.SetTrigger("IsHurt");
-                currentHealth -= dmg;
-                //isDead = currentHealth <= 0;
-            }
+        {
+            //Debug.Log(currentHealth);
+            m_animator.SetTrigger("IsHurt");
+            currentHealth -= dmg;
+            //isDead = currentHealth <= 0;
+        }
         //m_animator.SetBool("IsHurt", false);
         m_animator.SetTrigger("Rest");
         Die();
@@ -111,5 +118,18 @@ public class CQCCombat : PlayerClass
             //m_animator.SetBool("IsAtking", false);
             m_animator.SetTrigger("Attack 2");
         slashNb = (slashNb + 1) % 2;
+    }
+
+    public bool inCombat()
+    {
+        if (leavecombat >= 8f)
+            combatStatus = false;
+        return combatStatus;
+    }
+
+    public void regenGP(bool status)
+    {
+        if (!status && currentGP < getGP)
+            currentGP += 5 * Time.deltaTime;
     }
 }

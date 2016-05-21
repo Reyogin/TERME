@@ -8,6 +8,7 @@ public class Activate_Canvas : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //other = GameObject.FindGameObjectWithTag("Enemy").transform;
         other = GameObject.Find("LightGuard").transform;
         //distance = Vector3.Distance(transform.GetComponentInParent<Transform>().position, player.position);
     }
@@ -21,7 +22,7 @@ public class Activate_Canvas : MonoBehaviour
         }
         float distance = Vector3.Distance(transform.position, other.position);
 
-        Debug.Log("Distance = " + distance);
+        //Debug.Log("Distance = " + distance);
         if (distance > 15f)
             other.gameObject.GetComponentInChildren<Canvas>().enabled = false;
         else

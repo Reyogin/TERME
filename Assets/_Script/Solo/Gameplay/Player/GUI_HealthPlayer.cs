@@ -21,6 +21,8 @@ public class GUI_HealthPlayer : CQCCombat
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Combat Status : " + combatStatus +"\n leavecombat = " + leavecombat);
+        regenGP(combatStatus);
         if (Input.GetKeyDown(KeyCode.C))
             TakingPunishment(10);
     }

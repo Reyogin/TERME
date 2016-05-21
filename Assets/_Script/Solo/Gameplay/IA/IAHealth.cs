@@ -56,7 +56,7 @@ public class IAHealth : MonoBehaviour
         healthbar.transform.localScale = new Vector3(health, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
     }
 
-    public void ApplyDamage(int damage)
+    public void TakingPunishment(int damage)
     {
         animator.SetTrigger("Ishurt");
         currentHealth -= damage;
