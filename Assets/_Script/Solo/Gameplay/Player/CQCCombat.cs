@@ -55,13 +55,6 @@ public class CQCCombat : PlayerClass
 
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
             {
-                isbehind = Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, hit.transform.TransformVector(Vector3.forward).normalized);
-                Debug.Log("isbehind value = " + isbehind);
-                ///isbehind = produit scalaire entre l'avant du perso et le point d'impact
-                /// devrait renvoyer une valeur comprise entre -1 et 1
-                /// [-1,0[ => le personnage est derrière = pas de garde possible
-                /// 0 => le personnage est à la perpendiculaire = pas de garde possible
-                /// [0,1] => le personnage se trouve à l'avant de l'autre et peut donc parrer les coups
                 distance = hit.distance;
                 Debug.Log(distance);
                 if (distance <= range)
@@ -73,8 +66,23 @@ public class CQCCombat : PlayerClass
     public bool Guard()
     {
         bool guard = Input.GetButton("Fire2");
-
-        return inguard = (guard && currentGP > 0 && isbehind > 0);
+        if (guard)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+            {
+                isbehind = Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, hit.transform.TransformVector(Vector3.forward).normalized);
+                Debug.Log("isbehind value = " + isbehind);
+                ///isbehind = produit scalaire entre l'avant du perso et le point d'impact
+                /// devrait renvoyer une valeur comprise entre -1 et 1
+                /// ]0,1] => le personnage est derrière = pas de garde possible
+                /// 0 => le personnage est à la perpendiculaire = pas de garde possible
+                /// [-1,0[ => le personnage se trouve à l'avant de l'autre et peut donc parrer les coups
+            }
+            else
+                isbehind = Mathf.NegativeInfinity;
+        }
+        return inguard = (guard && currentGP > 0 && isbehind < 0);
     }
 
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
@@ -135,7 +143,7 @@ public class CQCCombat : PlayerClass
     /// Doesn't seem to work in GUIHealthPlayer
     /// </summary>
     /// <returns></returns>
-    public bool inCombat() 
+    public bool inCombat()
     {
         if (leavecombat >= 8f)
             combatStatus = false;

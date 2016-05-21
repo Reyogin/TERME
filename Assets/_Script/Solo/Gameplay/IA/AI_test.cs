@@ -79,16 +79,18 @@ public class AI_test : MonoBehaviour
 
     void Attack()
     {
-        RaycastHit hit;
+        Vector3 targetDir = target.position - transform.position;
+        Vector3 forward = transform.forward;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+        float distance = Vector3.Distance(transform.position, target.position);
+        float angle = Vector3.Angle(targetDir, forward);
+
+        if (angle < 45f)
         {
-            distance = hit.distance;
-
             if (distance <= range && timer >= timebetweenatks)
             {
                 animator.SetTrigger("Atk");
-                hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                target.transform.SendMessage("TakingPunishment", damage);
                 timer = 0f;
                 //animator.SetBool("Sees Enemy", false);
             }
