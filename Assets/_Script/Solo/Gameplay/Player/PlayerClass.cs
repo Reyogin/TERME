@@ -8,6 +8,7 @@ public class PlayerClass : MonoBehaviour
     private float currHealth;
     private float guardPoints;
     private float currGP;
+    private bool inCombat;
 
 	// Use this for initialization
 	protected virtual void Start ()
@@ -16,6 +17,7 @@ public class PlayerClass : MonoBehaviour
         currHealth = maxHealth;
         guardPoints = 100f;
         currGP = guardPoints;
+        inCombat = false;
 	}
 	
 	// Update is called once per frame
@@ -48,6 +50,12 @@ public class PlayerClass : MonoBehaviour
     {
         get { return currGP; }
         set { this.currGP = value; }
+    }
+
+    public bool combatStatus
+    {
+        get { return this.inCombat; }
+        set { this.inCombat = value; }
     }
     #endregion
 }

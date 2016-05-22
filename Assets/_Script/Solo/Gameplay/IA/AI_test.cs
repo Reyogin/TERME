@@ -10,13 +10,14 @@ public class AI_test : MonoBehaviour
     private float timebetweenatks = 2.0f;
     private float range = 2f;
     private float distance;
-    private float damage = 40f;
+    private float damage = 10f;
     // Use this for initialization
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        animator.SetBool("Idle", true);
     }
 
     // Update is called once per frame
@@ -39,17 +40,24 @@ public class AI_test : MonoBehaviour
         {
             if (distance <= 25f)
             {
+                Debug.Log("see player");
                 nav.SetDestination(target.position);
                 animator.SetBool("Sees Enemy", true);
+                animator.SetBool("Idle", false);
             }
             else
+            {
+                Debug.Log("don't see player");
                 animator.SetBool("Sees Enemy", false);
+                animator.SetBool("Idle", true);
+            }
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
         {
             nav.Stop();
             animator.SetBool("Sees Enemy", false);
+            animator.SetBool("Idle", true);
         }
     }
 
@@ -59,34 +67,43 @@ public class AI_test : MonoBehaviour
         {
             nav.SetDestination(target.position);
             animator.SetBool("Sees Enemy", true);
+            animator.SetBool("Idle", false);
         }
         else
+        {
+            nav.Stop();
             animator.SetBool("Sees Enemy", false);
+            animator.SetBool("Idle", true);
+        }
     }
 
     void Attack()
     {
-        RaycastHit hit;
+        Vector3 targetDir = target.position - transform.position;
+        Vector3 forward = transform.forward;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+        float distance = Vector3.Distance(transform.position, target.position);
+        float angle = Vector3.Angle(targetDir, forward);
+
+        if (angle < 45f)
         {
-            distance = hit.distance;
-
             if (distance <= range && timer >= timebetweenatks)
             {
-                hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                animator.SetTrigger("Atk");
+                target.transform.SendMessage("TakingPunishment", damage);
                 timer = 0f;
-                animator.SetBool("Atk", true);
-                animator.SetBool("Sees Enemy", false);
+                //animator.SetBool("Sees Enemy", false);
             }
-            else
-                animator.SetBool("Atk", false);
+            /*else
+                animator.SetBool("Atk", false);*/
+            animator.SetTrigger("Rest");
         }
 
         if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
         {
             animator.SetBool("Sees Enemy", false);
-            animator.SetBool("Atk", false);
+            animator.SetBool("Idle", true);
+            //animator.SetBool("Atk", false);
         }
     }
 }

@@ -21,7 +21,10 @@ public class GUI_HealthPlayer : CQCCombat
     // Update is called once per frame
     void Update()
     {
-      
+        Debug.Log("Combat Status : " + combatStatus + "\n leavecombat = " + leavecombat);
+        regenGP(combatStatus);
+        if (Input.GetKeyDown(KeyCode.C))
+            TakingPunishment(10);
     }
 
     void OnGUI()
@@ -29,11 +32,16 @@ public class GUI_HealthPlayer : CQCCombat
         float hppercent = currentHealth / getmaxHealth;
         float gppercent = currentGP / getGP;
         GUIDrawHP(hppercent);
-        GUIDrawRect(new Rect(140, Screen.height - 55, 110 * gppercent, 5), Color.cyan);
+        GUIDrawGP(gppercent);
         GUI.DrawTexture(new Rect(30, Screen.height - 250, 400, 400), image, ScaleMode.ScaleToFit);
     }
 
     // Note that this function is only meant to be called from OnGUI() functions.
+    /// <summary>
+    /// Draws Rectangles on GUI
+    /// </summary>
+    /// <param name="position"> = position on the screen</param>
+    /// <param name="color"> Color of the rectangle drawn</param>
     public static void GUIDrawRect(Rect position, Color color)
     {
         if (_staticRectTexture == null)
@@ -53,10 +61,15 @@ public class GUI_HealthPlayer : CQCCombat
     public static void GUIDrawHP(float percent)
     {
         if (percent > 0.5f)
-            GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.green);
+            GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), new Color(61/255f,161/255f,74/255f,1));
         else if (percent > 0.2f)
             GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.yellow);
         else
             GUIDrawRect(new Rect(162, Screen.height - 70, 228 * percent, 8), Color.red);
+    }
+
+    public static void GUIDrawGP(float percent)
+    {
+        GUIDrawRect(new Rect(140, Screen.height - 55, 110 * percent, 5), Color.cyan);
     }
 }
