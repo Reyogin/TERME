@@ -57,42 +57,10 @@ public class MoveControlsSolo : MonoBehaviour
 
     }
 
-    /*void UpdateAnimator()
-    {
-        bool leftshit = Input.GetKey(KeyCode.LeftShift);
-        bool input = Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0; //|| Input.GetAxis("Jump") >= Mathf.Abs(1);
-        bool jump = Input.GetKeyDown(KeyCode.Space);
-
-        if (!input && !jump)
-            m_animator.SetBool("Idle", true);
-        else
-            m_animator.SetBool("Idle", false);
-
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector2 input2 = new Vector2(horizontal, vertical);
-
-        m_animator.SetFloat(m_HashHorizontalPara, input2.x, m_Damping, Time.deltaTime);
-        m_animator.SetFloat(m_HashVerticalPara, input2.y, m_Damping, Time.deltaTime);
-
-        isRunning = leftshit && input;
-        if (isRunning)
-            m_animator.SetBool("IsRunning", true);
-        else
-            m_animator.SetBool("IsRunning", false);
-
-        if (!jump)
-            m_animator.SetBool("IsGrounded", true);
-        else
-            m_animator.SetBool("IsGrounded", false);
-
-    }*/
-
     void UpdateAnimator()
     {
         ///Gère les sauts
-        if (Input.GetKeyDown(KeyCode.Space) )//|| !IsGrounded)
+        if (Input.GetKey(KeyCode.Space) )//|| !IsGrounded)
             m_animator.SetBool("IsGrounded", false);
         else
             m_animator.SetBool("IsGrounded", true);
@@ -125,21 +93,4 @@ public class MoveControlsSolo : MonoBehaviour
         if (isJumping)
             transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
     }
-
-    /*bool IsGrounded
-    {
-        get
-        {
-            Vector3 pos = transform.position;
-            //pos.y = GetComponent<Collider>().bounds.min.y + 0.1f;
-            //float length = isGroundedRaylength + 0.1f;
-            Debug.DrawRay(pos, Vector3.down * isGroundedRaylength, Color.red);
-            RaycastHit hit;
-            Physics.Raycast(pos, Vector3.down, out hit);
-            Debug.Log(hit.distance <= isGroundedRaylength);
-            return hit.distance <= isGroundedRaylength;
-            //Debug.Log(grounded);
-            //return grounded;
-        }
-    }*/
 }
