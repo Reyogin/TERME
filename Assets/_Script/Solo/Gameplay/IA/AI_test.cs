@@ -3,19 +3,19 @@ using System.Collections;
 
 public class AI_test : MonoBehaviour
 {
-    private Transform target;
+    private GameObject target;
     Animator animator;
     NavMeshAgent nav;
     float timer;
     private float timebetweenatks = 2.0f;
     private float range = 2f;
-    private float distance;
+    //private float distance;
     private float damage = 10f;
     // Use this for initialization
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        this.nav = GetComponent<NavMeshAgent>();
+        target = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
         animator.SetBool("Idle", true);
     }
@@ -30,10 +30,10 @@ public class AI_test : MonoBehaviour
 
     void MoveTowards()
     {
-        Vector3 targetDir = target.position - transform.position;
+        Vector3 targetDir = target.transform.position - transform.position;
         Vector3 forward = transform.forward;
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(transform.position, target.transform.position);
         float angle = Vector3.Angle(targetDir, forward);
 
         if (angle < 45f)
@@ -41,7 +41,7 @@ public class AI_test : MonoBehaviour
             if (distance <= 25f)
             {
                 Debug.Log("see player");
-                nav.SetDestination(target.position);
+                nav.SetDestination(target.transform.position);
                 animator.SetBool("Sees Enemy", true);
                 animator.SetBool("Idle", false);
             }
@@ -63,9 +63,9 @@ public class AI_test : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.transform == target)
         {
-            nav.SetDestination(target.position);
+            nav.SetDestination(target.transform.position);
             animator.SetBool("Sees Enemy", true);
             animator.SetBool("Idle", false);
         }
@@ -79,10 +79,10 @@ public class AI_test : MonoBehaviour
 
     void Attack()
     {
-        Vector3 targetDir = target.position - transform.position;
+        Vector3 targetDir = target.transform.position - transform.position;
         Vector3 forward = transform.forward;
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(transform.position, target.transform.position);
         float angle = Vector3.Angle(targetDir, forward);
 
         if (angle < 45f)

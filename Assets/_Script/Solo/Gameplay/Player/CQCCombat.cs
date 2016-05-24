@@ -42,7 +42,7 @@ public class CQCCombat : PlayerClass
     /// </summary>
     void Attack()
     {
-        bool attack = Input.GetButtonDown("Fire1");
+        bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
         if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
         {
             combatStatus = true;
@@ -65,7 +65,7 @@ public class CQCCombat : PlayerClass
 
     public bool Guard()
     {
-        bool guard = Input.GetButton("Fire2");
+        bool guard = Input.GetButton("Fire2") || Input.GetButton("XBox_A");
         if (guard)
         {
             RaycastHit hit;
@@ -125,8 +125,8 @@ public class CQCCombat : PlayerClass
     void Animate_atk() ///Animations d'attaque
     {
         //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
-
-        if (Input.GetButtonDown("Fire1") && slashNb == 0) //lance la première attaque
+        bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
+        if (attack && slashNb == 0) //lance la première attaque
         {
             //m_animator.SetBool("IsAtking", true);
             m_animator.SetTrigger("Attack 1");

@@ -44,7 +44,7 @@ public class MoveControlsSolo : MonoBehaviour
     void Move(out float speed)
     {
         speed = this.speed;
-        bool leftshift = Input.GetKey(KeyCode.LeftShift);
+        bool leftshift = Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LeftJoystickPush");
         speed = leftshift ? runspeed : walkspeed;
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -60,7 +60,7 @@ public class MoveControlsSolo : MonoBehaviour
     void UpdateAnimator()
     {
         ///Gère les sauts
-        if (Input.GetKey(KeyCode.Space) )//|| !IsGrounded)
+        if (Input.GetKey(KeyCode.Space) || Input.GetButton("XBox_B"))
             m_animator.SetBool("IsGrounded", false);
         else
             m_animator.SetBool("IsGrounded", true);
@@ -76,7 +76,7 @@ public class MoveControlsSolo : MonoBehaviour
         else
         {
             m_animator.SetBool("Idle", false);
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LeftJoystickPush"))
                 m_animator.SetBool("Run", true);
             else
                 m_animator.SetBool("Run", false);
@@ -88,9 +88,9 @@ public class MoveControlsSolo : MonoBehaviour
     void jump()
     {
 
-        bool isJumping = Input.GetKeyDown(KeyCode.Space);
+        bool isJumping = Input.GetKeyDown(KeyCode.Space);//|| Input.GetButtonDown("XBox_B");
 
         if (isJumping)
-            transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
+            transform.Translate(0, Time.deltaTime * jumpCoeff, 0);
     }
 }
