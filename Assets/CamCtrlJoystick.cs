@@ -6,7 +6,7 @@ public class CamCtrlJoystick : MonoBehaviour
 {
     private Transform playerTransform;
     private GameObject cam;
-    private float rotationSpeed = 150.0f;
+    private float rotationSpeed = 50.0f;
 
     private float minx = -70.0f;
     private float maxx = 55.0f;
@@ -30,8 +30,8 @@ public class CamCtrlJoystick : MonoBehaviour
     void GetInput()
     {
         transform.Rotate(0.0f, Input.GetAxis("RightJoystickX") * rotationSpeed * Time.deltaTime, 0.0f);
-        v3rotate.x -= Input.GetAxis("RightJoystickY") * rotationSpeed * Time.deltaTime;
+        v3rotate.x = Input.GetAxis("RightJoystickY") * rotationSpeed * Time.deltaTime;
         v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
-        this.cam.transform.localEulerAngles = v3rotate;
+        this.cam.transform.Rotate(v3rotate);
     }
 }
