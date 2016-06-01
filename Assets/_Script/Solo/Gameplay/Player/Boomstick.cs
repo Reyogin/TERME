@@ -13,12 +13,12 @@ public class Boomstick : MonoBehaviour {
     public float Bullet_Forward_Force;
 
     //Audio du coup de feu
-    AudioSource bang;
+    AudioClip bang;
 
     // Use this for initialization
     void Start()
     {
-        bang = Resources.Load<AudioSource>("Sound/MusketFire");
+        bang = Resources.Load<AudioClip>("Sound/MusketFire");
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class Boomstick : MonoBehaviour {
             Temporary_RigidBody.AddForce(transform.forward * Bullet_Forward_Force);
 
             //BANG!
-            bang.Play();
+            AudioSource.PlayClipAtPoint(bang, Bullet_Emitter.transform.position);
 
             //Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
             Destroy(Temporary_Bullet_Handler, 10.0f);
