@@ -16,13 +16,13 @@ public class Boomstick : MonoBehaviour {
     AudioClip bang;
 
     //Animation de tir
-    Animation shoot;
+    Animation anim;
 
     // Use this for initialization
     void Start()
     {
         bang = Resources.Load<AudioClip>("Sound/MusketFire");
-        shoot = GetComponent<Animation>();
+        anim = GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class Boomstick : MonoBehaviour {
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            shoot.Play("shooting_gun");
+            anim.Play("shooting_gun");
 
             //The Bullet instantiation happens here.
             GameObject Temporary_Bullet_Handler;
