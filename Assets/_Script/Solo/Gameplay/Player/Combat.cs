@@ -12,9 +12,14 @@ public class Combat : PlayerClass
     private float atkcooldown = 0.4f;
     private float atkSpeed;
     private int slashNb = 0;
+    #endregion
+
+    #region Combat status
     public float leavecombat;
     private bool inguard;
     private float isbehind;
+    private bool CaC;
+    private bool shoot;
     #endregion
 
     #region For HUD
@@ -59,33 +64,38 @@ public class Combat : PlayerClass
         Attack();
     }
 
-    #region CQC
     /// <summary>
     /// In theory, should work if cast against player now
     /// </summary>
+    // TODO : Look into changing for animation, etc...
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
         if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
         {
-            combatStatus = true;
-            leavecombat = 0f;
-            m_animator.SetBool("IsAtking", true);
-            atkSpeed = 0f;
-            Animate_atk();
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+            if (CaC)
             {
-                distance = hit.distance;
-                Debug.Log(distance);
-                if (distance <= range)
-                    hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                combatStatus = true;
+                leavecombat = 0f;
+                m_animator.SetBool("IsAtking", true);
+                atkSpeed = 0f;
+                Animate_atk();
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+                {
+                    distance = hit.distance;
+                    Debug.Log(distance);
+                    if (distance <= range)
+                        hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                }
             }
+            else
+                Invoke("instantiateBullet", 0.8f);
         }
     }
-
+    #region CQC
     public bool Guard()
     {
         bool guard = Input.GetButton("Fire2") || Input.GetButton("XBox_A");
@@ -261,7 +271,7 @@ public class Combat : PlayerClass
         AudioSource.PlayClipAtPoint(bang, Bullet_Emitter.transform.position);
 
         //Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
-        Destroy(Temporary_Bullet_Handler, 10.0f);
+        Destroy(Temporary_Bullet_Handler, 3.0f);
     }
     #endregion
 }
