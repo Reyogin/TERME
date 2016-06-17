@@ -19,6 +19,7 @@ public class Combat : PlayerClass
     private bool inguard;
     private float isbehind;
     private bool CaC;
+    private bool kungfu;
     private bool shoot;
     #endregion
 
@@ -100,15 +101,22 @@ public class Combat : PlayerClass
     {
         //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
-        if (attack && slashNb == 0) //lance la première attaque
+        if (CaC)
         {
-            //m_animator.SetBool("IsAtking", true);
-            m_animator.SetTrigger("Attack 1");
+            if (attack && slashNb == 0) //lance la première attaque
+            {
+                //m_animator.SetBool("IsAtking", true);
+                m_animator.SetTrigger("Attack 1");
+            }
+            else
+                //m_animator.SetBool("IsAtking", false);
+                m_animator.SetTrigger("Attack 2");
+            slashNb = (slashNb + 1) % 2;
         }
+        else if (kungfu)
+            m_animator.SetTrigger("Sparta");
         else
-            //m_animator.SetBool("IsAtking", false);
-            m_animator.SetTrigger("Attack 2");
-        slashNb = (slashNb + 1) % 2;
+            m_animator.SetTrigger("Shoot");
     }
     #region CQC
     public bool Guard()
