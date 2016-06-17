@@ -20,12 +20,12 @@ public class bulletscript : MonoBehaviour {
         //gère la partie joueur
         if (other.tag == "Player" && other.gameObject != player)
         {
-            CQCCombat hp = other.GetComponent<CQCCombat>();
+            Combat hp = other.gameObject.GetComponent<Combat>();
             hp.TakingPunishment(35);
         }
         if(other.tag == "Enemy")
         {
-            IAHealth hp = other.GetComponent<IAHealth>();
+            IAHealth hp = other.gameObject.GetComponent<IAHealth>();
             hp.TakingPunishment(35);
         }
         Destroy(this.gameObject);
