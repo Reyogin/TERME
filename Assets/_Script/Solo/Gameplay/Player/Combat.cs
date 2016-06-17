@@ -92,8 +92,23 @@ public class Combat : PlayerClass
                 }
             }
             else
-                Invoke("instantiateBullet", 0.8f);
+                Invoke("instantiateBullet", 0.2f);
         }
+    }
+
+    void Animate_atk() ///Animations d'attaque
+    {
+        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
+        bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
+        if (attack && slashNb == 0) //lance la première attaque
+        {
+            //m_animator.SetBool("IsAtking", true);
+            m_animator.SetTrigger("Attack 1");
+        }
+        else
+            //m_animator.SetBool("IsAtking", false);
+            m_animator.SetTrigger("Attack 2");
+        slashNb = (slashNb + 1) % 2;
     }
     #region CQC
     public bool Guard()
@@ -153,21 +168,6 @@ public class Combat : PlayerClass
             camCtrl.enabled = false;
             combatscript.enabled = false;
         }
-    }
-
-    void Animate_atk() ///Animations d'attaque
-    {
-        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
-        bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
-        if (attack && slashNb == 0) //lance la première attaque
-        {
-            //m_animator.SetBool("IsAtking", true);
-            m_animator.SetTrigger("Attack 1");
-        }
-        else
-            //m_animator.SetBool("IsAtking", false);
-            m_animator.SetTrigger("Attack 2");
-        slashNb = (slashNb + 1) % 2;
     }
 
     /// <summary>
