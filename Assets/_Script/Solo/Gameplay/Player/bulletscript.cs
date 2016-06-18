@@ -15,15 +15,15 @@ public class bulletscript : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         //gère la partie joueur
-        if (other.tag == "Player" && other.gameObject != player)
+        if (other.gameObject.tag == "Player" && other.gameObject != player)
         {
             Combat hp = other.gameObject.GetComponent<Combat>();
             hp.TakingPunishment(35);
         }
-        if(other.tag == "Enemy")
+        if(other.gameObject.tag == "Enemy")
         {
             IAHealth hp = other.gameObject.GetComponent<IAHealth>();
             hp.TakingPunishment(35);
