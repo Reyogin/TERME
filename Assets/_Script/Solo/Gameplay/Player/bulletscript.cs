@@ -25,7 +25,7 @@ public class bulletscript : MonoBehaviour {
         }
         if(other.gameObject.tag == "Enemy")
         {
-            IAHealth hp = other.gameObject.GetComponent<IAHealth>();
+            AI_Reboot hp = other.gameObject.GetComponent<AI_Reboot>();
             hp.TakingPunishment(35);
         }
         Destroy(this.gameObject);

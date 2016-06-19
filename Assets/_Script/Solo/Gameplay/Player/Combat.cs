@@ -63,6 +63,7 @@ public class Combat : PlayerClass
             m_animator.SetBool("IsAtking", false);
         inCombat();
         Attack();
+        Animate_guard();
         regenGP(inCombat());
     }
 
@@ -98,14 +99,17 @@ public class Combat : PlayerClass
         }
     }
 
-    void Animate_atk() ///Animations d'attaque
+    void Animate_guard()
     {
-        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
         if (Input.GetButton("Fire2") || Input.GetButton("XBox_A"))
             m_animator.SetBool("Block", true);
         else
             m_animator.SetBool("Block", false);
+    }
 
+    void Animate_atk() ///Animations d'attaque
+    {
+        //m_animator.SetFloat(hashAtkSpeed, atkcooldown);
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
         if (CaC)
         {
