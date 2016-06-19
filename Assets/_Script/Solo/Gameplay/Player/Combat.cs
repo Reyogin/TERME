@@ -63,6 +63,7 @@ public class Combat : PlayerClass
             m_animator.SetBool("IsAtking", false);
         inCombat();
         Attack();
+        regenGP(inCombat());
     }
 
     /// <summary>
