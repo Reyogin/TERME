@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
+
 
 public class AIClass : MonoBehaviour
 {
@@ -8,13 +10,17 @@ public class AIClass : MonoBehaviour
     private float atkSpd;
     private float atkRange;
     private float atkDmg;
+    private float patrolSpd;
+    private float chaseSpd;
     private bool aggro;
 
 	// Use this for initialization
 	void Start ()
     {
         /*this.maxHp = 100f;
-        this.currHp = maxHp;*/
+        this.currHp = maxHp;
+        this.patrolSpd = 1;
+        this.chaseSpd = 2.5f;*/
         aggro = false;
 	}
 	
@@ -59,6 +65,18 @@ public class AIClass : MonoBehaviour
     {
         get { return this.atkDmg; }
         set { this.atkDmg = value; }
+    }
+
+    public float patrol_spd
+    {
+        get { return this.patrolSpd; }
+        set { this.patrolSpd = value; }
+    }
+
+    public float chase_spd
+    {
+        get { return this.chaseSpd; }
+        set { this.chaseSpd = value; }
     }
     #endregion
 }

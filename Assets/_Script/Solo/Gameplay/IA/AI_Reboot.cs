@@ -19,11 +19,14 @@ public class AI_Reboot : AIClass
         atk_range = 2;
         atk_spd = 2;
         atk_dmg = 10;
+        patrol_spd = 2;
+        chase_spd = 4.4f;
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         isDead = curr_hp <= 0;
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
+        animator.SetBool("Idle", true);
     }
 	
 	// Update is called once per frame
@@ -59,6 +62,7 @@ public class AI_Reboot : AIClass
             animator.SetTrigger("Dead");
             GameObject.Destroy(this.gameObject, 2.5f);
         }
+        nav.speed = chase_spd;
         nav.SetDestination(target.position);
         animator.SetBool("Sees Enemy", true);
         //animator.SetTrigger("Rest");
@@ -76,6 +80,7 @@ public class AI_Reboot : AIClass
         {
             if (distance <= 25f)
             {
+                nav.speed = chase_spd;
                 nav.SetDestination(target.position);
                 animator.SetBool("Sees Enemy", true);
             }
@@ -94,6 +99,7 @@ public class AI_Reboot : AIClass
     {
         if (other.gameObject.tag == "Player")
         {
+            nav.speed = chase_spd;
             nav.SetDestination(target.position);
             animator.SetBool("Sees Enemy", true);
         }
