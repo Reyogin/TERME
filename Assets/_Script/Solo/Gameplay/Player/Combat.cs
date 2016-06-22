@@ -37,7 +37,7 @@ public class Combat : PlayerClass
     //Drag in the Bullet Prefab from the Component Inspector.
     public GameObject Bullet;
     //Enter the Speed of the Bullet from the Component Inspector.
-    public float Bullet_Forward_Force;
+    private readonly float Bullet_Forward_Force = 40f;
     //Audio du coup de feu
     AudioClip bang;
     #endregion
