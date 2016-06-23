@@ -15,12 +15,15 @@ public class AIClass : MonoBehaviour
     private bool aggro;
 
 	// Use this for initialization
-	void Start ()
+	protected virtual void Start ()
     {
-        /*this.maxHp = 100f;
-        this.currHp = maxHp;
-        this.patrolSpd = 1;
-        this.chaseSpd = 2.5f;*/
+        max_hp = 100;
+        curr_hp = max_hp;
+        atk_range = 2;
+        atk_spd = 2;
+        atk_dmg = 10;
+        patrol_spd = 2;
+        chase_spd = 4.4f;
         aggro = false;
 	}
 	

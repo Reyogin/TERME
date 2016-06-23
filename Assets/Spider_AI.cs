@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class AI_Reboot : AIClass
+public class Spider_AI : AIClass
 {
     public Image healthbar;
     Animator animator;
@@ -15,6 +15,7 @@ public class AI_Reboot : AIClass
     protected override void Start ()
     {
         base.Start();
+        atk_range = 5f;
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
@@ -22,9 +23,8 @@ public class AI_Reboot : AIClass
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         animator.SetBool("Idle", true);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    void Update()
     {
         timer += Time.deltaTime;
         MoveTowards();
