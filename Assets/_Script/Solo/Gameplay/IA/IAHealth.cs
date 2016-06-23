@@ -66,7 +66,6 @@ public class IAHealth : MonoBehaviour
         {
             currentHealth = 0f;
             SetHealthBar(currentHealth);
-            IA.enabled = false;
             animator.SetTrigger("Dead");
             isDead = true;
             GameObject.Destroy(this.gameObject, 2.5f);

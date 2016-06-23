@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponHudUpDate : MonoBehaviour
 {
-
+    private CQCCombat CQC_script;
     private Transform playerTransform;
     private List<Transform> listeItems;
     private List<Transform> AncieneListeItems;
@@ -16,6 +16,7 @@ public class WeaponHudUpDate : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        CQC_script = GetComponent<CQCCombat>();//a deactivate si index == 1 => on va faire ca pour activer les combats a distance
         playerTransform = GetComponent<Transform>();
         AncieneListeItems = new List<Transform>();
     }
