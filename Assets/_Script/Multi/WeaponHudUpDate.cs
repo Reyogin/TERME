@@ -10,6 +10,7 @@ public class WeaponHudUpDate : MonoBehaviour
     private List<Transform> listeItems;
     private List<Transform> AncieneListeItems;
     private List<Transform> listehudWImg;
+    //pour item drag and drop, object contenant toutes les armes , mais de base elles sont desactive sauf le couteau
     public GameObject items;
 
     // Use this for initialization
@@ -23,6 +24,7 @@ public class WeaponHudUpDate : MonoBehaviour
     //fonction qui change le sprite dans l hud des armes
     public void changeImage(Transform gObjectImg, string ImgName)
     {
+        //modifie l image
         gObjectImg.GetChild(0).GetComponent<Image>().overrideSprite = (Sprite)Resources.Load("Resources/Image/weapons sprites/" + ImgName);
     }
 
@@ -30,8 +32,9 @@ public class WeaponHudUpDate : MonoBehaviour
     void Update()
     {
 
-        
+
         listeItems = new List<Transform>();
+        //fait la liste des items
         foreach (Transform item in items.transform)
         {
             listeItems.Add(item.gameObject.transform);
@@ -39,29 +42,25 @@ public class WeaponHudUpDate : MonoBehaviour
         if (AncieneListeItems.Count == 0 || listeItems != AncieneListeItems)
         {
             GameObject hudW = playerTransform.FindChild("Hud weapon").gameObject;
+            //liste contenant les images
             listehudWImg = new List<Transform>();
+            //recupere le gameobject image
             foreach (Transform item in hudW.transform)
             {
                 listehudWImg.Add(hudW.gameObject.transform.GetChild(0));
             }
-            // index pour la liste qui va servir a stocker les image UI
-            int indexImg = 0;
-            int indexImgM = 3;
             //index qui sert a checker les armes
             int indexW = 0;
             int indexWM = listeItems.Count;
-            while (indexW < indexWM && indexImg < indexImgM)
+
+            while (indexW < indexWM)
             {
                 string name = listeItems[indexW].name;
-                while (indexW < indexWM && indexImg < indexImgM)
-                {
-                    changeImage(listehudWImg[indexImg], name);
-                    indexImg++;
-                }
+                changeImage(listehudWImg[indexW], name);
                 indexW++;
 
             }
-            if (indexWM < 2)
+            if (indexWM < 3)
             {
                 for (int i = indexWM; i < 3; i++)
                 {

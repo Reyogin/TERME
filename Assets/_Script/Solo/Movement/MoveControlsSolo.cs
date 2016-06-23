@@ -88,9 +88,9 @@ public class MoveControlsSolo : MonoBehaviour
     void jump()
     {
 
-        bool isJumping = Input.GetKeyDown(KeyCode.Space);//|| Input.GetButtonDown("XBox_B");
+        bool isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_B");
 
         if (isJumping)
-            transform.Translate(0, Time.deltaTime * jumpCoeff, 0);
+            transform.Translate(0, 0.32f*Time.deltaTime * jumpCoeff, 0);
     }
 }
