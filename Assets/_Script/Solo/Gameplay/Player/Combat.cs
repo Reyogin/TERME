@@ -177,7 +177,7 @@ public class Combat : PlayerClass
             currentHealth = 0f;
             MoveControlsSolo moves = GetComponent<MoveControlsSolo>();
             CameraControllerSolo camCtrl = GetComponent<CameraControllerSolo>();
-            CQCCombat combatscript = GetComponent<CQCCombat>();
+            Combat combatscript = GetComponent<Combat>();
 
             isDead = true;
             m_animator.SetTrigger("Dead");
