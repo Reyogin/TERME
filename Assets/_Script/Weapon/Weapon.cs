@@ -2,33 +2,40 @@
 using System.Collections;
 
 
-public class Weapon : MonoBehaviour {
+
+public class Weapon : MonoBehaviour
+{
     private int _maxDamage;
-    private float _varDamage;
     private float _maxDistance;
-    private int _durability;
-    private System.Random rnd;
+    public float _durability;
+    private float _duraMax;
+    private float _vitesseATQ;
+    public string imageName;
+
 
 
     //Constructeur par defaut
-    public Weapon()
+    /*public Weapon()
     {
-        _maxDamage = 0;
+        /*_maxDamage = 0;
         _maxDistance = 0;
         _varDamage = 0;
         _durability = 50;
-        rnd = new System.Random();
-    }
+        _duraMax = 50;
+        //rnd = new System.Random();
+    */
 
-    public Weapon(int mDmg , float varD , float maxD , int dura)
+    public Weapon(int mDmg, float maxD, float dura, float duraM , float vitesse)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
-        _varDamage = varD;
         _durability = dura;
+        _duraMax = duraM;
+        _vitesseATQ = vitesse;
 
     }
 
+ 
     //Setter and getter
     public int MaxDamage
     {
@@ -36,24 +43,33 @@ public class Weapon : MonoBehaviour {
         set { _maxDamage = value; }
     }
 
-    public float DamageVariance
+    public float durabilite
     {
-        get { return _varDamage; }
-        set { _varDamage = value; }
+        get { return _durability; }
+        set { _durability = value; }
     }
+    public float MaxDurability
+    {
+        get { return _duraMax; }
+        set { _duraMax = value; }
+    }
+
 
     public float MaxDistance
     {
         get { return _maxDistance; }
         set { _maxDistance = value; }
     }
+    public float Vitesse
+    {
+        get { return _vitesseATQ; }
+        set { _vitesseATQ = value; }
+    }
 
     public int degatsEffectue()
     {
-        _durability --;
-        //valeur ajoutee
-        int valAdd = rnd.Next(0, (int)_varDamage);
-        return MaxDamage + valAdd;
+        _durability--;
+        return MaxDamage ;
 
 
     }

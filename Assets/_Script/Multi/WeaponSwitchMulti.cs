@@ -8,9 +8,16 @@ public class WeaponSwitchMulti : NetworkBehaviour
 
 
     //debut par defaut a au debut l arme numero 0
-    public int currentweapon = 0;
+    public int currentweapon;
+    public Weapon[] listeArme;
+
+
     private Transform playerTransform;
+
+    public int indexOBJ;
     private List<GameObject> listeItems;
+
+
 
     //max arme debut a zero donc le joueur ici pourra porter 3 armes
     public int maxweapon = 2;
@@ -21,17 +28,19 @@ public class WeaponSwitchMulti : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
+        this.playerTransform = GetComponent<Transform>();
+        GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
+        listeItems = new List<GameObject>();
+        foreach (Transform item in items.transform)
+            listeItems.Add(item.gameObject);
+
+
         if (isLocalPlayer)
         {
-            this.playerTransform = GetComponent<Transform>();
+            this.indexOBJ = 1;
+            currentweapon = 0;
             //GameObject items = gameObject.transform.FindChild("Items").gameObject;
-            GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
-            listeItems = new List<GameObject>();
-            foreach (Transform item in items.transform)
-            {
-                listeItems.Add(item.gameObject);
-            }
-            //Debug.Log(listeItems.Count);
+            listeArme = new Weapon[3] { new Knife_script(), new Fist_script(), new Fist_script() };
         }
     }
 
@@ -40,55 +49,56 @@ public class WeaponSwitchMulti : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            int newWp = currentweapon;
             // changement d'arme avec la mollette de la souris
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                if ((currentweapon + 1) <= maxweapon)
+                if ((newWp + 1) <= maxweapon)
                 {
-                    currentweapon++;
+                    newWp++;
                 }
                 else
                 {
-                    currentweapon = 0;
+                    newWp = 0;
                 }
-                SelectWeapon(currentweapon);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                if ((currentweapon - 1) >= 0)
+                if ((newWp - 1) >= 0)
                 {
-                    currentweapon--;
+                    newWp--;
                 }
                 else
                 {
-                    currentweapon = maxweapon;
+                    newWp = maxweapon;
                 }
-                SelectWeapon(currentweapon);
             }
-            if (currentweapon == maxweapon + 1)
+            if (newWp == maxweapon + 1)
             {
-                currentweapon = 0;
+                newWp = 0;
             }
-            if (currentweapon == -1)
+            if (newWp == -1)
             {
-                currentweapon = maxweapon;
+                newWp = maxweapon;
             }
 
             //Changement d'arme en pressant la touche 0 ,1 ou 2
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                currentweapon = 0;
-                SelectWeapon(currentweapon);
+                newWp = 0;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                currentweapon = 1;
-                SelectWeapon(currentweapon);
+                newWp = 1;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                currentweapon = 2;
-                SelectWeapon(currentweapon);
+                newWp = 2;
+            }
+            if (newWp != currentweapon)
+            {
+                SelectWeapon(newWp);
+                currentweapon = newWp;
             }
         }
 
@@ -96,34 +106,42 @@ public class WeaponSwitchMulti : NetworkBehaviour
 
     public void SelectWeapon(int index)
     {
-        if (isLocalPlayer)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                //active la selection arme 
-                if (i == index)
-                {
-                    /*
-                    if (listeItems[i].name == "Fist")
-                    {
-                        //animation quand on est a main nue
-                        theAnimator.SetBool("WeaponIsOn", false);
-                    }
-                    else
-                    {
-                        theAnimator.SetBool("WeaponIsOn", true);
+        if (!isLocalPlayer)
+            return;
 
-                    }
-                    */
-                    //regarde si l'arme ( gameobject.child) est bien celle voulu a l index, si oui on l active
-                    listeItems[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    //sinon on desactive l arme
-                    listeItems[i].gameObject.SetActive(false);
-                }
-            }
-        }
+        CmdActivWeapon(this.indexOBJ, false);
+
+        Weapon wp = listeArme[index];
+        if (wp is Fist_script)
+            this.indexOBJ = 0;
+
+        if (wp is Knife_script)
+            this.indexOBJ = 1;
+
+        if (wp is Sword_script)
+            this.indexOBJ = 2;
+
+        if (wp is Gun_script)
+            this.indexOBJ = 3;
+
+        CmdActivWeapon(this.indexOBJ, true);
+    }
+
+    public void ChangeWeapon(Weapon wp)
+    {
+        this.listeArme[currentweapon] = wp;
+        gameObject.GetComponent<WeaponHudUpDate>().UpdateHUD();
+        SelectWeapon(currentweapon);
+    }
+    [Command]
+    private void CmdActivWeapon(int index, bool state)
+    {
+        RpcActivWeapon(index, state);
+    }
+
+    [ClientRpc]
+    private void RpcActivWeapon(int index, bool state)
+    {
+        listeItems[index].SetActive(state);
     }
 }

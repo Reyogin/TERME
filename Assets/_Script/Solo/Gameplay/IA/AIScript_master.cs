@@ -46,7 +46,7 @@ public class AIScript_master : MonoBehaviour
                 animator.SetBool("Sees Enemy", false);
         }
 
-        if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
+        if (target.GetComponent<Combat>().currentHealth <= 0)
         {
             nav.Stop();
             animator.SetBool("Sees Enemy", false);
@@ -82,7 +82,7 @@ public class AIScript_master : MonoBehaviour
             }
             animator.SetTrigger("Rest");
 
-            if (target.GetComponent<GUI_HealthPlayer>().currentHealth <= 0)
+            if (target.GetComponent<Combat>().currentHealth <= 0)
             {
                 animator.SetBool("Sees Enemy", false);
                 animator.SetTrigger("Rest");

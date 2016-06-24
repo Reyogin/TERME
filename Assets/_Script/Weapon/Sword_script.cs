@@ -1,32 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sword_script : MonoBehaviour {
+public class Sword_script : Weapon {
 
-    private int _maxDamage;
-    private float _varDamage;
-    private float _maxDistance;
-    private int _durability;
-
-
-
-    public Sword_script()
+    public Sword_script() : base(25,2,100,100,4)
     {
-        // a mettre les bonne caracteristiques suivant l'arme
-        _maxDamage = 25;
-        _maxDistance = 2;
-        _varDamage = 15;
-        _durability = 100;
+        base.imageName = "Image/weaponssprites/Sword";
     }
-    public Sword_script(int mDmg, float varD, float maxD, int dura)
+
+    public Sword_script(float durabiliteActuelle) : base(25, 2, durabiliteActuelle, 100, 4)
     {
-        _maxDamage = mDmg;
-        _maxDistance = maxD;
-        _varDamage = varD;
-        _durability = dura;
+        base.imageName = "Image/weaponssprites/Sword";
     }
     public bool can_attack()
     {
-        return _durability > 0;
+        return durabilite > 0;
     }
 }
