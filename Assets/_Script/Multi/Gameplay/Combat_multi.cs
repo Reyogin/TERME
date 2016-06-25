@@ -6,7 +6,8 @@ public class Combat_multi : NetworkBehaviour
 {
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 
 	
 	}

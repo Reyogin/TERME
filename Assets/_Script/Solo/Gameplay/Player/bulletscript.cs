@@ -29,7 +29,7 @@ public class bulletscript : MonoBehaviour
             AI_Reboot hp = other.gameObject.GetComponent<AI_Reboot>();
             hp.TakingPunishment(35);
         }
-        else
+        if (other.gameObject.tag == "Spider")
         {
             Spider_AI hp = other.gameObject.GetComponent<Spider_AI>();
             hp.TakingPunishment(35);
