@@ -4,13 +4,14 @@ using UnityEngine.Networking;
 
 public class Combat_multi : PlayerClassMulti
 {
+    Weapon weapon;
     #region Combat Stats
     private float distance;
-    private float damage = 10f;
-    private float range = 1f;
+    private float damage;// = 10f;
+    private float range;// = 1f;
     protected Animator m_animator;
     bool isDead;
-    private float atkcooldown = 0.4f;
+    private float atkcooldown;// = 0.4f;
     private float atkSpeed;
     private int slashNb = 0;
     #endregion
@@ -47,10 +48,14 @@ public class Combat_multi : PlayerClassMulti
     protected override void Start()
     {
         base.Start();
-        m_animator = GetComponent<Animator>();
+        m_animator = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Animator>();
         isDead = currentHealth <= 0;
         this.image = Resources.Load<Texture>("Image/hud_healthbar");
         bang = Resources.Load<AudioClip>("Sound/MusketFire");
+        weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
+        damage = weapon.MaxDamage;
+        range = weapon.MaxDistance;
+        atkcooldown = weapon.Vitesse;
     }
 
     // Update is called once per frame
@@ -58,6 +63,22 @@ public class Combat_multi : PlayerClassMulti
     {
         //Die();
         //regenGP(combatStatus);
+        weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
+        if (weapon.w_name == "Boomstick")
+        {
+            shoot = true;
+            CaC = false;
+            kungfu = false;
+        }
+        else
+        {
+            shoot = false;
+            CaC = true;
+            if (weapon.w_name == "Fist")
+                kungfu = true;
+            else
+                kungfu = false;
+        }
         atkSpeed += Time.deltaTime;
         leavecombat += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.2f))
@@ -75,7 +96,7 @@ public class Combat_multi : PlayerClassMulti
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
-        if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
+        if (attack && currentHealth > 0 && atkSpeed >= atkcooldown && weapon.can_attack())
         {
             if (CaC)
             {

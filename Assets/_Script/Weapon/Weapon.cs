@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     public float _durability;
     private float _duraMax;
     private float _vitesseATQ;
+    private string weaponname;
     public string imageName;
 
 
@@ -78,6 +79,11 @@ public class Weapon : MonoBehaviour
         return true;
     }
 
+    public string w_name
+    {
+        get { return this.weaponname; }
+        set { this.weaponname = value; }
+    }
 }
 
 
