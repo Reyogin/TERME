@@ -28,7 +28,7 @@ public class cristal_Zone : NetworkBehaviour
         {
             if (count <= 1)
             {
-                Combat hp = other.gameObject.GetComponent<Combat>();
+                Combat_multi hp = other.gameObject.GetComponent<Combat_multi>();
                 hp.currentHealth += 5 * Time.deltaTime;
                 if (hp.currentHealth >= 100)
                     hp.currentHealth = 100;
