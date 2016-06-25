@@ -47,6 +47,8 @@ public class Combat_multi : PlayerClassMulti
     // Use this for initialization
     protected override void Start()
     {
+        if (!isLocalPlayer)
+            return;
         base.Start();
         m_animator = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Animator>();
         isDead = currentHealth <= 0;
@@ -61,8 +63,12 @@ public class Combat_multi : PlayerClassMulti
     // Update is called once per frame
     void Update()
     {
-        //Die();
-        //regenGP(combatStatus);
+        Debug.Log("Cac : " + CaC);
+        Debug.Log("kungfu : " + kungfu);
+        Debug.Log("Shoot : " + shoot);
+
+        if (!isLocalPlayer)
+            return;
         weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
         if (weapon.w_name == "Boomstick")
         {
@@ -135,18 +141,21 @@ public class Combat_multi : PlayerClassMulti
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
         if (CaC)
         {
-            if (attack && slashNb == 0) //lance la première attaque
-            {
-                //m_animator.SetBool("IsAtking", true);
-                m_animator.SetTrigger("Attack 1");
-            }
+            if (kungfu)
+                m_animator.SetTrigger("Sparta");
             else
-                //m_animator.SetBool("IsAtking", false);
-                m_animator.SetTrigger("Attack 2");
-            slashNb = (slashNb + 1) % 2;
+            {
+                if (/*attack && */slashNb == 0) //lance la première attaque
+                {
+                    //m_animator.SetBool("IsAtking", true);
+                    m_animator.SetTrigger("Attack 1");
+                }
+                else
+                    //m_animator.SetBool("IsAtking", false);
+                    m_animator.SetTrigger("Attack 2");
+                slashNb = (slashNb + 1) % 2;
+            }
         }
-        else if (kungfu)
-            m_animator.SetTrigger("Sparta");
         else
             m_animator.SetTrigger("Shoot");
     }
