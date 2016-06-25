@@ -5,8 +5,8 @@ public class Combat : PlayerClass
 {
     #region Combat Stats
     private float distance;
-    private float damage = 10f;
-    private float range = 1f;
+    private float damage = 30f;
+    private float range = 1.5f;
     protected Animator m_animator;
     bool isDead;
     private float atkcooldown = 0.4f;
@@ -50,6 +50,7 @@ public class Combat : PlayerClass
         isDead = currentHealth <= 0;
         this.image = Resources.Load<Texture>("Image/hud_healthbar");
         bang = Resources.Load<AudioClip>("Sound/MusketFire");
+        CaC = true;
     }
 
     // Update is called once per frame
@@ -63,6 +64,7 @@ public class Combat : PlayerClass
             m_animator.SetBool("IsAtking", false);
         inCombat();
         Attack();
+        Debug.Log(distance);
         Animate_guard();
         regenGP(inCombat());
     }
