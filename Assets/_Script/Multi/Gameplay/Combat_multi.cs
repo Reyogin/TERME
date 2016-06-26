@@ -116,7 +116,6 @@ public class Combat_multi : PlayerClassMulti
                     if (distance <= range)
                     {
                         hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
-                        Debug.Log(hit.transform.GetComponent<Combat_multi>().currentHealth);
                     }
                 }
             }

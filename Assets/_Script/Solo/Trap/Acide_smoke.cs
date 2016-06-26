@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class Acide_smoke : NetworkBehaviour
+public class Acide_smoke : MonoBehaviour
 {
 
 	// Use this for initialization
@@ -16,7 +16,7 @@ public class Acide_smoke : NetworkBehaviour
 	}
     void OnTriggerStay (Collider other)
     {
-        if (other.gameObject.tag == "Player")
-            other.gameObject.GetComponent<Combat_multi>().currentHealth -= 0.1f;
+        if (other.transform.parent.gameObject.tag == "Player")
+            other.transform.parent.gameObject.GetComponent<Combat_multi>().currentHealth -= 0.1f;
     }
 }
