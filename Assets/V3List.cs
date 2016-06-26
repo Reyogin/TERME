@@ -15,7 +15,6 @@ public class V3List : MonoBehaviour
             liste[i] = child.position;
             i++;
         }
-        Debug.Log(liste);
 	}
 	
 	// Update is called once per frame

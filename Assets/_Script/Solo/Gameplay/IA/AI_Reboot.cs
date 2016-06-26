@@ -10,7 +10,7 @@ public class AI_Reboot : AIClass
     private Transform target;
     NavMeshAgent nav;
     float timer;
-    int index = 0;
+    int index;
     Vector3[] liste;
     float mindistance = Mathf.Infinity;
 
@@ -24,7 +24,11 @@ public class AI_Reboot : AIClass
         isDead = curr_hp <= 0;
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         animator.SetBool("Idle", true);
+        index = 0;
         Vector3[] liste = GetComponentInParent<V3List>().liste;
+        Debug.Log(liste[0].x);
+        Debug.Log(liste[0].y);
+        Debug.Log(liste[0].z);
         for (int i = 0; i < GetComponentInParent<V3List>().liste.Length; i++)
         {
             float dist = Vector3.Distance(liste[i], transform.position);
@@ -34,7 +38,6 @@ public class AI_Reboot : AIClass
                 index = i;
             }
         }
-        Debug.Log(index);
         Patrol();
     }
 
@@ -64,10 +67,10 @@ public class AI_Reboot : AIClass
 
     void Patrol()
     {
+        index = (index + 1) % liste.Length;
         animator.SetBool("Idle", false);
         nav.speed = patrol_spd;
         nav.destination = (liste[index]);
-        index = (index + 1) % liste.Length;
     }
 
     public void TakingPunishment(int damage)
