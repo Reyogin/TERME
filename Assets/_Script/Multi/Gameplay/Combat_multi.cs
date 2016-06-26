@@ -113,7 +113,6 @@ public class Combat_multi : PlayerClassMulti
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
                 {
                     distance = hit.distance;
-                    Debug.Log(distance);
                     if (distance <= range)
                     {
                         hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);

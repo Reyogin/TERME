@@ -54,7 +54,6 @@ public class SelectionMult_Player : NetworkBehaviour
     [Command]
     private void CmdSet(int model)
     {
-        Debug.Log(model);
         this.selected = model;
 
 
@@ -105,10 +104,6 @@ public class SelectionMult_Player : NetworkBehaviour
         gameObject.GetComponent<WeaponSwitchMulti>().listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             gameObject.GetComponent<WeaponSwitchMulti>().listeItems.Add(item.gameObject);
-
-        if (!isLocalPlayer)
-            PlayerPrefab.transform.GetChild(0).gameObject.SetActive(false);
-
     }
     public GameObject GetItems
     {
