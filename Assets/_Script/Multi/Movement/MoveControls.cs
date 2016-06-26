@@ -102,7 +102,6 @@ public class MoveControls : NetworkBehaviour
         if (isJumping)
         {
             transform.Translate(0, Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff, 0);
-            //rigidbody.drag = 0.1f * Time.deltaTime;
 
         }
 
