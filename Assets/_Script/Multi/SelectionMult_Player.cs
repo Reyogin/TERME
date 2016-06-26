@@ -36,9 +36,6 @@ public class SelectionMult_Player : NetworkBehaviour
         PlayerPrefab = this.transform.GetChild(selected).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
-        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
-        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
-
         for (int i = 0; i < 3; i++)
             this.transform.GetChild(i).gameObject.SetActive(i == selected);
 
@@ -94,9 +91,6 @@ public class SelectionMult_Player : NetworkBehaviour
 
         PlayerPrefab = this.transform.GetChild(model).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
-
-
-        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
 
         for (int i = 0; i < 3; i++)
             this.transform.GetChild(i).gameObject.SetActive(i == model);

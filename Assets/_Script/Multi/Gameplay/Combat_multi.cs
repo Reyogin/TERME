@@ -345,7 +345,10 @@ public class Combat_multi : PlayerClassMulti
     [Command]
     private void CmdSetTrigger(string name)
     {
-        RpcSetTrigger(name);
+        foreach (Animator anim in gameObject.GetComponentsInChildren<Animator>())
+        {
+            anim.SetTrigger(name);
+        }
     }
     [ClientRpc]
     private void RpcSetTrigger(string name)
@@ -367,7 +370,10 @@ public class Combat_multi : PlayerClassMulti
     [ClientRpc]
     private void RpcSetBool(string name, bool value)
     {
-        this.m_animator.SetBool(name, value);
+        foreach (Animator anim in gameObject.GetComponentsInChildren<Animator>())
+        {
+            anim.SetBool(name, value);
+        }
     }
     #endregion
 }

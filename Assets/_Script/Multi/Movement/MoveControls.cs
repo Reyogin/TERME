@@ -120,7 +120,10 @@ public class MoveControls : NetworkBehaviour
     [ClientRpc]
     private void RpcSetBool(string name, bool value)
     {
-        this.m_animator.SetBool(name, value);
+        foreach (Animator anim in gameObject.GetComponentsInChildren<Animator>())
+        {
+            anim.SetBool(name, value);
+        }
     }
 #endregion
 }
