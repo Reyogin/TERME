@@ -21,7 +21,7 @@ public class CameraController : NetworkBehaviour
                 came.gameObject.SetActive(false);
 
             //desactive les canvas
-            gameObject.transform.GetChild(4).gameObject.SetActive(false);
+            gameObject.transform.GetChild(3).gameObject.SetActive(false);
             gameObject.transform.GetChild(5).gameObject.SetActive(false);
             gameObject.transform.GetChild(6).gameObject.SetActive(false);
             return;
