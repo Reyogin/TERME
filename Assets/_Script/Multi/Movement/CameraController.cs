@@ -15,16 +15,20 @@ public class CameraController : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        playerTransform = GetComponent<Transform>();
-        this.cam = gameObject.GetComponentInChildren<Camera>();
-        cam.transform.localEulerAngles = v3rotate;
-
         if (!isLocalPlayer)
         {
-            this.cam.enabled = false;//  SetActive(false);
+            foreach (Camera came in gameObject.transform.GetComponentsInChildren<Camera>())
+                came.gameObject.SetActive(false);
+
+            //desactive les canvas
+            gameObject.transform.GetChild(3).gameObject.SetActive(false);
+            gameObject.transform.GetChild(5).gameObject.SetActive(false);
+            gameObject.transform.GetChild(6).gameObject.SetActive(false);
             return;
         }
-
+        playerTransform = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
+        this.cam = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponentInChildren<Camera>();
+        cam.transform.localEulerAngles = v3rotate;
     }
 
     // Update is called once per frame
@@ -36,9 +40,9 @@ public class CameraController : NetworkBehaviour
 
     void GetInput()
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
         {
-            transform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
+            playerTransform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
             v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
             v3rotate.x = Mathf.Clamp(v3rotate.x, minx, maxx);
             this.cam.transform.localEulerAngles = v3rotate;

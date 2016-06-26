@@ -230,7 +230,7 @@ namespace UnityEngine.Networking
                     manager.StartHost();
                     break;
                 case TypeLaunch.Client:
-                    manager.StartHost();
+                    manager.StartClient();
                     break;
                 default:
                     break;

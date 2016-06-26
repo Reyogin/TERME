@@ -28,9 +28,9 @@ public class MoveControls : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            playerTransform = GetComponent<Transform>();
+            playerTransform = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
             //rigidbody = GetComponent<Rigidbody>();
-            m_animator = GetComponent<Animator>();
+            m_animator = GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Animator>();
         }
 
     }
@@ -57,7 +57,7 @@ public class MoveControls : NetworkBehaviour
 
             Vector2 move = new Vector2(horizontal, vertical).normalized;
 
-            transform.Translate(move.x * Time.deltaTime * coeffMove * speed, /*Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff*/0, move.y * coeffMove * speed * Time.deltaTime);
+            playerTransform.Translate(move.x * Time.deltaTime * coeffMove * speed, /*Input.GetAxis("Jump") * Time.deltaTime * jumpCoeff*/0, move.y * coeffMove * speed * Time.deltaTime);
             jump();
         }
     }
@@ -89,7 +89,10 @@ public class MoveControls : NetworkBehaviour
             m_animator.SetBool("IsGrounded", true);
         else
             m_animator.SetBool("IsGrounded", false);
-
+        if (!input)
+            m_animator.SetBool("Idle", true);
+        else
+            m_animator.SetBool("Idle", false);
     }
 
     void jump()

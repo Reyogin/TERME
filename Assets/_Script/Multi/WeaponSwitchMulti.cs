@@ -12,7 +12,7 @@ public class WeaponSwitchMulti : NetworkBehaviour
     public Weapon[] listeArme;
 
     public int indexOBJ;
-    private List<GameObject> listeItems;
+    public List<GameObject> listeItems;
 
     //max arme debut a zero donc le joueur ici pourra porter 3 armes
     public int maxweapon = 2;
@@ -27,14 +27,11 @@ public class WeaponSwitchMulti : NetworkBehaviour
             this.indexOBJ = 1;
             currentweapon = 0;
             listeArme = new Weapon[3] { new Knife_script(), new Fist_script(), new Fist_script() };
-        }
         GameObject items = gameObject.GetComponent<SelectionMult_Player>().items;
         listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             listeItems.Add(item.gameObject);
-
-
-        
+        }
     }
 
     // Update is called once per frame

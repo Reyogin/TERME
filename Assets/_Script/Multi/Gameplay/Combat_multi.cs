@@ -4,13 +4,14 @@ using UnityEngine.Networking;
 
 public class Combat_multi : PlayerClassMulti
 {
+    Weapon weapon;
     #region Combat Stats
     private float distance;
-    private float damage = 10f;
-    private float range = 1f;
+    private float damage;// = 10f;
+    private float range;// = 1f;
     protected Animator m_animator;
     bool isDead;
-    private float atkcooldown = 0.4f;
+    private float atkcooldown;// = 0.4f;
     private float atkSpeed;
     private int slashNb = 0;
     #endregion
@@ -46,18 +47,40 @@ public class Combat_multi : PlayerClassMulti
     // Use this for initialization
     protected override void Start()
     {
+        if (!isLocalPlayer)
+            return;
         base.Start();
-        m_animator = GetComponent<Animator>();
+        m_animator = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Animator>();
         isDead = currentHealth <= 0;
         this.image = Resources.Load<Texture>("Image/hud_healthbar");
         bang = Resources.Load<AudioClip>("Sound/MusketFire");
+        weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
+        damage = weapon.MaxDamage;
+        range = weapon.MaxDistance;
+        atkcooldown = weapon.Vitesse;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Die();
-        //regenGP(combatStatus);
+        if (!isLocalPlayer)
+            return;
+        weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
+        if (weapon.w_name == "Boomstick")
+        {
+            shoot = true;
+            CaC = false;
+            kungfu = false;
+        }
+        else
+        {
+            shoot = false;
+            CaC = true;
+            if (weapon.w_name == "Fist")
+                kungfu = true;
+            else
+                kungfu = false;
+        }
         atkSpeed += Time.deltaTime;
         leavecombat += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.2f))
@@ -75,7 +98,7 @@ public class Combat_multi : PlayerClassMulti
     void Attack()
     {
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
-        if (attack && currentHealth > 0 && atkSpeed >= atkcooldown)
+        if (attack && currentHealth > 0 && atkSpeed >= atkcooldown && weapon.can_attack())
         {
             if (CaC)
             {
@@ -90,9 +113,11 @@ public class Combat_multi : PlayerClassMulti
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
                 {
                     distance = hit.distance;
-                    Debug.Log(distance);
                     if (distance <= range)
+                    {
                         hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                        Debug.Log(hit.transform.GetComponent<Combat_multi>().currentHealth);
+                    }
                 }
             }
             else
@@ -114,18 +139,21 @@ public class Combat_multi : PlayerClassMulti
         bool attack = Input.GetButtonDown("Fire1") || Input.GetButtonDown("XBox_X");
         if (CaC)
         {
-            if (attack && slashNb == 0) //lance la première attaque
-            {
-                //m_animator.SetBool("IsAtking", true);
-                m_animator.SetTrigger("Attack 1");
-            }
+            if (kungfu)
+                m_animator.SetTrigger("Sparta");
             else
-                //m_animator.SetBool("IsAtking", false);
-                m_animator.SetTrigger("Attack 2");
-            slashNb = (slashNb + 1) % 2;
+            {
+                if (/*attack && */slashNb == 0) //lance la première attaque
+                {
+                    //m_animator.SetBool("IsAtking", true);
+                    m_animator.SetTrigger("Attack 1");
+                }
+                else
+                    //m_animator.SetBool("IsAtking", false);
+                    m_animator.SetTrigger("Attack 2");
+                slashNb = (slashNb + 1) % 2;
+            }
         }
-        else if (kungfu)
-            m_animator.SetTrigger("Sparta");
         else
             m_animator.SetTrigger("Shoot");
     }

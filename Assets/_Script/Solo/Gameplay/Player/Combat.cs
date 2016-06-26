@@ -6,7 +6,7 @@ public class Combat : PlayerClass
     #region Combat Stats
     private float distance;
     private float damage = 50f;
-    private float range = 1.2f;
+    private float range = 1.5f;
     protected Animator m_animator;
     bool isDead;
     private float atkcooldown = 0.4f;
@@ -64,6 +64,7 @@ public class Combat : PlayerClass
             m_animator.SetBool("IsAtking", false);
         inCombat();
         Attack();
+        Debug.Log(distance);
         Animate_guard();
         regenGP(inCombat());
     }

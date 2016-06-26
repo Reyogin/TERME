@@ -3,13 +3,14 @@ using System.Collections;
 
 
 
-public class Weapon : MonoBehaviour
+public class Weapon
 {
     private int _maxDamage;
     private float _maxDistance;
     public float _durability;
     private float _duraMax;
     private float _vitesseATQ;
+    private string weaponname;
     public string imageName;
 
 
@@ -73,11 +74,16 @@ public class Weapon : MonoBehaviour
 
 
     }
-    public bool can_attack()
+    public virtual bool can_attack()
     {
         return true;
     }
 
+    public string w_name
+    {
+        get { return this.weaponname; }
+        set { this.weaponname = value; }
+    }
 }
 
 
