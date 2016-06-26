@@ -18,13 +18,6 @@ public class CameraController : NetworkBehaviour
         playerTransform = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
         this.cam = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponentInChildren<Camera>();
         cam.transform.localEulerAngles = v3rotate;
-
-        if (!isLocalPlayer)
-        {
-            this.cam.enabled = false;//  SetActive(false);
-            return;
-        }
-
     }
 
     // Update is called once per frame
@@ -36,7 +29,7 @@ public class CameraController : NetworkBehaviour
 
     void GetInput()
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
         {
             playerTransform.Rotate(0.0f, Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime, 0.0f);
             v3rotate.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
