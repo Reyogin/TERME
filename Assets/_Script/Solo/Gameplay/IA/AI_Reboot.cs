@@ -25,10 +25,7 @@ public class AI_Reboot : AIClass
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         animator.SetBool("Idle", true);
         index = 0;
-        Vector3[] liste = GetComponentInParent<V3List>().liste;
-        Debug.Log(liste[0].x);
-        Debug.Log(liste[0].y);
-        Debug.Log(liste[0].z);
+        liste = GetComponentInParent<V3List>().liste;
         for (int i = 0; i < GetComponentInParent<V3List>().liste.Length; i++)
         {
             float dist = Vector3.Distance(liste[i], transform.position);
@@ -67,7 +64,7 @@ public class AI_Reboot : AIClass
 
     void Patrol()
     {
-        index = (index + 1) % liste.Length;
+        index = (index + 1) % 6;
         animator.SetBool("Idle", false);
         nav.speed = patrol_spd;
         nav.destination = (liste[index]);
