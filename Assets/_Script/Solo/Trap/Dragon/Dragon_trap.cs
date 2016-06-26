@@ -35,11 +35,13 @@ public class Dragon_trap : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         //Debug.Log("Player on fire");
-        if (CD <= 0 && other.gameObject.tag == "Player")
+        if (/*CD <= 0 && */other.gameObject.tag == "Player")
         {
             Combat otherPl = other.gameObject.GetComponent<Combat>();
-            otherPl.TakingPunishment(10f);
-            CD = 0.8f;
+            otherPl.currentHealth -= 10 * Time.deltaTime;
+            //CD = 0.8f;
+            if (otherPl.currentHealth <= 0)
+                otherPl.Die();
         }
     }
     void OnTriggerExit(Collider other)

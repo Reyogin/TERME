@@ -10,9 +10,12 @@ public class AI_Reboot : AIClass
     private Transform target;
     NavMeshAgent nav;
     float timer;
+    int index = 0;
+    Vector3[] liste;
+    float mindistance = Mathf.Infinity;
 
     // Use this for initialization
-    protected override void Start ()
+    protected override void Start()
     {
         base.Start();
         nav = GetComponent<NavMeshAgent>();
@@ -21,15 +24,33 @@ public class AI_Reboot : AIClass
         isDead = curr_hp <= 0;
         healthbar = transform.FindChild("EnemyCanvas").FindChild("HealthBG").FindChild("Health").GetComponent<Image>();
         animator.SetBool("Idle", true);
+        Vector3[] liste = GetComponentInParent<V3List>().liste;
+        for (int i = 0; i < GetComponentInParent<V3List>().liste.Length; i++)
+        {
+            float dist = Vector3.Distance(liste[i], transform.position);
+            if (dist < mindistance)
+            {
+                mindistance = dist;
+                index = i;
+            }
+        }
+        Debug.Log(index);
+        Patrol();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
+        if (nav.remainingDistance < 0.5f)
+        {
+            animator.SetBool("Idle", true);
+            nav.Stop();
+            nav.Resume();
+            Patrol();
+        }
         timer += Time.deltaTime;
         MoveTowards();
         Attack();
-        Debug.Log(curr_hp);
     }
 
     public void SetHealthBar(float health)
@@ -39,6 +60,14 @@ public class AI_Reboot : AIClass
         if (health <= 0.2)
             healthbar.color = Color.red;
         healthbar.transform.localScale = new Vector3(health, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
+    }
+
+    void Patrol()
+    {
+        animator.SetBool("Idle", false);
+        nav.speed = patrol_spd;
+        nav.destination = (liste[index]);
+        index = (index + 1) % liste.Length;
     }
 
     public void TakingPunishment(int damage)
