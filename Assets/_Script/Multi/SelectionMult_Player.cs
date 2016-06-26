@@ -25,20 +25,19 @@ public class SelectionMult_Player : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
+            this.selected = -1;
             this.notsync = true;
-            for (int i = 0; i < 3; i++)
-                transform.GetChild(i).gameObject.SetActive(false);
             return;
         }
         this.notsync = false;
-        int indexSelect = PlayerPrefs.GetInt("Model");
+        this.selected = PlayerPrefs.GetInt("Model");
 
-        CmdSet(indexSelect);
-        PlayerPrefab = this.transform.GetChild(indexSelect).gameObject;
+        CmdSet(selected);
+        PlayerPrefab = this.transform.GetChild(selected).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == indexSelect);
+            this.transform.GetChild(i).gameObject.SetActive(i == selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
@@ -77,13 +76,16 @@ public class SelectionMult_Player : NetworkBehaviour
     [Command]
     private void CmdAsk()
     {
+        if (this.selected != -1)
         RpcSet(this.selected);
     }
 
     [ClientRpc]
     private void RpcSet(int model)
     {
-        this.notsync = false;
+        if (!notsync)
+            return;
+
 
         this.selected = model;
 
@@ -103,6 +105,7 @@ public class SelectionMult_Player : NetworkBehaviour
         gameObject.GetComponent<WeaponSwitchMulti>().listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             gameObject.GetComponent<WeaponSwitchMulti>().listeItems.Add(item.gameObject);
+        this.notsync = false;
     }
     public GameObject GetItems
     {
