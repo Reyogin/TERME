@@ -81,9 +81,9 @@ public class MoveControls : NetworkBehaviour
 
         isRunning = leftshit && input;
         if (isRunning)
-            SetBool("IsRunning", true);
+            SetBool("Run", true);
         else
-            SetBool("IsRunning", false);
+            SetBool("Run", false);
 
         if (!jump)
             SetBool("IsGrounded", true);
