@@ -17,11 +17,8 @@ public class Nez_ramasseArme : MonoBehaviour
     {
         if (other.gameObject.tag == "Weapon")
         {
-
-            Debug.Log("Nez rencontre bouton : " + gameObject.name);
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Debug.Log("essaie de changer d arme :)");
                 //Weapon wp;
                 this.nRM.Ramasse(other.gameObject);
             }
