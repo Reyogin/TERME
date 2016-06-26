@@ -3,7 +3,7 @@ using System.Collections;
 
 
 
-public class Weapon : MonoBehaviour
+public class Weapon
 {
     private int _maxDamage;
     private float _maxDistance;
@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour
 
 
     }
-    public bool can_attack()
+    public virtual bool can_attack()
     {
         return true;
     }

@@ -15,7 +15,7 @@ public class CameraController : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        playerTransform = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
+        playerTransform = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
         this.cam = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponentInChildren<Camera>();
         cam.transform.localEulerAngles = v3rotate;
 

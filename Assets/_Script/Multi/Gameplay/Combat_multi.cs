@@ -63,10 +63,6 @@ public class Combat_multi : PlayerClassMulti
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Cac : " + CaC);
-        Debug.Log("kungfu : " + kungfu);
-        Debug.Log("Shoot : " + shoot);
-
         if (!isLocalPlayer)
             return;
         weapon = GetComponent<WeaponSwitchMulti>().listeArme[GetComponent<WeaponSwitchMulti>().currentweapon];
@@ -119,7 +115,10 @@ public class Combat_multi : PlayerClassMulti
                     distance = hit.distance;
                     Debug.Log(distance);
                     if (distance <= range)
+                    {
                         hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                        Debug.Log(hit.transform.GetComponent<Combat_multi>().currentHealth);
+                    }
                 }
             }
             else

@@ -20,6 +20,7 @@ public class WeaponHudUpDate : NetworkBehaviour
             return;
 
         hudW = gameObject.GetComponent<SelectionMult_Player>().HUDWp;
+        
         items = gameObject.GetComponent<SelectionMult_Player>().items;
         switche = gameObject.GetComponent<WeaponSwitchMulti>();
         UpdateHUD();
@@ -45,14 +46,14 @@ public class WeaponHudUpDate : NetworkBehaviour
         listehudWImg = new List<Transform>();
         for (int i = 0; i < 3; i++)
             listehudWImg.Add(hudW.transform.GetChild(i));
+        
 
         Weapon[] listewp = switche.listeArme;
+
         for (int i = 0; i < 3; i++)
         {
             changeImage(listehudWImg[i], listewp[i]);
             changeDurabilite(listehudWImg[i], listewp[i].durabilite, listewp[i].MaxDurability);
-
-            Debug.Log(listewp[i].MaxDurability);
         }
 
     }

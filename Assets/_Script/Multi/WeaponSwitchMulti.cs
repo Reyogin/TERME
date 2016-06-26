@@ -32,9 +32,6 @@ public class WeaponSwitchMulti : NetworkBehaviour
         listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             listeItems.Add(item.gameObject);
-
-
-        
     }
 
     // Update is called once per frame

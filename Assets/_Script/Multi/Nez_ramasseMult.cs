@@ -33,7 +33,6 @@ public class Nez_ramasseMult : NetworkBehaviour
             type = ArmeType.Sword;
         else if (wp is Gun_script)
             type = ArmeType.Gun;
-        Debug.Log(type);
 
         CmdRamasse(gOb, type, wp.durabilite);
     }
@@ -41,15 +40,9 @@ public class Nez_ramasseMult : NetworkBehaviour
     [Command]
     private void CmdRamasse(GameObject gOB, ArmeType type, float durabilite)
     {
-        ArmeType type2 = ArmeType.Fist;
-        Weapon wp = gOB.GetComponent<Weapon>();
-        if (wp is Knife_script)
-            type2 = ArmeType.Knife;
-        else if (wp is Sword_script)
-            type2 = ArmeType.Sword;
-        else if (wp is Gun_script)
-            type2 = ArmeType.Gun;
-        float dur2 = wp.durabilite;
+        WeaponMono wp = gOB.GetComponent<WeaponMono>();
+        ArmeType type2 = wp.armetype;
+        float dur2 = wp.durability;
 
 
         //detruire gob
@@ -64,31 +57,23 @@ public class Nez_ramasseMult : NetworkBehaviour
             {
                 case ArmeType.Knife:
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Knife");
-                    obj.GetComponent<Weapon>()._durability = durabilite;
+                    obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 case ArmeType.Sword:
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Sword");
-                    obj.GetComponent<Weapon>()._durability = durabilite;
+                    obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 case ArmeType.Gun:
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Gun");
-                    obj.GetComponent<Weapon>()._durability = durabilite;
+                    obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 default:
-                    obj = Resources.Load<GameObject>("_Prefabs/Items/Fist");
-                    obj.GetComponent<Weapon>()._durability = durabilite;
-                    obj = GameObject.Instantiate(obj) as GameObject;
-                    //obj.GetComponent<Weapon>().durabilite = durabilite;
-                    break;
+                    return;
             }
             obj.transform.position = pos;
-            //obj.GetComponent<Rigidbody>().AddForce(force);
             NetworkServer.Spawn(obj);
 
         }

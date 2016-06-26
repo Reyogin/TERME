@@ -15,7 +15,8 @@ public class Knife_script : Weapon
     {
         base.imageName = "Image/weaponssprites/Knife";
     }
-    public bool can_attack()
+
+    public override bool can_attack()
     {
         return  durabilite > 0;
     }

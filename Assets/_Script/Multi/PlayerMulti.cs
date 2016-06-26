@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class PlayerMulti : NetworkBehaviour
+public class PlayerMulti : MonoBehaviour
 {
     private int indexSelect;
 

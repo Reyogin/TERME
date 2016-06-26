@@ -1,73 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public class Traps_activation : NetworkBehaviour
+public class Traps_activation : MonoBehaviour
 {
     GameObject[] trap_list;
-    private float cd_activation = 0;
-    private float activate_cd = 0;
-    private bool youarenotprepared;
-    GameObject[] enabledtraps;
+    private float cd = 0;
+    private bool trapActive;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         int i = 0;
         trap_list = new GameObject[transform.childCount];
-	    foreach (Transform child in transform)
+        foreach (Transform child in transform)
         {
             trap_list[i] = child.gameObject;
             i++;
         }
-        youarenotprepared = cd_activation >= 30;
+        trapActive = false;
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        Debug.Log(cd_activation);
-        Debug.Log(activate_cd);
-        cd_activation += Time.deltaTime;
-        youarenotprepared = cd_activation >= 10;
-        YouJustActivatedMyTrapCard(youarenotprepared);
-	}
+        cd += Time.deltaTime;
 
-    void YouJustActivatedMyTrapCard (bool cd)
-    {
-        if (cd)
+        if (cd >= 10 && !trapActive)
+            GameObject.FindGameObjectWithTag("Player");
             Activate();
+
+        if (cd > 40)
+            Deactivate();
     }
 
     void Activate()
     {
-        int i = 0;
-        activate_cd += Time.deltaTime;
+        Debug.Log("1");
+        trapActive = true;
         int nb = (int)Random.Range(1, trap_list.Length);
-        enabledtraps = new GameObject[nb];
+        Debug.Log(nb);
+        List<int> number = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
         while (nb > 0)
         {
-            GameObject trap = trap_list[(int)Random.Range(0, trap_list.Length - 1)];
-            if (trap.activeSelf == false)
+            int i = Random.Range(0, number.Count);
+            GameObject trap = trap_list[i];
+            Debug.Log(trap.activeInHierarchy);
+            if (!trap.activeSelf)
             {
-                enabledtraps[i] = trap;
                 trap.SetActive(true);
-                i++;
                 nb--;
             }
+            number.Remove(i);
         }
-        if (activate_cd > 30)
-            Deactivate();
     }
 
     void Deactivate()
     {
-        int i = 0;
-        activate_cd = 0;
-        while (i < enabledtraps.Length)
-        {
-            enabledtraps[i].SetActive(false);
-            i++;
-        }
+        cd = 0;
+        foreach (GameObject trap in trap_list)
+            trap.SetActive(false);
+        trapActive = false;
     }
 }
