@@ -81,9 +81,6 @@ public class SelectionMult_Player : NetworkBehaviour
     [ClientRpc]
     private void RpcSet(int model)
     {
-        if (!notsync)
-            return;
-
         this.notsync = false;
 
         this.selected = model;
