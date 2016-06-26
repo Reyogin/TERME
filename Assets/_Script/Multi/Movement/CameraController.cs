@@ -19,6 +19,10 @@ public class CameraController : NetworkBehaviour
         {
             foreach (Camera came in gameObject.transform.GetComponentsInChildren<Camera>())
                 came.gameObject.SetActive(false);
+
+            //desactive les canvas
+            gameObject.transform.GetChild(5).gameObject.SetActive(false);
+            gameObject.transform.GetChild(6).gameObject.SetActive(false);
             return;
         }
         playerTransform = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
