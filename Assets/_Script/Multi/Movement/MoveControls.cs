@@ -18,7 +18,7 @@ public class MoveControls : NetworkBehaviour
     //private bool input;
     private float walkspeed = 2f;
     private float runspeed = 4f;
-    Animator m_animator;
+    public Animator m_animator;
     private float speed;
 
 
@@ -81,18 +81,18 @@ public class MoveControls : NetworkBehaviour
 
         isRunning = leftshit && input;
         if (isRunning)
-            m_animator.SetBool("IsRunning", true);
+            SetBool("IsRunning", true);
         else
-            m_animator.SetBool("IsRunning", false);
+            SetBool("IsRunning", false);
 
         if (!jump)
-            m_animator.SetBool("IsGrounded", true);
+            SetBool("IsGrounded", true);
         else
-            m_animator.SetBool("IsGrounded", false);
+            SetBool("IsGrounded", false);
         if (!input)
-            m_animator.SetBool("Idle", true);
+            SetBool("Idle", true);
         else
-            m_animator.SetBool("Idle", false);
+            SetBool("Idle", false);
     }
 
     void jump()
@@ -107,17 +107,21 @@ public class MoveControls : NetworkBehaviour
         }
 
     }
-    /*void CheckGround()
+    #region Animation
+    public void SetBool(string name, bool value)
     {
-        RaycastHit hitInfo;
-        Ray isgrounded = new Ray(transform.position, Vector3.down);
+        CmdSetBool(name, value);
+    }
 
-        if (Physics.Raycast(isgrounded, out hitInfo, m_GroundCheckDistance))
-        {
-            if (hitInfo.collider.tag == "Plane")
-                isGrounded = true;
-            else
-                isGrounded = false;
-        }
-    }*/
+    [Command]
+    private void CmdSetBool(string name, bool value)
+    {
+        RpcSetBool(name, value);
+    }
+    [ClientRpc]
+    private void RpcSetBool(string name, bool value)
+    {
+        this.m_animator.SetBool(name, value);
+    }
+#endregion
 }
