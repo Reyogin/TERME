@@ -26,6 +26,8 @@ public class SelectionMult_Player : NetworkBehaviour
         if (!isLocalPlayer)
         {
             this.notsync = true;
+            for (int i = 0; i < 3; i++)
+                transform.GetChild(i).gameObject.SetActive(false);
             return;
         }
         this.notsync = false;
