@@ -47,11 +47,6 @@ public class SelectionMult_Player : NetworkBehaviour
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
     }
 
-    void Update()
-    {
-        if (notsync && !isServer)
-            CmdAsk();
-    }
     [Command]
     private void CmdSet(int model)
     {
@@ -73,12 +68,6 @@ public class SelectionMult_Player : NetworkBehaviour
 
     }
 
-    [Command]
-    private void CmdAsk()
-    {
-        if (this.selected != -1)
-        RpcSet(this.selected);
-    }
 
     [ClientRpc]
     private void RpcSet(int model)
