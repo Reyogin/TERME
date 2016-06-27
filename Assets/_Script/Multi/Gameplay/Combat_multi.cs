@@ -16,6 +16,8 @@ public class Combat_multi : PlayerClassMulti
     private int slashNb = 0;
     #endregion
 
+    GameObject player;
+
     #region Combat status
     public float leavecombat;
     private bool inguard;
@@ -58,6 +60,8 @@ public class Combat_multi : PlayerClassMulti
         damage = weapon.MaxDamage;
         range = weapon.MaxDistance;
         atkcooldown = weapon.Vitesse;
+
+        this.player = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab;
     }
 
     // Update is called once per frame
@@ -109,8 +113,9 @@ public class Combat_multi : PlayerClassMulti
                 Animate_atk();
 
                 RaycastHit hit;
+                
 
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+                if (Physics.Raycast(this.player.transform.position, this.player.transform.TransformDirection(Vector3.forward), out hit))
                 {
                     distance = hit.distance;
                     if (distance <= range)
