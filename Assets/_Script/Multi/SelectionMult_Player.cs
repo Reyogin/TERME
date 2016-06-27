@@ -45,6 +45,10 @@ public class SelectionMult_Player : NetworkBehaviour
 
         nez = PlayerPrefab.GetComponent<PlayerMulti>().nez;
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
+
     }
 
     void Update()
@@ -53,7 +57,6 @@ public class SelectionMult_Player : NetworkBehaviour
             foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
                 if (player != null && !gameObject.Equals(player))
                 {
-                    Debug.Log("test");
                     player.GetComponent<SelectionMult_Player>().Set();
                 }
     }
@@ -77,17 +80,16 @@ public class SelectionMult_Player : NetworkBehaviour
         nez = PlayerPrefab.GetComponent<PlayerMulti>().nez;
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
 
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
     }
 
     private void Set()
     {
 
-        Debug.Log("set");
-
-        if (this.selected == null)
+        if ( !notsync || this.selected == null)
             return;
-
-        Debug.Log("set done");
 
         this.notsync = false;
 
@@ -108,6 +110,9 @@ public class SelectionMult_Player : NetworkBehaviour
         foreach (Transform item in items.transform)
             gameObject.GetComponent<WeaponSwitchMulti>().listeItems.Add(item.gameObject);
 
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
     }
     public GameObject GetItems
     {

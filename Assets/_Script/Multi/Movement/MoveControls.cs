@@ -29,7 +29,6 @@ public class MoveControls : NetworkBehaviour
         if (isLocalPlayer)
         {
             playerTransform = this.gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Transform>();
-            //rigidbody = GetComponent<Rigidbody>();
             m_animator = GetComponent<SelectionMult_Player>().PlayerPrefab.GetComponent<Animator>();
         }
 
@@ -120,10 +119,7 @@ public class MoveControls : NetworkBehaviour
     [ClientRpc]
     private void RpcSetBool(string name, bool value)
     {
-        foreach (Animator anim in gameObject.GetComponentsInChildren<Animator>())
-        {
-            anim.SetBool(name, value);
-        }
+        this.m_animator.SetBool(name, value);
     }
-#endregion
+    #endregion
 }
