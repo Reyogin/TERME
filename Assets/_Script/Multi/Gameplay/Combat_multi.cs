@@ -115,7 +115,7 @@ public class Combat_multi : PlayerClassMulti
                     distance = hit.distance;
                     if (distance <= range)
                     {
-                        hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
+                        hit.transform.parent.gameObject.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
                     }
                 }
             }
