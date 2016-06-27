@@ -9,6 +9,7 @@ public class SelectionMult_Player : NetworkBehaviour
     public GameObject items;
     public GameObject nez;
 
+    [SyncVar]
     int selected;
 
     public GameObject PlayerPrefab;
@@ -47,6 +48,17 @@ public class SelectionMult_Player : NetworkBehaviour
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
     }
 
+    void Update()
+    {
+        if (isLocalPlayer)
+            foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+                if (player != null && !gameObject.Equals(player))
+                {
+                    Debug.Log("test");
+                    player.GetComponent<SelectionMult_Player>().Set();
+                }
+    }
+
     [Command]
     private void CmdSet(int model)
     {
@@ -68,21 +80,23 @@ public class SelectionMult_Player : NetworkBehaviour
 
     }
 
-
-    [ClientRpc]
-    private void RpcSet(int model)
+    private void Set()
     {
-        if (!notsync)
+
+        Debug.Log("set");
+
+        if (!notsync || this.selected == -1)
             return;
 
+        Debug.Log("set done");
 
-        this.selected = model;
+        this.notsync = false;
 
-        PlayerPrefab = this.transform.GetChild(model).gameObject;
+        PlayerPrefab = this.transform.GetChild(this.selected).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == model);
+            this.transform.GetChild(i).gameObject.SetActive(i == this.selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
@@ -94,7 +108,7 @@ public class SelectionMult_Player : NetworkBehaviour
         gameObject.GetComponent<WeaponSwitchMulti>().listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             gameObject.GetComponent<WeaponSwitchMulti>().listeItems.Add(item.gameObject);
-        this.notsync = false;
+
     }
     public GameObject GetItems
     {
