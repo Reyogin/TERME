@@ -113,15 +113,16 @@ public class Combat_multi : PlayerClassMulti
                 Animate_atk();
 
                 RaycastHit hit;
-                
+
 
                 if (Physics.Raycast(this.player.transform.position, this.player.transform.TransformDirection(Vector3.forward), out hit))
                 {
                     distance = hit.distance;
                     if (distance <= range)
-                    {
-                        hit.transform.parent.gameObject.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
-                    }
+                        if (hit.transform.parent != null && hit.transform.parent.tag == "Player")
+                        {
+                            TakingPunishment(hit.transform.parent.gameObject, damage);
+                        }
                 }
             }
             else
@@ -182,15 +183,15 @@ public class Combat_multi : PlayerClassMulti
 
 
 
-    public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
+    public void TakingPunishment(GameObject ennemi, float dmg) ///Refresh HP Values + Hurting Animations
     {
-        CmdTakingPunishment(dmg);
+        CmdTakingPunishment(ennemi, dmg);
     }
 
     [Command]
-    private void CmdTakingPunishment(float dmg)
+    private void CmdTakingPunishment(GameObject ennemi, float dmg)
     {
-        RpcTakingPunishment(dmg);
+        ennemi.GetComponent<Combat_multi>().RpcTakingPunishment(dmg);
     }
 
     [ClientRpc]
