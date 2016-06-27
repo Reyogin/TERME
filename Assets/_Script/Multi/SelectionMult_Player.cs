@@ -10,7 +10,7 @@ public class SelectionMult_Player : NetworkBehaviour
     public GameObject nez;
 
     [SyncVar]
-    int selected;
+    string selected;
 
     public GameObject PlayerPrefab;
     public GameObject BulletEmitt;
@@ -26,19 +26,18 @@ public class SelectionMult_Player : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
-            this.selected = -1;
             this.notsync = true;
             return;
         }
         this.notsync = false;
-        this.selected = PlayerPrefs.GetInt("Model");
+        this.selected = PlayerPrefs.GetInt("Model").ToString();
 
-        CmdSet(selected);
-        PlayerPrefab = this.transform.GetChild(selected).gameObject;
+        CmdSet(int.Parse(selected));
+        PlayerPrefab = this.transform.GetChild(int.Parse(selected)).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == selected);
+            this.transform.GetChild(i).gameObject.SetActive(i.ToString() == selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
@@ -62,7 +61,7 @@ public class SelectionMult_Player : NetworkBehaviour
     [Command]
     private void CmdSet(int model)
     {
-        this.selected = model;
+        this.selected = model.ToString();
 
 
         PlayerPrefab = this.transform.GetChild(model).gameObject;
@@ -85,18 +84,18 @@ public class SelectionMult_Player : NetworkBehaviour
 
         Debug.Log("set");
 
-        if (!notsync || this.selected == -1)
+        if (this.selected == null)
             return;
 
         Debug.Log("set done");
 
         this.notsync = false;
 
-        PlayerPrefab = this.transform.GetChild(this.selected).gameObject;
+        PlayerPrefab = this.transform.GetChild(int.Parse(this.selected)).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == this.selected);
+            this.transform.GetChild(i).gameObject.SetActive(i.ToString() == this.selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
