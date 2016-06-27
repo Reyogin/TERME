@@ -49,7 +49,7 @@ public class Nez_ramasseMult : NetworkBehaviour
         NetworkServer.UnSpawn(gOB);
         GameObject.Destroy(gOB);
 
-        Vector3 pos = gameObject.transform.position + Vector3.up * 1;
+        Vector3 pos = gameObject.GetComponent<SelectionMult_Player>().PlayerPrefab.transform.position + Vector3.up * 1;
         if (durabilite > 0)
         {
             GameObject obj = null;
