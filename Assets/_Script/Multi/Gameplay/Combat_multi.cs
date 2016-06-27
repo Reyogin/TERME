@@ -115,7 +115,7 @@ public class Combat_multi : PlayerClassMulti
                 RaycastHit hit;
 
 
-                if (Physics.Raycast(this.player.transform.position, this.player.transform.TransformDirection(Vector3.forward), out hit))
+                if (Physics.Raycast(this.player.transform.position + Vector3.up * 2, this.player.transform.TransformDirection(Vector3.forward), out hit))
                 {
                     distance = hit.distance;
                     if (distance <= range)
