@@ -9,7 +9,8 @@ public class SelectionMult_Player : NetworkBehaviour
     public GameObject items;
     public GameObject nez;
 
-    int selected;
+    [SyncVar]
+    string selected;
 
     public GameObject PlayerPrefab;
     public GameObject BulletEmitt;
@@ -25,19 +26,18 @@ public class SelectionMult_Player : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
-            this.selected = -1;
             this.notsync = true;
             return;
         }
         this.notsync = false;
-        this.selected = PlayerPrefs.GetInt("Model");
+        this.selected = PlayerPrefs.GetInt("Model").ToString();
 
-        CmdSet(selected);
-        PlayerPrefab = this.transform.GetChild(selected).gameObject;
+        CmdSet(int.Parse(selected));
+        PlayerPrefab = this.transform.GetChild(int.Parse(selected)).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == selected);
+            this.transform.GetChild(i).gameObject.SetActive(i.ToString() == selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
@@ -45,17 +45,26 @@ public class SelectionMult_Player : NetworkBehaviour
 
         nez = PlayerPrefab.GetComponent<PlayerMulti>().nez;
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
+
     }
 
     void Update()
     {
-        if (notsync && !isServer)
-            CmdAsk();
+        if (isLocalPlayer)
+            foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+                if (player != null && !gameObject.Equals(player))
+                {
+                    player.GetComponent<SelectionMult_Player>().Set();
+                }
     }
+
     [Command]
     private void CmdSet(int model)
     {
-        this.selected = model;
+        this.selected = model.ToString();
 
 
         PlayerPrefab = this.transform.GetChild(model).gameObject;
@@ -71,29 +80,24 @@ public class SelectionMult_Player : NetworkBehaviour
         nez = PlayerPrefab.GetComponent<PlayerMulti>().nez;
         armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
 
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
     }
 
-    [Command]
-    private void CmdAsk()
+    private void Set()
     {
-        if (this.selected != -1)
-        RpcSet(this.selected);
-    }
 
-    [ClientRpc]
-    private void RpcSet(int model)
-    {
-        if (!notsync)
+        if ( !notsync || this.selected == null)
             return;
 
+        this.notsync = false;
 
-        this.selected = model;
-
-        PlayerPrefab = this.transform.GetChild(model).gameObject;
+        PlayerPrefab = this.transform.GetChild(int.Parse(this.selected)).gameObject;
         items = PlayerPrefab.GetComponent<PlayerMulti>().items;
 
         for (int i = 0; i < 3; i++)
-            this.transform.GetChild(i).gameObject.SetActive(i == model);
+            this.transform.GetChild(i).gameObject.SetActive(i.ToString() == this.selected);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
@@ -105,7 +109,10 @@ public class SelectionMult_Player : NetworkBehaviour
         gameObject.GetComponent<WeaponSwitchMulti>().listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             gameObject.GetComponent<WeaponSwitchMulti>().listeItems.Add(item.gameObject);
-        this.notsync = false;
+
+
+        gameObject.GetComponent<Combat_multi>().m_animator = PlayerPrefab.GetComponent<Animator>();
+        gameObject.GetComponent<MoveControls>().m_animator = PlayerPrefab.GetComponent<Animator>();
     }
     public GameObject GetItems
     {

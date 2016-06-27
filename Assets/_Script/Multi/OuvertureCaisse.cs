@@ -23,12 +23,10 @@ public class OuvertureCaisse : MonoBehaviour
         
         if (other.gameObject.tag == "Nez")
         {
-            //Debug.Log("Nez en vu de caisse");
             if (finis)
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //Debug.Log("Essai d ouvrir caisse");
                     Anim.enabled = true;
                     Sond.Play();
                     finis = false;

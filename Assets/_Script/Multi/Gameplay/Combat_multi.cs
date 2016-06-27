@@ -9,7 +9,7 @@ public class Combat_multi : PlayerClassMulti
     private float distance;
     private float damage;// = 10f;
     private float range;// = 1f;
-    protected Animator m_animator;
+    public Animator m_animator;
     bool isDead;
     private float atkcooldown;// = 0.4f;
     private float atkSpeed;
@@ -84,7 +84,7 @@ public class Combat_multi : PlayerClassMulti
         atkSpeed += Time.deltaTime;
         leavecombat += Time.deltaTime;
         if (atkSpeed > (atkcooldown + 0.2f))
-            m_animator.SetBool("IsAtking", false);
+            SetBool("IsAtking", false);
         inCombat();
         Attack();
         Animate_guard();
@@ -104,7 +104,7 @@ public class Combat_multi : PlayerClassMulti
             {
                 combatStatus = true;
                 leavecombat = 0f;
-                m_animator.SetBool("IsAtking", true);
+                SetBool("IsAtking", true);
                 atkSpeed = 0f;
                 Animate_atk();
 
@@ -115,8 +115,7 @@ public class Combat_multi : PlayerClassMulti
                     distance = hit.distance;
                     if (distance <= range)
                     {
-                        hit.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
-                        Debug.Log(hit.transform.GetComponent<Combat_multi>().currentHealth);
+                        hit.transform.parent.gameObject.transform.SendMessage("TakingPunishment", damage, SendMessageOptions.DontRequireReceiver);
                     }
                 }
             }
@@ -128,9 +127,9 @@ public class Combat_multi : PlayerClassMulti
     void Animate_guard()
     {
         if (Input.GetButton("Fire2") || Input.GetButton("XBox_A"))
-            m_animator.SetBool("Block", true);
+            SetBool("Block", true);
         else
-            m_animator.SetBool("Block", false);
+            SetBool("Block", false);
     }
 
     void Animate_atk() ///Animations d'attaque
@@ -140,22 +139,18 @@ public class Combat_multi : PlayerClassMulti
         if (CaC)
         {
             if (kungfu)
-                m_animator.SetTrigger("Sparta");
+                SetTrigger("Sparta");
             else
             {
                 if (/*attack && */slashNb == 0) //lance la première attaque
-                {
-                    //m_animator.SetBool("IsAtking", true);
-                    m_animator.SetTrigger("Attack 1");
-                }
+                    SetTrigger("Attack 1");
                 else
-                    //m_animator.SetBool("IsAtking", false);
-                    m_animator.SetTrigger("Attack 2");
+                    SetTrigger("Attack 2");
                 slashNb = (slashNb + 1) % 2;
             }
         }
         else
-            m_animator.SetTrigger("Shoot");
+            SetTrigger("Shoot");
     }
     #region CQC
     public bool Guard()
@@ -180,8 +175,25 @@ public class Combat_multi : PlayerClassMulti
         return inguard = (guard && currentGP > 0 && isbehind < 0);
     }
 
+
+
     public void TakingPunishment(float dmg) ///Refresh HP Values + Hurting Animations
     {
+        CmdTakingPunishment(dmg);
+    }
+
+    [Command]
+    private void CmdTakingPunishment(float dmg)
+    {
+        RpcTakingPunishment(dmg);
+    }
+
+    [ClientRpc]
+    private void RpcTakingPunishment(float dmg)
+    {
+        if (!isLocalPlayer)
+            return;
+
         combatStatus = true;
         leavecombat = 0f;
         if (Guard())
@@ -189,16 +201,12 @@ public class Combat_multi : PlayerClassMulti
         else
             if (currentHealth > 0 && !isDead)
         {
-            //Debug.Log(currentHealth);
-            m_animator.SetTrigger("IsHurt");
+            SetTrigger("IsHurt");
             currentHealth -= dmg;
-            //isDead = currentHealth <= 0;
         }
-        //m_animator.SetBool("IsHurt", false);
-        m_animator.SetTrigger("Rest");
+        SetTrigger("Rest");
         Die();
     }
-
     public void Die() ///Animations de mort
     {
         if (currentHealth <= 0 && !isDead)
@@ -209,7 +217,7 @@ public class Combat_multi : PlayerClassMulti
             Combat combatscript = GetComponent<Combat>();
 
             isDead = true;
-            m_animator.SetTrigger("Dead");
+            SetTrigger("Dead");
 
             moves.enabled = false;
             camCtrl.enabled = false;
@@ -248,6 +256,8 @@ public class Combat_multi : PlayerClassMulti
     /// </summary>
     void OnGUI()
     {
+        if (!isLocalPlayer)
+            return;
         float hppercent = currentHealth / getmaxHealth;
         float gppercent = currentGP / getGP;
         GUIDrawHP(hppercent);
@@ -319,6 +329,44 @@ public class Combat_multi : PlayerClassMulti
 
         //Basic Clean Up, set the Bullets to self destruct after 10 Seconds, I am being VERY generous here, normally 3 seconds is plenty.
         Destroy(Temporary_Bullet_Handler, 3.0f);
+    }
+    #endregion
+
+
+
+    #region Animation
+
+    public void SetTrigger(string name)
+    {
+        CmdSetTrigger(name);
+    }
+
+    [Command]
+    private void CmdSetTrigger(string name)
+    {
+        this.m_animator.SetTrigger(name);
+    }
+    [ClientRpc]
+    private void RpcSetTrigger(string name)
+    {
+        this.m_animator.SetTrigger(name);
+    }
+
+
+    public void SetBool(string name, bool value)
+    {
+        CmdSetBool(name, value);
+    }
+
+    [Command]
+    private void CmdSetBool(string name, bool value)
+    {
+        RpcSetBool(name, value);
+    }
+    [ClientRpc]
+    private void RpcSetBool(string name, bool value)
+    {
+        this.m_animator.SetBool(name, value);
     }
     #endregion
 }

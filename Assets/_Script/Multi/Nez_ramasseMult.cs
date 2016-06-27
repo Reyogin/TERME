@@ -59,23 +59,26 @@ public class Nez_ramasseMult : NetworkBehaviour
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Knife");
                     obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
+                    obj.transform.position = pos;
+                    NetworkServer.Spawn(obj);
                     break;
                 case ArmeType.Sword:
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Sword");
                     obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
+                    obj.transform.position = pos;
+                    NetworkServer.Spawn(obj);
                     break;
                 case ArmeType.Gun:
                     obj = Resources.Load<GameObject>("_Prefabs/Items/Gun");
                     obj.GetComponent<WeaponMono>().durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
+                    obj.transform.position = pos;
+                    NetworkServer.Spawn(obj);
                     break;
                 default:
-                    return;
+                    break;
             }
-            obj.transform.position = pos;
-            NetworkServer.Spawn(obj);
-
         }
         RpcRamasse(type2, dur2);
     }
