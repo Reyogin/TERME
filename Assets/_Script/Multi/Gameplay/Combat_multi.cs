@@ -349,7 +349,7 @@ public class Combat_multi : PlayerClassMulti
     [Command]
     private void CmdSetTrigger(string name)
     {
-        this.m_animator.SetTrigger(name);
+        RpcSetTrigger(name);
     }
     [ClientRpc]
     private void RpcSetTrigger(string name)
