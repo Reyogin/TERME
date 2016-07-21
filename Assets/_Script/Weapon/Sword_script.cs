@@ -7,6 +7,7 @@ public class Sword_script : MonoBehaviour {
     private float _varDamage;
     private float _maxDistance;
     private int _durability;
+    private int _duraMax;
 
 
 
@@ -17,13 +18,15 @@ public class Sword_script : MonoBehaviour {
         _maxDistance = 2;
         _varDamage = 15;
         _durability = 100;
+        _duraMax = 100;
     }
-    public Sword_script(int mDmg, float varD, float maxD, int dura)
+    public Sword_script(int mDmg, float varD, float maxD, int dura , int duraM)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
         _varDamage = varD;
         _durability = dura;
+        _duraMax = duraM;
     }
     public bool can_attack()
     {

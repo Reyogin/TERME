@@ -7,6 +7,7 @@ public class Gun_script : MonoBehaviour {
     private float _varDamage;
     private float _maxDistance;
     private int _durability;
+    private int _duraMax;
 
 
 
@@ -17,13 +18,15 @@ public class Gun_script : MonoBehaviour {
         _maxDistance = 10;
         _varDamage = 20;
         _durability = 50;
-    }
-    public Gun_script(int mDmg, float varD, float maxD, int dura)
+           _duraMax = 50;
+}
+    public Gun_script(int mDmg, float varD, float maxD, int dura , int duraM)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
         _varDamage = varD;
         _durability = dura;
+        _duraMax = duraM;
     }
 
 

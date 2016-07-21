@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour {
     private float _varDamage;
     private float _maxDistance;
     private int _durability;
+    private int _duraMax;
     private System.Random rnd;
 
 
@@ -17,15 +18,17 @@ public class Weapon : MonoBehaviour {
         _maxDistance = 0;
         _varDamage = 0;
         _durability = 50;
+        _duraMax = 50;
         rnd = new System.Random();
     }
 
-    public Weapon(int mDmg , float varD , float maxD , int dura)
+    public Weapon(int mDmg , float varD , float maxD , int dura , int duraM)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
         _varDamage = varD;
         _durability = dura;
+        _duraMax = duraM;
 
     }
 
@@ -34,6 +37,17 @@ public class Weapon : MonoBehaviour {
     {
         get { return _maxDamage; }
         set { _maxDamage = value; }
+    }
+
+    public int durabilite
+    {
+        get { return _durability; }
+        set { _durability = value; }
+    }
+    public int MaxDurability
+    {
+        get { return _duraMax; }
+        set { _duraMax = value; }
     }
 
     public float DamageVariance
