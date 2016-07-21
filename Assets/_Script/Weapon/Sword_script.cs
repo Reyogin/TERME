@@ -7,23 +7,26 @@ public class Sword_script : MonoBehaviour {
     private float _varDamage;
     private float _maxDistance;
     private int _durability;
-    private WeaponType _weatype;
+
 
 
     public Sword_script()
     {
         // a mettre les bonne caracteristiques suivant l'arme
-        _maxDamage = 0;
-        _maxDistance = 0;
-        _varDamage = 0;
-        _durability = 50;
+        _maxDamage = 25;
+        _maxDistance = 2;
+        _varDamage = 15;
+        _durability = 100;
     }
-    public Sword_script(int mDmg, float varD, float maxD, int dura, WeaponType weatype)
+    public Sword_script(int mDmg, float varD, float maxD, int dura)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
         _varDamage = varD;
         _durability = dura;
-        _weatype = weatype;
+    }
+    public bool can_attack()
+    {
+        return _durability > 0;
     }
 }

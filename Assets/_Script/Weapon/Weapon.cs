@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Weapon : MonoBehaviour {
     private int _maxDamage;
     private float _varDamage;
     private float _maxDistance;
     private int _durability;
-    private WeaponType _weatype;
+    private System.Random rnd;
+
 
     //Constructeur par defaut
     public Weapon()
@@ -15,15 +17,16 @@ public class Weapon : MonoBehaviour {
         _maxDistance = 0;
         _varDamage = 0;
         _durability = 50;
+        rnd = new System.Random();
     }
 
-    public Weapon(int mDmg , float varD , float maxD , int dura , WeaponType weatype)
+    public Weapon(int mDmg , float varD , float maxD , int dura)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
         _varDamage = varD;
         _durability = dura;
-        _weatype = weatype;
+
     }
 
     //Setter and getter
@@ -45,14 +48,21 @@ public class Weapon : MonoBehaviour {
         set { _maxDistance = value; }
     }
 
+    public int degatsEffectue()
+    {
+        _durability --;
+        //valeur ajoutee
+        int valAdd = rnd.Next(0, (int)_varDamage);
+        return MaxDamage + valAdd;
+
+
+    }
+    public bool can_attack()
+    {
+        return true;
+    }
 
 }
 
-public enum WeaponType
-{
-    fist,
-    knife,
-    sword,
-    bow
-}
+
 
