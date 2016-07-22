@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class WeaponHudUpDate : MonoBehaviour
+public class WeaponHudUpDate : NetworkBehaviour
 {
 
     private List<Transform> listeItems;
@@ -12,9 +13,14 @@ public class WeaponHudUpDate : MonoBehaviour
     //pour item drag and drop, object contenant toutes les armes , mais de base elles sont desactive sauf le couteau
     public GameObject items;
 
+    private int itemslot;
+
     // Use this for initialization
     void Start()
     {
+        if (!isLocalPlayer)
+            return;
+
         UpdateHUD();
     }
 
@@ -22,36 +28,29 @@ public class WeaponHudUpDate : MonoBehaviour
     public void changeImage(Transform gObjectImg, string ImgName)
 
     {
-        Debug.Log("Vient de changer une image");
+
         //modifie l image
         if (ImgName == "Fist")
-            gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = (Sprite)Resources.Load("Resources/Image/weapons sprites/" + ImgName);
+            gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/Empty");
         else
-            gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = (Sprite)Resources.Load("Resources/Image/weapons sprites/" + ImgName);
+            gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/" + ImgName);
     }
 
-    public void changeDurabilite(Transform gObjectEmplacementn, string dura , string duraMax)
+    public void changeDurabilite(Transform gObjectEmplacementn, int dura, int duraMax)
     {
-        Debug.Log("Vient de modifie la durabilite");
-        gObjectEmplacementn.FindChild("Durabilite").GetComponent<Text>().text = dura + "/" + duraMax;
+        gObjectEmplacementn.FindChild("Durabilite").GetComponent<Text>().text = dura.ToString() + "/" + duraMax.ToString();
 
     }
-    // Update is called once per frame
     public void UpdateHUD()
     {
-
-        listeItems = new List<Transform>();
         //fait la liste des items
-        foreach (Transform item in items.transform)
-        {
-            listeItems.Add(item.gameObject.transform);
-        }
+        listeItems = new List<Transform>();
         //liste contenant les gameobject images de l'hud
         listehudWImg = new List<Transform>();
-        //recupere le gameobject image
-        foreach (Transform item in hudW.transform)
+        for (int i = 0; i < 3; i++)
         {
-            listehudWImg.Add(hudW.gameObject.transform.GetChild(0));
+            listeItems.Add(items.transform.GetChild(i));
+            listehudWImg.Add(hudW.transform.GetChild(i));
         }
         //index qui sert a checker les armes
         int indexW = 0;
@@ -61,10 +60,11 @@ public class WeaponHudUpDate : MonoBehaviour
         {
             string name = listeItems[indexW].name;
             changeImage(listehudWImg[indexW], name);
-            changeDurabilite(listehudWImg[indexW], "10" , "10");
+            changeDurabilite(listehudWImg[indexW], 10, 10);
             indexW++;
 
         }
     }
 }
+
 
