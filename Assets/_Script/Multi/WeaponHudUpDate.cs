@@ -28,12 +28,17 @@ public class WeaponHudUpDate : NetworkBehaviour
     public void changeImage(Transform gObjectImg, string ImgName)
 
     {
+        for (int i = 0; i < 5; i++)
+        {
+            if (gObjectImg.GetChild(i).name == ImgName)
+            {
+                gObjectImg.GetChild(i).gameObject.SetActive(true);
+            }
 
-        //modifie l image
-        if (ImgName == "Fist")
-            gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/Empty");
-        else
-            gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/" + ImgName);
+            else
+                gObjectImg.GetChild(i).gameObject.SetActive(false);
+        }
+        /* gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/" + ImgName);*/
     }
 
     public void changeDurabilite(Transform gObjectEmplacementn, int dura, int duraMax)
@@ -60,7 +65,7 @@ public class WeaponHudUpDate : NetworkBehaviour
         {
             string name = listeItems[indexW].name;
             changeImage(listehudWImg[indexW], name);
-            changeDurabilite(listehudWImg[indexW], 10, 10);
+            changeDurabilite(listehudWImg[indexW], listeItems[indexW].GetComponent<Weapon>().durabilite, listeItems[indexW].GetComponent<Weapon>().MaxDurability);
             indexW++;
 
         }

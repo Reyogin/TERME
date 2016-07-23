@@ -2,7 +2,9 @@
 using System.Collections;
 
 
-public class Weapon : MonoBehaviour {
+
+public class Weapon : MonoBehaviour
+{
     private int _maxDamage;
     private float _varDamage;
     private float _maxDistance;
@@ -22,7 +24,7 @@ public class Weapon : MonoBehaviour {
         rnd = new System.Random();
     }
 
-    public Weapon(int mDmg , float varD , float maxD , int dura , int duraM)
+    public Weapon(int mDmg, float varD, float maxD, int dura, int duraM)
     {
         _maxDamage = mDmg;
         _maxDistance = maxD;
@@ -32,6 +34,7 @@ public class Weapon : MonoBehaviour {
 
     }
 
+ 
     //Setter and getter
     public int MaxDamage
     {
@@ -64,7 +67,7 @@ public class Weapon : MonoBehaviour {
 
     public int degatsEffectue()
     {
-        _durability --;
+        _durability--;
         //valeur ajoutee
         int valAdd = rnd.Next(0, (int)_varDamage);
         return MaxDamage + valAdd;
