@@ -16,11 +16,11 @@ public class Weapon : MonoBehaviour
     //Constructeur par defaut
     public Weapon()
     {
-        _maxDamage = 0;
+        /*_maxDamage = 0;
         _maxDistance = 0;
         _varDamage = 0;
         _durability = 50;
-        _duraMax = 50;
+        _duraMax = 50;*/
         rnd = new System.Random();
     }
 
@@ -32,6 +32,10 @@ public class Weapon : MonoBehaviour
         _durability = dura;
         _duraMax = duraM;
 
+    }
+     public Weapon(int durabiliteActuelle)
+    {
+        _durability = durabiliteActuelle;
     }
 
  

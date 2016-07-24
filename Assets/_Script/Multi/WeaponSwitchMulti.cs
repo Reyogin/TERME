@@ -8,9 +8,12 @@ public class WeaponSwitchMulti : NetworkBehaviour
 
 
     //debut par defaut a au debut l arme numero 0
-    public int currentweapon = 0;
+    public int currentweapon;
     private Transform playerTransform;
     private List<GameObject> listeItems;
+
+    private Weapon[] listeArme;
+
 
     //max arme debut a zero donc le joueur ici pourra porter 3 armes
     public int maxweapon = 2;
@@ -23,15 +26,19 @@ public class WeaponSwitchMulti : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            currentweapon = 0;
             this.playerTransform = GetComponent<Transform>();
             //GameObject items = gameObject.transform.FindChild("Items").gameObject;
             GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
+            listeArme = new Weapon[3];
             listeItems = new List<GameObject>();
+            int index = 0;
             foreach (Transform item in items.transform)
             {
+                listeArme[index] = item.GetComponent<Weapon>();
                 listeItems.Add(item.gameObject);
+                index++;
             }
-            //Debug.Log(listeItems.Count);
         }
     }
 
@@ -40,90 +47,78 @@ public class WeaponSwitchMulti : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            int newWp = currentweapon;
             // changement d'arme avec la mollette de la souris
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                if ((currentweapon + 1) <= maxweapon)
+                if ((newWp + 1) <= maxweapon)
                 {
-                    currentweapon++;
+                    newWp++;
                 }
                 else
                 {
-                    currentweapon = 0;
+                    newWp = 0;
                 }
-                SelectWeapon(currentweapon);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                if ((currentweapon - 1) >= 0)
+                if ((newWp - 1) >= 0)
                 {
-                    currentweapon--;
+                    newWp--;
                 }
                 else
                 {
-                    currentweapon = maxweapon;
+                    newWp = maxweapon;
                 }
-                SelectWeapon(currentweapon);
             }
-            if (currentweapon == maxweapon + 1)
+            if (newWp == maxweapon + 1)
             {
-                currentweapon = 0;
+                newWp = 0;
             }
-            if (currentweapon == -1)
+            if (newWp == -1)
             {
-                currentweapon = maxweapon;
+                newWp = maxweapon;
             }
 
             //Changement d'arme en pressant la touche 0 ,1 ou 2
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                currentweapon = 0;
-                SelectWeapon(currentweapon);
+                newWp = 0;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                currentweapon = 1;
-                SelectWeapon(currentweapon);
+                newWp = 1;
             }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                currentweapon = 2;
-                SelectWeapon(currentweapon);
+                newWp = 2;
             }
+            SelectWeapon(newWp);
         }
 
     }
 
     public void SelectWeapon(int index)
     {
-        if (isLocalPlayer)
+        if (!isLocalPlayer || index == currentweapon)
+            return;
+        //active la selection arme 
+        /*
+        if (listeItems[i].name == "Fist")
         {
-            for (int i = 0; i < 3; i++)
-            {
-                //active la selection arme 
-                if (i == index)
-                {
-                    /*
-                    if (listeItems[i].name == "Fist")
-                    {
-                        //animation quand on est a main nue
-                        theAnimator.SetBool("WeaponIsOn", false);
-                    }
-                    else
-                    {
-                        theAnimator.SetBool("WeaponIsOn", true);
-
-                    }
-                    */
-                    //regarde si l'arme ( gameobject.child) est bien celle voulu a l index, si oui on l active
-                    listeItems[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    //sinon on desactive l arme
-                    listeItems[i].gameObject.SetActive(false);
-                }
-            }
+            //animation quand on est a main nue
+            theAnimator.SetBool("WeaponIsOn", false);
         }
+        else
+        {
+            theAnimator.SetBool("WeaponIsOn", true);
+
+        }
+        */
+        listeItems[index].gameObject.SetActive(true);
+        listeItems[currentweapon].gameObject.SetActive(false);
+        // sync en multi ??
+        currentweapon = index;
+
     }
 }

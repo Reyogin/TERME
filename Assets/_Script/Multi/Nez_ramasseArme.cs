@@ -21,8 +21,9 @@ public class Nez_ramasseArme : MonoBehaviour
             //Debug.Log("Nez rencontre bouton : " + gameObject.name);
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Weapon wp;
-                this.nRM.Ramasse(other.gameObject, wp);
+                //Weapon wp;
+                this.nRM.Ramasse(other.gameObject, other.GetComponent<Weapon>());
+                this.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponent<WeaponHudUpDate>().UpdateHUD();
             }
 
 

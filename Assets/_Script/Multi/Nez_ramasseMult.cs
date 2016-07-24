@@ -5,12 +5,14 @@ using UnityEngine.Networking;
 public class Nez_ramasseMult : NetworkBehaviour
 {
     NetworkManager nm;
+    WeaponSwitchMulti wpSwiMult;
 
     public enum ArmeType { Fist, Knife, Sword, Gun }
     // Use this for initialization
     void Start()
     {
         this.nm = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        wpSwiMult = gameObject.GetComponent<WeaponSwitchMulti>();
     }
 
     // Update is called once per frame
@@ -61,23 +63,23 @@ public class Nez_ramasseMult : NetworkBehaviour
                 case ArmeType.Knife:
                     obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Knife_script>(/* a faire cionstructeur avec dura*/);
+                    obj.AddComponent<Knife_script>(/* a faire constructeur avec dura*/);
                     break;
                 case ArmeType.Sword:
                     obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Sword_script>(/* a faire cionstructeur avec dura*/);
+                    obj.AddComponent<Sword_script>(/* a faire constructeur avec dura*/);
                     break;
                 case ArmeType.Gun:
                     obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Gun_script>(/* a faire cionstructeur avec dura*/);
+                    obj.AddComponent<Gun_script>(/* a faire constructeur avec dura*/);
                     break;
                 default:
                     obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
                     obj = GameObject.Instantiate(obj) as GameObject;
 
-                    obj.AddComponent<Fist_script>(/* a faire cionstructeur avec dura*/);
+                    obj.AddComponent<Fist_script>(/* a faire constructeur avec dura*/);
                     break;
             }
             obj.transform.position = pos;
