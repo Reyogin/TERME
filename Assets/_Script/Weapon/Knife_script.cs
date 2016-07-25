@@ -4,32 +4,19 @@ using System.Collections;
 public class Knife_script : Weapon
 {
 
-    private int _maxDamage;
-    private float _varDamage;
-    private float _maxDistance;
-    private int _durability;
-
-
-
-    public Knife_script()
+    public Knife_script() : base(15,1,100,100,1)
     {
-        // a mettre les bonne caracteristiques suivant l'arme
-        _maxDamage = 15;
-        _maxDistance = 1;
-        _varDamage = 10;
-        _durability = 100;
-    }
-    public Knife_script(int mDmg, float varD, float maxD, int dura)
-    {
-        _maxDamage = mDmg;
-        _maxDistance = maxD;
-        _varDamage = varD;
-        _durability = dura;
+        base.imageName = "Image/weaponssprites/Knife";
     }
 
+
+    public Knife_script(float durabiliteActuelle) : base(15, 1, durabiliteActuelle, 100, 1)
+    {
+        base.imageName = "Image/weaponssprites/Knife";
+    }
     public bool can_attack()
     {
-        return _durability > 0;
+        return  durabilite > 0;
     }
 }
 
