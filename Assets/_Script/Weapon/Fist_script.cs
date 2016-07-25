@@ -4,11 +4,8 @@ using System.Collections;
 public class Fist_script : Weapon {
 
 
-    public Fist_script() : base(10,5,1,50,50)
+    public Fist_script() : base(10,1,Mathf.Infinity,Mathf.Infinity,3)
     {
 }
-    /*public bool can_attack()
-    {
-        return true;
-    }*/
+
 }

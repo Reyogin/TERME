@@ -37,7 +37,7 @@ public class Nez_ramasseMult : NetworkBehaviour
     }
 
     [Command]
-    private void CmdRamasse(GameObject gOB, ArmeType type, int durabilite)
+    private void CmdRamasse(GameObject gOB, ArmeType type, float durabilite)
     {
         ArmeType type2 = ArmeType.Fist;
         Weapon wp = gOB.GetComponent<Weapon>();
@@ -47,7 +47,7 @@ public class Nez_ramasseMult : NetworkBehaviour
             type2 = ArmeType.Sword;
         else if (wp is Gun_script)
             type2 = ArmeType.Gun;
-        int dur2 = wp.durabilite;
+        float dur2 = wp.durabilite;
 
 
         //detruire gob
@@ -91,7 +91,7 @@ public class Nez_ramasseMult : NetworkBehaviour
 
 
     [ClientRpc]
-    private void RpcRamasse(ArmeType type, int durabilite)
+    private void RpcRamasse(ArmeType type, float durabilite)
     {
         switch (type)
         {

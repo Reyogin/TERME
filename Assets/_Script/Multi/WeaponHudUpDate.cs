@@ -33,7 +33,7 @@ public class WeaponHudUpDate : NetworkBehaviour
         gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = Resources.Load<Sprite>("Image/weaponssprites/" + ImgName);
     }
 
-    public void changeDurabilite(Transform gObjectEmplacementn, int dura, int duraMax)
+    public void changeDurabilite(Transform gObjectEmplacementn, float dura, float duraMax)
     {
         gObjectEmplacementn.FindChild("Durabilite").GetComponent<Text>().text = dura.ToString() + "/" + duraMax.ToString();
 

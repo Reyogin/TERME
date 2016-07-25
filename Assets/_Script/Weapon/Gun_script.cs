@@ -5,7 +5,7 @@ public class Gun_script : Weapon
 {
 
 
-    public Gun_script() : base(15, 20, 10, 50, 50)
+    public Gun_script() : base(35, 10, 50, 50 ,10)
     {
     }
 
