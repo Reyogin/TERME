@@ -28,18 +28,9 @@ public class WeaponHudUpDate : NetworkBehaviour
     public void changeImage(Transform gObjectImg, string ImgName)
 
     {
-
-        for (int i = 0; i < 5; i++)
-        {
-            if (gObjectImg.GetChild(i).name == ImgName)
-            {
-                gObjectImg.GetChild(i).gameObject.SetActive(true);
-            }
-
-            else
-                gObjectImg.GetChild(i).gameObject.SetActive(false);
-        }
-        /* gObjectImg.FindChild("Image").GetComponent<Image>().sprite = (Sprite)Resources.Load("Resources/Image/weaponssprites/" + ImgName);*/
+        //Debug.Log(gObjectImg.name + " avec pour image : " + ImgName);
+        
+        gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = Resources.Load<Sprite>("Image/weaponssprites/" + ImgName);
     }
 
     public void changeDurabilite(Transform gObjectEmplacementn, int dura, int duraMax)
