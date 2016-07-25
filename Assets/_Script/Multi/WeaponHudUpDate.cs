@@ -28,6 +28,7 @@ public class WeaponHudUpDate : NetworkBehaviour
     public void changeImage(Transform gObjectImg, string ImgName)
 
     {
+
         for (int i = 0; i < 5; i++)
         {
             if (gObjectImg.GetChild(i).name == ImgName)
@@ -48,6 +49,7 @@ public class WeaponHudUpDate : NetworkBehaviour
     }
     public void UpdateHUD()
     {
+       
         //fait la liste des items
         listeItems = new List<Transform>();
         //liste contenant les gameobject images de l'hud
