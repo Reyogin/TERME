@@ -9,10 +9,14 @@ public class WeaponSwitchMulti : NetworkBehaviour
 
     //debut par defaut a au debut l arme numero 0
     public int currentweapon;
+    public Weapon[] listeArme;
+
+
     private Transform playerTransform;
+
+    public int indexOBJ;
     private List<GameObject> listeItems;
 
-    private Weapon[] listeArme;
 
 
     //max arme debut a zero donc le joueur ici pourra porter 3 armes
@@ -24,21 +28,19 @@ public class WeaponSwitchMulti : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
+        this.playerTransform = GetComponent<Transform>();
+        GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
+        listeItems = new List<GameObject>();
+        foreach (Transform item in items.transform)
+            listeItems.Add(item.gameObject);
+
+
         if (isLocalPlayer)
         {
+            this.indexOBJ = 1;
             currentweapon = 0;
-            this.playerTransform = GetComponent<Transform>();
             //GameObject items = gameObject.transform.FindChild("Items").gameObject;
-            GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
-            listeArme = new Weapon[3];
-            listeItems = new List<GameObject>();
-            int index = 0;
-            foreach (Transform item in items.transform)
-            {
-                listeArme[index] = item.GetComponent<Weapon>();
-                listeItems.Add(item.gameObject);
-                index++;
-            }
+            listeArme = new Weapon[3] { new Knife_script(), new Fist_script(), new Fist_script() };
         }
     }
 
@@ -93,32 +95,53 @@ public class WeaponSwitchMulti : NetworkBehaviour
             {
                 newWp = 2;
             }
-            SelectWeapon(newWp);
+            if (newWp != currentweapon)
+            {
+                SelectWeapon(newWp);
+                currentweapon = newWp;
+            }
         }
 
     }
 
     public void SelectWeapon(int index)
     {
-        if (!isLocalPlayer || index == currentweapon)
+        if (!isLocalPlayer)
             return;
-        //active la selection arme 
-        /*
-        if (listeItems[i].name == "Fist")
-        {
-            //animation quand on est a main nue
-            theAnimator.SetBool("WeaponIsOn", false);
-        }
-        else
-        {
-            theAnimator.SetBool("WeaponIsOn", true);
 
-        }
-        */
-        listeItems[index].gameObject.SetActive(true);
-        listeItems[currentweapon].gameObject.SetActive(false);
-        // sync en multi ??
-        currentweapon = index;
+        CmdActivWeapon(this.indexOBJ, false);
 
+        Weapon wp = listeArme[index];
+        if (wp is Fist_script)
+            this.indexOBJ = 0;
+
+        if (wp is Knife_script)
+            this.indexOBJ = 1;
+
+        if (wp is Sword_script)
+            this.indexOBJ = 2;
+
+        if (wp is Gun_script)
+            this.indexOBJ = 3;
+
+        CmdActivWeapon(this.indexOBJ, true);
+    }
+
+    public void ChangeWeapon(Weapon wp)
+    {
+        this.listeArme[currentweapon] = wp;
+        gameObject.GetComponent<WeaponHudUpDate>().UpdateHUD();
+        SelectWeapon(currentweapon);
+    }
+    [Command]
+    private void CmdActivWeapon(int index, bool state)
+    {
+        RpcActivWeapon(index, state);
+    }
+
+    [ClientRpc]
+    private void RpcActivWeapon(int index, bool state)
+    {
+        listeItems[index].SetActive(state);
     }
 }

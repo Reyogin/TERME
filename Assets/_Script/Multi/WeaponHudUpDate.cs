@@ -6,14 +6,12 @@ using UnityEngine.Networking;
 
 public class WeaponHudUpDate : NetworkBehaviour
 {
-
-    private List<Transform> listeItems;
     private List<Transform> listehudWImg;
     public GameObject hudW;
+
+    private WeaponSwitchMulti switche;
     //pour item drag and drop, object contenant toutes les armes , mais de base elles sont desactive sauf le couteau
     public GameObject items;
-
-    private int itemslot;
 
     // Use this for initialization
     void Start()
@@ -21,16 +19,17 @@ public class WeaponHudUpDate : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
+        switche = gameObject.GetComponent<WeaponSwitchMulti>();
         UpdateHUD();
     }
 
     //fonction qui change le sprite dans l hud des armes
-    public void changeImage(Transform gObjectImg, string ImgName)
+    public void changeImage(Transform gObjectImg, Weapon wp)
 
     {
         //Debug.Log(gObjectImg.name + " avec pour image : " + ImgName);
-        
-        gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = Resources.Load<Sprite>("Image/weaponssprites/" + ImgName);
+
+        gObjectImg.FindChild("Image").GetComponent<Image>().overrideSprite = Resources.Load<Sprite>(wp.imageName);
     }
 
     public void changeDurabilite(Transform gObjectEmplacementn, float dura, float duraMax)
@@ -40,28 +39,20 @@ public class WeaponHudUpDate : NetworkBehaviour
     }
     public void UpdateHUD()
     {
-       
-        //fait la liste des items
-        listeItems = new List<Transform>();
         //liste contenant les gameobject images de l'hud
         listehudWImg = new List<Transform>();
         for (int i = 0; i < 3; i++)
-        {
-            listeItems.Add(items.transform.GetChild(i));
             listehudWImg.Add(hudW.transform.GetChild(i));
-        }
-        //index qui sert a checker les armes
-        int indexW = 0;
-        //indexWM = 3
-        int indexWM = listeItems.Count;
-        while (indexW < indexWM)
-        {
-            string name = listeItems[indexW].name;
-            changeImage(listehudWImg[indexW], name);
-            changeDurabilite(listehudWImg[indexW], listeItems[indexW].GetComponent<Weapon>().durabilite, listeItems[indexW].GetComponent<Weapon>().MaxDurability);
-            indexW++;
 
+        Weapon[] listewp = switche.listeArme;
+        for (int i = 0; i < 3; i++)
+        {
+            changeImage(listehudWImg[i], listewp[i]);
+            changeDurabilite(listehudWImg[i], listewp[i].durabilite, listewp[i].MaxDurability);
+
+            Debug.Log(listewp[i].MaxDurability);
         }
+
     }
 }
 

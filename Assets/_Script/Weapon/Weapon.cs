@@ -7,9 +7,10 @@ public class Weapon : MonoBehaviour
 {
     private int _maxDamage;
     private float _maxDistance;
-    private float _durability;
+    public float _durability;
     private float _duraMax;
     private float _vitesseATQ;
+    public string imageName;
 
 
 
@@ -32,10 +33,6 @@ public class Weapon : MonoBehaviour
         _duraMax = duraM;
         _vitesseATQ = vitesse;
 
-    }
-     public Weapon(float durabiliteActuelle)
-    {
-        _durability = durabiliteActuelle;
     }
 
  

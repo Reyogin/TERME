@@ -20,10 +20,12 @@ public class Nez_ramasseMult : NetworkBehaviour
     {
 
     }
-    public void Ramasse(GameObject gOb, Weapon wp)
+    public void Ramasse(GameObject gOb)
     {
         if (!isLocalPlayer)
             return;
+
+        Weapon wp = wpSwiMult.listeArme[wpSwiMult.currentweapon];
         ArmeType type = ArmeType.Fist;
         if (wp is Knife_script)
             type = ArmeType.Knife;
@@ -31,7 +33,7 @@ public class Nez_ramasseMult : NetworkBehaviour
             type = ArmeType.Sword;
         else if (wp is Gun_script)
             type = ArmeType.Gun;
-
+        Debug.Log(type);
 
         CmdRamasse(gOb, type, wp.durabilite);
     }
@@ -51,40 +53,44 @@ public class Nez_ramasseMult : NetworkBehaviour
 
 
         //detruire gob
+        NetworkServer.UnSpawn(gOB);
+        GameObject.Destroy(gOB);
 
-
-        Vector3 pos = gameObject.transform.position;
-        Vector3 force = gameObject.transform.forward * Random.Range(1, 2f) + Vector3.up * Random.Range(0.5f, 1.5f);
+        Vector3 pos = gameObject.transform.position + Vector3.up * 1;
         if (durabilite > 0)
         {
             GameObject obj = null;
             switch (type)
             {
                 case ArmeType.Knife:
-                    obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
+                    obj = Resources.Load<GameObject>("_Prefabs/Items/Knife");
+                    obj.GetComponent<Weapon>()._durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Knife_script>(/* a faire constructeur avec dura*/);
+                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 case ArmeType.Sword:
-                    obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
+                    obj = Resources.Load<GameObject>("_Prefabs/Items/Sword");
+                    obj.GetComponent<Weapon>()._durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Sword_script>(/* a faire constructeur avec dura*/);
+                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 case ArmeType.Gun:
-                    obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
+                    obj = Resources.Load<GameObject>("_Prefabs/Items/Gun");
+                    obj.GetComponent<Weapon>()._durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-                    obj.AddComponent<Gun_script>(/* a faire constructeur avec dura*/);
+                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
                 default:
-                    obj = Resources.Load<GameObject>(""); // Fix les chemain d'acces
+                    obj = Resources.Load<GameObject>("_Prefabs/Items/Fist");
+                    obj.GetComponent<Weapon>()._durability = durabilite;
                     obj = GameObject.Instantiate(obj) as GameObject;
-
-                    obj.AddComponent<Fist_script>(/* a faire constructeur avec dura*/);
+                    //obj.GetComponent<Weapon>().durabilite = durabilite;
                     break;
             }
             obj.transform.position = pos;
-            obj.GetComponent<Rigidbody>().AddForce(force);
+            //obj.GetComponent<Rigidbody>().AddForce(force);
             NetworkServer.Spawn(obj);
+
         }
         RpcRamasse(type2, dur2);
     }
@@ -93,16 +99,21 @@ public class Nez_ramasseMult : NetworkBehaviour
     [ClientRpc]
     private void RpcRamasse(ArmeType type, float durabilite)
     {
+        if (!isLocalPlayer)
+            return;
         switch (type)
         {
             case ArmeType.Fist:
-
+                wpSwiMult.ChangeWeapon(new Fist_script());
                 break;
             case ArmeType.Knife:
+                wpSwiMult.ChangeWeapon(new Knife_script(durabilite));
                 break;
             case ArmeType.Sword:
+                wpSwiMult.ChangeWeapon(new Sword_script(durabilite));
                 break;
             case ArmeType.Gun:
+                wpSwiMult.ChangeWeapon(new Gun_script(durabilite));
                 break;
             default:
                 break;
