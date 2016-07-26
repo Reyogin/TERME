@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Acide_smoke : MonoBehaviour {
+public class Acide_smoke : NetworkBehaviour
+{
 
 	// Use this for initialization
 	void Start () {
@@ -12,11 +14,9 @@ public class Acide_smoke : MonoBehaviour {
 	void Update () {
 	
 	}
-    void onParticuleCollison(GameObject other)
+    void OnTriggerStay (Collider other)
     {
-        if(other.tag == "Player")
-        {
-            
-        }
+        if (other.gameObject.tag == "Player")
+            other.gameObject.GetComponent<Combat_multi>().currentHealth -= 0.1f;
     }
 }
