@@ -18,8 +18,8 @@ public class MoveControlsSolo : MonoBehaviour
 
     //private bool isGrounded;
     private bool input;
-    private float walkspeed = 0.8f;
-    private float runspeed = 1.6f;
+    private float walkspeed = 2f;
+    private float runspeed = 5f;
     Animator m_animator;
     float speed;
 

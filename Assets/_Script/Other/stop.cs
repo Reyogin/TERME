@@ -10,6 +10,7 @@ public class stop : MonoBehaviour
         {
             Destroy(gameMusic);
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 }
 

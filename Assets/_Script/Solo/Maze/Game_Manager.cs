@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Game_Manager : MonoBehaviour
 {
@@ -7,14 +8,18 @@ public class Game_Manager : MonoBehaviour
     public Maze mazePrefab;
     private Maze mazeInstance;
 
+    private float CD;
     public Player playerPrefab;
     private Player playerInstance;
+    public GameObject IMG;
 
     private void Start()
     {
         //1BeginGame();
-
+        CD = 0;
         StartCoroutine(BeginGame());
+
+
     }
 
     private IEnumerator BeginGame()
@@ -38,14 +43,15 @@ public class Game_Manager : MonoBehaviour
         {
             RestartGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            IMG.SetActive(false);
+        //cheatcode pour acceder au credit de fin
+        if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKeyDown(KeyCode.LeftControl))
+            SceneManager.LoadScene("Credit de fin");
     }
 
-    /*private void BeginGame()
-    {
-        mazeInstance = Instantiate(mazePrefab) as Maze;
-        //mazeInstance.Generate();
-        StartCoroutine(mazeInstance.Generate());
-    }*/
+
 
     private void RestartGame()
     {
