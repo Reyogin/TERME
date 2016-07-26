@@ -9,22 +9,49 @@ public class lift : MonoBehaviour
     [SerializeField]
     GameObject target;
 
-    void OnMouseOver()
+    void OnTriggerStay(Collider other)
     {
-        pressedButton = true;
-    }
+        if (other.tag == "Nez")
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                
+                while (!isElevatorUp)
+                    if (target.transform.position.y > 27.5)
+                        isElevatorUp = true;
+                    else
+                        target.transform.TransformVector(Vector3.up);
 
-    void OnMouseExit()
-    {
-        pressedButton = false;
-    }
+            }
+            /*else
+            {
+                pressedButton = false;
+                isElevatorUp = false;
+            }
 
-    void OnMouseDown()
-    {
-        if (!pressedButton)
-            return;
+            target.GetComponent<Animator>().SetBool("isUp", isElevatorUp);*/
 
-        isElevatorUp = !isElevatorUp;
-        target.GetComponent<Animator>().SetBool("isUp", isElevatorUp);
+
+
+        }
+
     }
+    /* void OnMouseOver()
+     {
+         pressedButton = true;
+     }
+
+     void OnMouseExit()
+     {
+         pressedButton = false;
+     }
+
+     void OnMouseDown()
+     {
+         if (!pressedButton)
+             return;
+
+         isElevatorUp = !isElevatorUp;
+         target.GetComponent<Animator>().SetBool("isUp", isElevatorUp);
+     }*/
 }
