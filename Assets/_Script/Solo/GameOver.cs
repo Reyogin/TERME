@@ -9,7 +9,7 @@ public class GameOver : MonoBehaviour
     public GameObject gameOver;
     void Start()
     {
-        Player = GetComponent<GUI_HealthPlayer>();
+        Player = GetComponent<Combat>();
 
     }
 

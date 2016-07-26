@@ -8,7 +8,7 @@ public class Spike_damage : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            GUI_HealthPlayer otherPl = other.gameObject.GetComponent<GUI_HealthPlayer>();
+            Combat otherPl = other.gameObject.GetComponent<Combat>();
             otherPl.TakingPunishment(damageReceive);
 
         }

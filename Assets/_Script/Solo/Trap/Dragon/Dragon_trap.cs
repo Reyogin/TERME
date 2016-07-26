@@ -37,7 +37,7 @@ public class Dragon_trap : MonoBehaviour
         //Debug.Log("Player on fire");
         if (CD <= 0 && other.gameObject.tag == "Player")
         {
-            GUI_HealthPlayer otherPl = other.gameObject.GetComponent<GUI_HealthPlayer>();
+            Combat otherPl = other.gameObject.GetComponent<Combat>();
             otherPl.TakingPunishment(10f);
             CD = 0.8f;
         }
