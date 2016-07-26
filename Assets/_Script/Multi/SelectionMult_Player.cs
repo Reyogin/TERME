@@ -13,33 +13,34 @@ public class SelectionMult_Player : NetworkBehaviour
     public GameObject PlayerPrefab;
     public GameObject BulletEmitt;
     public GameObject Bullet;
+    public GameObject HUDWp;
     public float vitesse;
     public float degatSupp;
     public Weapon armePredilection;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         indexSelect = PlayerPrefs.GetInt("Model");
         PlayerPrefab = this.transform.GetChild(indexSelect).gameObject;
+        items = PlayerPrefab.GetComponent<PlayerMulti>().items;
+
         for (int i = 0; i < 3; i++)
             this.transform.GetChild(i).gameObject.SetActive(i == indexSelect);
 
         vitesse = PlayerPrefab.GetComponent<PlayerMulti>().vitesse;
         degatSupp = PlayerPrefab.GetComponent<PlayerMulti>().degatSupp;
         BulletEmitt = PlayerPrefab.GetComponent<PlayerMulti>().BulletEmitt;
-        armePredilection = ArmedePred(indexSelect);
+        
+        nez = PlayerPrefab.GetComponent<PlayerMulti>().nez;
+        armePredilection = PlayerPrefab.GetComponent<PlayerMulti>().arme;
 
-    }
+            
 
-    public Weapon ArmedePred(int index)
+}
+    public GameObject GetItems
     {
-        if (index == 0)
-            return new Gun_script();
-        else if (index == 1)
-            return new Sword_script();
-        else
-            return new Knife_script();
+        get { return items; }
+        set { items = value; }
     }
-
 }

@@ -11,37 +11,30 @@ public class WeaponSwitchMulti : NetworkBehaviour
     public int currentweapon;
     public Weapon[] listeArme;
 
-
-    private Transform playerTransform;
-
     public int indexOBJ;
     private List<GameObject> listeItems;
 
-
-
     //max arme debut a zero donc le joueur ici pourra porter 3 armes
     public int maxweapon = 2;
-    //var pour access animator controler
-    public Animator theAnimator;
+
 
 
     // Use this for initialization
     void Start()
     {
-        this.playerTransform = GetComponent<Transform>();
-        GameObject items = playerTransform.FindChild("Reference").FindChild("Hips").FindChild("Spine").FindChild("Chest").FindChild("RightShoulder").FindChild("RightArm").FindChild("RightForeArm").FindChild("RightHand").FindChild("Items").gameObject;
+        if (isLocalPlayer)
+        {
+            this.indexOBJ = 1;
+            currentweapon = 0;
+            listeArme = new Weapon[3] { new Knife_script(), new Fist_script(), new Fist_script() };
+        }
+        GameObject items = gameObject.GetComponent<SelectionMult_Player>().items;
         listeItems = new List<GameObject>();
         foreach (Transform item in items.transform)
             listeItems.Add(item.gameObject);
 
 
-        if (isLocalPlayer)
-        {
-            this.indexOBJ = 1;
-            currentweapon = 0;
-            //GameObject items = gameObject.transform.FindChild("Items").gameObject;
-            listeArme = new Weapon[3] { new Knife_script(), new Fist_script(), new Fist_script() };
-        }
+        
     }
 
     // Update is called once per frame

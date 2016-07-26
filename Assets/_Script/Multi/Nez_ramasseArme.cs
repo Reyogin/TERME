@@ -9,7 +9,7 @@ public class Nez_ramasseArme : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.nRM = transform.parent.parent.GetComponent<Nez_ramasseMult>();
+        this.nRM = transform.parent.parent.parent.GetComponent<Nez_ramasseMult>();
 
     }
     

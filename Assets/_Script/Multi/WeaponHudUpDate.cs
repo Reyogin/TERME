@@ -19,6 +19,8 @@ public class WeaponHudUpDate : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
+        hudW = gameObject.GetComponent<SelectionMult_Player>().HUDWp;
+        items = gameObject.GetComponent<SelectionMult_Player>().items;
         switche = gameObject.GetComponent<WeaponSwitchMulti>();
         UpdateHUD();
     }

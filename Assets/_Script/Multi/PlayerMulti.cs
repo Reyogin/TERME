@@ -11,6 +11,8 @@ public class PlayerMulti : NetworkBehaviour
     public GameObject PlayerPrefab;
     public GameObject BulletEmitt;
 
+    public Weapon arme;
+
     public float vitesse;
     public float degatSupp;
 
