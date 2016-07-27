@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game_Manager : MonoBehaviour
 {
@@ -11,15 +12,16 @@ public class Game_Manager : MonoBehaviour
     private float CD;
     public Player playerPrefab;
     private Player playerInstance;
-    public GameObject IMG;
+    public Texture IMG;
+
+    bool loading;
 
     private void Start()
     {
         //1BeginGame();
-        CD = 0;
+        
         StartCoroutine(BeginGame());
-
-
+        this.loading = true;
     }
 
     private IEnumerator BeginGame()
@@ -36,6 +38,16 @@ public class Game_Manager : MonoBehaviour
         Camera.main.rect = new Rect(0f, 0f, 0.5f, 0.5f);
     }
 
+    private void OnGUI()
+    {
+        if (loading)
+        {
+            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), IMG);
+        }
+    }
+
+       
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // a chanmger avec un restrd en gardant la position du player a chaque interval de temps
@@ -45,10 +57,12 @@ public class Game_Manager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            IMG.SetActive(false);
+            loading = false;
+
+
         //cheatcode pour acceder au credit de fin
-        if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKeyDown(KeyCode.LeftControl))
-            SceneManager.LoadScene("Credit de fin");
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SceneManager.LoadScene("Credits");
     }
 
 
